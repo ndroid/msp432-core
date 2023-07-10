@@ -1,0 +1,39 @@
+##############################################################
+##############################################################
+menu.cpu=Processor
+
+# TI MSP432P401R Red LaunchPad
+# -------------------------------------------------------------
+MSP-EXP432P401R.ccs.device_id=MSP432P401R
+MSP-EXP432P401R.vid.0=0x0451
+MSP-EXP432P401R.pid.0=0xbef3
+MSP-EXP432P401R.name=RED LaunchPad w/ msp432p401r EMT (48MHz)
+MSP-EXP432P401R.build.mcu=cortex-m4
+MSP-EXP432P401R.build.f_cpu=48000000L
+MSP-EXP432P401R.build.core=msp432
+MSP-EXP432P401R.build.variant=MSP_EXP432P401R
+MSP-EXP432P401R.build.board=MSP_EXP432P401R
+MSP-EXP432P401R.build.ldscript=linker.cmd
+MSP-EXP432P401R.build.extra_flags=-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mabi=aapcs -g -Dxdc_target_types__=gnu/targets/arm/std.h -Dxdc_target_name__=M4F -Dxdc_cfg__xheader__="configPkg/package/cfg/energia_pm4fg.h" -DBOARD_MSP_EXP432P401R -Dxdc__nolocalstring=1 -D__MSP432P401R__ -DCORE_VERSION={version.string}
+MSP-EXP432P401R.upload.tool=dslite
+MSP-EXP432P401R.upload.protocol=dslite
+MSP-EXP432P401R.upload.maximum_size=262144
+MSP-EXP432P401R.upload.maximum_data_size=65536
+
+# TI MSP432P4111 LaunchPad
+# -------------------------------------------------------------
+MSP-EXP432P4111.ccs.device_id=MSP432P4111
+MSP-EXP432P4111.vid.0=0x0451
+MSP-EXP432P4111.pid.0=0xbef3
+MSP-EXP432P4111.name=RED LaunchPad w/ msp432p4111 EMT (48MHz)
+MSP-EXP432P4111.build.mcu=cortex-m4
+MSP-EXP432P4111.build.f_cpu=48000000L
+MSP-EXP432P4111.build.core=msp432
+MSP-EXP432P4111.build.variant=MSP_EXP432P4111
+MSP-EXP432P4111.build.board=MSP_EXP432P4111
+MSP-EXP432P4111.build.ldscript=linker.cmd
+MSP-EXP432P4111.build.extra_flags=-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mabi=aapcs -g -Dxdc_target_types__=gnu/targets/arm/std.h -Dxdc_target_name__=M4F -Dxdc_cfg__xheader__="configPkg/package/cfg/energia_pm4fg.h" -DBOARD_MSP_EXP432P4111 -Dxdc__nolocalstring=1 -D__MSP432P4111__ -DCORE_VERSION={version.string}
+MSP-EXP432P4111.upload.tool=dslite
+MSP-EXP432P4111.upload.protocol=dslite
+MSP-EXP432P4111.upload.maximum_size=2097152
+MSP-EXP432P4111.upload.maximum_data_size=65536

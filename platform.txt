@@ -1,0 +1,111 @@
+# Energia MSP432 Core and platform.
+# ------------------------------
+#
+# For more info:
+# https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5-3rd-party-Hardware-specification
+
+name=Energia MSP432 (32-bits) RED Boards
+version=5.29.4
+version.string=5294
+
+ccs.platform_class=emt
+ccs.connection=TIXDS110_Connection.xml
+
+# MSP432 compile variables
+# ----------------------
+
+compiler.warning_flags=-w
+compiler.warning_flags.none=-w
+compiler.warning_flags.default=
+compiler.warning_flags.more=-Wall
+compiler.warning_flags.all=-Wall -Wextra
+
+compiler.path={runtime.tools.arm-none-eabi-gcc-8.3.1-20190703.path}/bin/
+compiler.c.cmd=arm-none-eabi-gcc
+compiler.c.flags=-c -g -Os {compiler.warning_flags} -ffunction-sections -fdata-sections -MMD
+#compiler.c.flags=-c -g -Os {compiler.warning_flags} -ffunction-sections -fdata-sections -nostdlib
+compiler.cpp.elf.cmd=arm-none-eabi-g++
+compiler.c.elf.flags=-Os -Wl,--gc-sections -specs=nano.specs  -specs=rdimon.specs -specs=nosys.specs
+compiler.S.cmd=arm-none-eabi-gcc
+compiler.S.flags=-c -g -x assembler-with-cpp
+compiler.cpp.cmd=arm-none-eabi-g++
+compiler.cpp.flags=-c -g -Os {compiler.warning_flags} -ffunction-sections -fdata-sections -fno-threadsafe-statics -fno-rtti -fno-exceptions -MMD
+#compiler.cpp.flags=-c -g -Os {compiler.warning_flags} -ffunction-sections -fdata-sections -fno-threadsafe-statics -fno-rtti -fno-exceptions -nostdlib
+compiler.ar.cmd=arm-none-eabi-ar
+compiler.ar.flags=rcPs
+compiler.objcopy.cmd=arm-none-eabi-objcopy
+compiler.objcopy.eep.flags=-O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0
+compiler.elf2hex.flags=-O binary
+compiler.elf2hex.cmd=arm-none-eabi-objcopy
+compiler.ldflags=
+compiler.size.cmd=arm-none-eabi-size
+
+
+compiler.driverlib.c.flags="-I{build.system.path}/source/ti/devices/msp432p4xx/driverlib" "-I{build.system.path}/source/ti/devices/msp432p4xx/inc" "-I{build.system.path}/source/ti/devices/msp432p4xx/" "-I{build.system.path}/source/third_party/CMSIS/Include"
+compiler.emt.c.flags="-I{build.core.path}/ti/runtime/wiring/" "-I{build.core.path}/ti/runtime/wiring/msp432" "-I{build.system.path}/kernel/tirtos/packages/ti/sysbios/posix" "-I{build.system.path}/kernel/tirtos/packages" "-I{build.system.path}/source" "-I{build.system.path}/energia" -D_DEFAULT_SOURCE
+
+linker.include.flags="-L{build.system.path}/kernel/tirtos/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard" "-L{build.path}" "-L{build.core.path}" "-L{build.system.path}/energia" "-L{build.system.path}/kernel" "-L{build.system.path}/source" "-L{build.system.path}/kernel/tirtos/builds/{build.variant}/energia/" "-L{build.system.path}/kernel/tirtos/packages"
+
+# this can be overriden in boards.txt
+build.extra_flags=-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mabi=aapcs -g -Dxdc_target_types__=gnu/targets/arm/std.h -Dxdc_target_name__=M4F -Dxdc_cfg__xheader__="configPkg/package/cfg/energia_pm4fg.h" -DBOARD_{build.board} -Dxdc__nolocalstring=1 -D__{ccs.device_id}__ -DCORE_VERSION={version.string}
+
+# These can be overridden in platform.local.txt
+compiler.c.extra_flags={compiler.emt.c.flags} {compiler.driverlib.c.flags}
+compiler.c.elf.extra_flags=-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mabi=aapcs
+compiler.cpp.extra_flags={compiler.emt.c.flags} {compiler.driverlib.c.flags}
+compiler.S.extra_flags=
+compiler.ar.extra_flags=
+compiler.elf2hex.extra_flags=
+
+# USB Flags
+# ---------
+build.usb_flags=-DUSB_VID={build.vid} -DUSB_PID={build.pid} -DUSBCON '-DUSB_MANUFACTURER={build.usb_manufacturer}' '-DUSB_PRODUCT={build.usb_product}'
+
+# Default usb manufacturer will be replaced at compile time using
+# numeric vendor ID if available or by board's specific value.
+build.usb_manufacturer="TI"
+
+# MSP432 compile patterns
+# ---------------------
+
+# Energia's ino2ccp
+
+build.ino2cpp.path={runtime.tools.ino2cpp-1.0.7.path}
+build.ino2cpp.cmd="{build.ino2cpp.path}/ino2cpp"
+recipe.hooks.sketch.prebuild.1.pattern={build.ino2cpp.cmd} -s "{build.path}/sketch/{build.project_name}.cpp" -t "{build.ino2cpp.path}/templates/msp432/main.template" -o "{build.path}/sketch/main.cpp"
+
+## Compile c files
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {build.extra_flags} {compiler.c.flags} -mcpu={build.mcu} -mthumb -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DENERGIA={runtime.ide.version} -DENERGIA_{build.board} -DENERGIA_ARCH_{build.arch} {compiler.c.extra_flags} {compiler.emt.c.flags} {compiler.driverlib.c.flags} {includes} "{source_file}" -o "{object_file}"
+
+## Compile c++ files
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {build.extra_flags} {compiler.cpp.flags} -mcpu={build.mcu} -mthumb -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DENERGIA={runtime.ide.version} -DENERGIA_{build.board} -DENERGIA_ARCH_{build.arch} {compiler.cpp.extra_flags} {compiler.emt.c.flags} {compiler.driverlib.c.flags} {includes} "{source_file}" -o "{object_file}"
+
+## Compile S files
+recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} -mcpu={build.mcu} -mthumb -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DENERGIA={runtime.ide.version} -DENERGIA_{build.board} -DENERGIA_ARCH_{build.arch} {compiler.S.extra_flags} {compiler.emt.c.flags} {build.extra_flags} {compiler.driverlib.c.flags} {includes} "{source_file}" -o "{object_file}"
+
+## Create archives
+recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} {compiler.ar.extra_flags} "{archive_file_path}" "{object_file}"
+
+## Combine gc-sections, archives, and objects
+recipe.c.combine.pattern="{compiler.path}{compiler.cpp.elf.cmd}" -mcpu={build.mcu} -mthumb -nostartfiles {compiler.c.elf.flags} "-Wl,-u,main" "-Wl,-u,_printf_float,-u,-_scanf_float" "-Wl,-Map,{build.path}/{build.project_name}.map" {compiler.c.elf.extra_flags} -o "{build.path}/{build.project_name}.elf" {object_files} {linker.include.flags} "-L{build.core.path}/ti/runtime/wiring/msp432" "-L{runtime.platform.path}/variants/{build.variant}" -Wl,--check-sections -Wl,--gc-sections "{build.path}/{archive_file}" "-Wl,-T{build.system.path}/energia/{build.ldscript}" "{build.system.path}/source/ti/devices/msp432p4xx/driverlib/gcc/msp432p4xx_driverlib.a" -lstdc++ -lgcc -lm -lnosys -lc
+
+## Create output (.bin file)
+recipe.objcopy.bin.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} {compiler.elf2hex.extra_flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+
+## Save hex
+recipe.output.tmp_file={build.project_name}.bin
+recipe.output.save_file={build.project_name}.{build.variant}.bin
+
+## Compute size
+recipe.size.pattern="{compiler.path}{compiler.size.cmd}" -A "{build.path}/{build.project_name}.elf"
+recipe.size.regex=\.text\s+([0-9]+).*
+recipe.size.regex.data=^(?:\.data|\.bss)\s+([0-9]+).*
+
+# TI's DSLite
+tools.dslite.upload.params.verbose=
+tools.dslite.upload.params.quiet=
+tools.dslite.path={runtime.tools.dslite-9.3.0.1863.path}
+tools.dslite.config.path={path}
+tools.dslite.cmd.path={path}/DebugServer/bin/DSLite
+tools.dslite.upload.pattern="{cmd.path}" {upload.verbose} load -c "{config.path}/{build.variant}.ccxml" -f "{build.path}/{build.project_name}.elf"
+
