@@ -35,6 +35,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "pin_names_energia.h"
 
 static const uint8_t RED_LED = 75;
 static const uint8_t GREEN_LED = 76;

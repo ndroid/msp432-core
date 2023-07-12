@@ -30,10 +30,30 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <ti/runtime/wiring/msp432/I2CSlave.h>
 #include <ti/runtime/wiring/Wire.h>
+void I2CSlaveReadCallback(I2CSlave_Handle i2cSlave)
+{
+    Wire.readCallback(i2cSlave);
+}
+
+void I2CSlaveReadCallback1(I2CSlave_Handle i2cSlave)
+{
+    Wire1.readCallback(i2cSlave);
+}
+
+void I2CSlaveWriteCallback(I2CSlave_Handle i2cSlave, size_t count)
+{
+    Wire.writeCallback(i2cSlave, count);
+}
+
+void I2CSlaveWriteCallback1(I2CSlave_Handle i2cSlave, size_t count)
+{
+    Wire1.writeCallback(i2cSlave, count);
+}
 
 /*
  * Pre-Initialize Wire instances
  */
-TwoWire Wire;
-TwoWire Wire1(1);
+TwoWire Wire(0, I2CSlaveReadCallback, I2CSlaveWriteCallback);
+TwoWire Wire1(1, I2CSlaveReadCallback1, I2CSlaveWriteCallback1);

@@ -656,6 +656,62 @@ void Board_initGPIO(void)
     /* set up initial TI-RTOS GPIO pin configurations */
     GPIO_init();
 }
+/*
+ *  =============================== I2CSlave ===============================
+ */
+
+#include <ti/drivers/I2CSlave.h>
+#include <ti/drivers/i2cslave/I2CSlaveMSP432.h>
+
+#if 0
+/* I2CSlave function table for I2CMSP432 implementation */
+const I2CSlave_FxnTable I2CSlaveMSP432_fxnTable = {
+    I2CSlaveMSP432_close,
+    I2CSlaveMSP432_control,
+    I2CSlaveMSP432_init,
+    I2CSlaveMSP432_open,
+    I2CSlaveMSP432_read,
+    I2CSlaveMSP432_write
+};
+#endif
+
+/* I2C objects */
+I2CSlaveMSP432_Object i2cSlaveMSP432Objects[Board_I2CCOUNT];
+
+/* I2C configuration structure */
+I2CSlaveMSP432_HWAttrs i2cSlaveMSP432HWAttrs[Board_I2CCOUNT] = {
+    {
+        .baseAddr = EUSCI_B1_BASE,
+        .intNum = INT_EUSCIB1,
+        .intPriority = (~0),
+        .slaveAddress = 0x48,
+        .dataPin = I2CSLAVEMSP432_P6_4_UCB1SDA,
+        .clkPin = I2CSLAVEMSP432_P6_5_UCB1SCL
+    },
+    {
+        .baseAddr = EUSCI_B0_BASE,
+        .intNum = INT_EUSCIB0,
+        .intPriority = (~0),
+        .slaveAddress = 0x48,
+        .dataPin = I2CSLAVEMSP432_P1_6_UCB0SDA,
+        .clkPin = I2CSLAVEMSP432_P1_7_UCB0SCL
+    }
+};
+
+const I2CSlave_Config I2CSlave_config[Board_I2CCOUNT] = {
+    {
+        .fxnTablePtr = &I2CSlaveMSP432_fxnTable,
+        .object = &i2cSlaveMSP432Objects[0],
+        .hwAttrs = &i2cSlaveMSP432HWAttrs[0]
+    },
+    {
+        .fxnTablePtr = &I2CSlaveMSP432_fxnTable,
+        .object = &i2cSlaveMSP432Objects[1],
+        .hwAttrs = &i2cSlaveMSP432HWAttrs[1]
+    }
+};
+
+const uint_least8_t I2CSlave_count = Board_I2CCOUNT;
 
 /*
  *  =============================== I2C ===============================
