@@ -149,6 +149,12 @@ static void completeTransfer(I2CSlave_Handle handle)
     /* Remove constraints set during transfer */
 #if DeviceFamily_ID == DeviceFamily_ID_MSP432P401x
     Power_releaseConstraint(PowerMSP432_DISALLOW_DEEPSLEEP_0);
+/* Added these lines to match with P401R implementation, but based on 
+    other TI files, it is not clear that P4111 should have same 
+    implementation as P401R
+#elif DeviceFamily_PARENT == DeviceFamily_PARENT_MSP432P4111
+    Power_releaseConstraint(PowerMSP432_DISALLOW_DEEPSLEEP_0);
+*/
 #endif
 }
 /*
@@ -545,6 +551,15 @@ static bool primeTransfer(I2CSlave_Handle handle, const void *writeBuffer,
      * Set power constraints to keep peripheral active during transfer
      */
     Power_setConstraint(PowerMSP432_DISALLOW_DEEPSLEEP_0);
+/* Added these lines to match with P401R implementation, but based on 
+    other TI files, it is not clear that P4111 should have same 
+    implementation as P401R
+#elif DeviceFamily_PARENT == DeviceFamily_PARENT_MSP432P4111
+    /*
+     * Set power constraints to keep peripheral active during transfer
+     *  /
+    Power_setConstraint(PowerMSP432_DISALLOW_DEEPSLEEP_0);
+*/
 #endif
 
     /*

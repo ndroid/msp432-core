@@ -42,9 +42,9 @@ compiler.size.cmd=arm-none-eabi-size
 
 
 compiler.driverlib.c.flags="-I{build.system.path}/source/ti/devices/msp432p4xx/driverlib" "-I{build.system.path}/source/ti/devices/msp432p4xx/inc" "-I{build.system.path}/source/ti/devices/msp432p4xx/" "-I{build.system.path}/source/third_party/CMSIS/Include"
-compiler.emt.c.flags="-I{build.core.path}/ti/runtime/wiring/" "-I{build.core.path}/ti/runtime/wiring/msp432" "-I{build.system.path}/kernel/tirtos/packages/ti/sysbios/posix" "-I{build.system.path}/kernel/tirtos/packages" "-I{build.system.path}/source" "-I{build.system.path}/energia" -D_DEFAULT_SOURCE
+compiler.emt.c.flags="-I{build.core.path}/ti/runtime/wiring/" "-I{build.core.path}/ti/runtime/wiring/msp432" "-I{build.system.path}/kernel/tirtos/packages/ti/sysbios/posix" "-I{build.system.path}/kernel/tirtos/packages" "-I{build.system.path}/source" "-I{runtime.platform.path}/variants/{build.variant}/energia" -D_DEFAULT_SOURCE
 
-linker.include.flags="-L{build.system.path}/kernel/tirtos/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard" "-L{build.path}" "-L{build.core.path}" "-L{build.system.path}/energia" "-L{build.system.path}/kernel" "-L{build.system.path}/source" "-L{build.system.path}/kernel/tirtos/builds/{build.variant}/energia/" "-L{build.system.path}/kernel/tirtos/packages"
+linker.include.flags="-L{build.system.path}/kernel/tirtos/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard" "-L{build.path}" "-L{build.core.path}" "-L{runtime.platform.path}/variants/{build.variant}/energia" "-L{build.system.path}/kernel" "-L{build.system.path}/source" "-L{build.system.path}/kernel/tirtos/builds/{build.variant}/energia/" "-L{build.system.path}/kernel/tirtos/packages"
 
 # this can be overriden in boards.txt
 build.extra_flags=-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mabi=aapcs -g -Dxdc_target_types__=gnu/targets/arm/std.h -Dxdc_target_name__=M4F -Dxdc_cfg__xheader__="configPkg/package/cfg/energia_pm4fg.h" -DBOARD_{build.board} -Dxdc__nolocalstring=1 -D__{ccs.device_id}__ -DCORE_VERSION={version.string}
@@ -87,7 +87,7 @@ recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} -mcpu={b
 recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} {compiler.ar.extra_flags} "{archive_file_path}" "{object_file}"
 
 ## Combine gc-sections, archives, and objects
-recipe.c.combine.pattern="{compiler.path}{compiler.cpp.elf.cmd}" -mcpu={build.mcu} -mthumb -nostartfiles {compiler.c.elf.flags} "-Wl,-u,main" "-Wl,-u,_printf_float,-u,-_scanf_float" "-Wl,-Map,{build.path}/{build.project_name}.map" {compiler.c.elf.extra_flags} -o "{build.path}/{build.project_name}.elf" {object_files} {linker.include.flags} "-L{build.core.path}/ti/runtime/wiring/msp432" "-L{runtime.platform.path}/variants/{build.variant}" -Wl,--check-sections -Wl,--gc-sections "{build.path}/{archive_file}" "-Wl,-T{build.system.path}/energia/{build.ldscript}" "{build.system.path}/source/ti/devices/msp432p4xx/driverlib/gcc/msp432p4xx_driverlib.a" -lstdc++ -lgcc -lm -lnosys -lc
+recipe.c.combine.pattern="{compiler.path}{compiler.cpp.elf.cmd}" -mcpu={build.mcu} -mthumb -nostartfiles {compiler.c.elf.flags} "-Wl,-u,main" "-Wl,-u,_printf_float,-u,-_scanf_float" "-Wl,-Map,{build.path}/{build.project_name}.map" {compiler.c.elf.extra_flags} -o "{build.path}/{build.project_name}.elf" {object_files} {linker.include.flags} "-L{build.core.path}/ti/runtime/wiring/msp432" "-L{runtime.platform.path}/variants/{build.variant}" -Wl,--check-sections -Wl,--gc-sections "{build.path}/{archive_file}" "-Wl,-T{runtime.platform.path}/variants/{build.variant}/energia/{build.ldscript}" "{build.system.path}/source/ti/devices/msp432p4xx/driverlib/gcc/msp432p4xx_driverlib.a" -lstdc++ -lgcc -lm -lnosys -lc
 
 ## Create output (.bin file)
 recipe.objcopy.bin.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} {compiler.elf2hex.extra_flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
