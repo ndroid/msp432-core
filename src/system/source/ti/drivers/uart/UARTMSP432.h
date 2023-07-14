@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019, Texas Instruments Incorporated
+ * Copyright (c) 2015-2018, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -85,6 +85,10 @@
 #ifndef ti_drivers_uart_UARTMSP432__include
 #define ti_drivers_uart_UARTMSP432__include
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -98,10 +102,6 @@
 #include <ti/drivers/utils/RingBuf.h>
 
 #include <ti/devices/msp432p4xx/inc/msp.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define UARTMSP432_P1_2_UCA0RXD  0x00000112  /* Primary, port 1, pin 2 */
 #define UARTMSP432_P1_3_UCA0TXD  0x00000113  /* Primary, port 1, pin 3 */
@@ -367,7 +367,7 @@ typedef void (*UARTMSP432_ErrorCallback) (UART_Handle handle,  uint32_t error);
  *
  *  readIsrFxn:     The required ISR counterpart to readTaskFxn
  */
-typedef struct {
+typedef struct UARTMSP432_FxnSet {
     bool (*readIsrFxn)  (UART_Handle handle);
     int  (*readTaskFxn) (UART_Handle handle);
 } UARTMSP432_FxnSet;
@@ -402,7 +402,7 @@ typedef struct {
  *  };
  *  @endcode
  */
-typedef struct {
+typedef struct UARTMSP432_BaudrateConfig {
     uint32_t  outputBaudrate; /*!< Search criteria: desired baudrate */
     uint32_t  inputClockFreq; /*!< Search criteria: given this input clock frequency */
 
@@ -464,7 +464,7 @@ typedef struct {
  *  };
  *  @endcode
  */
-typedef struct {
+typedef struct UARTMSP432_HWAttrsV1 {
     /*! UART Peripheral's base address */
     unsigned int    baseAddr;
     /*! UART Peripheral's interrupt vector */
@@ -495,7 +495,7 @@ typedef struct {
  *
  *  The application must not access any member variables of this structure!
  */
-typedef struct {
+typedef struct UARTMSP432_Object {
     /* UART state variable */
     struct {
         bool             opened:1;         /* Has the obj been opened */
@@ -523,8 +523,8 @@ typedef struct {
         bool             drainByISR:1;
         /* Flag to keep the state of the read Power constraints */
         bool             rxEnabled:1;
-        /* Flag to keep track of ongoing transmit */
-        bool             txBusy:1;
+        /* Flag to keep the state of the write Power constraints */
+        bool             txEnabled:1;
 
         /* Flags to prevent recursion in read callback mode */
         bool             inReadCallback:1;

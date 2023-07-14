@@ -32,14 +32,12 @@
  */
 
 /*
- *  ======== spiSelect.json ========
+ *  ======== SPISelect.json ========
  */
 
 {
     "type": ["SPISelect", "SPI_SS", "DOUT"],
     "displayName": "SPI Select",
-    "description": "SPI slave select",
-    "longDescription": "Generic Serial Interface Peripheral (SPI) slave select digital output",
     "signals": {
         "SS": {
             "type": ["SPI_SS", "DOUT"]

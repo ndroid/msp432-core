@@ -62,22 +62,13 @@ if (deviceId.match(/CC13.0|CC26.0/)) {
                 "/ti/drivers/Power",
                 "/ti/drivers/PWM",
                 "/ti/drivers/RTOS",
+                "/ti/drivers/RF",
                 "/ti/drivers/SD",
                 "/ti/drivers/SPI",
                 "/ti/drivers/Timer",
                 "/ti/drivers/TRNG",
                 "/ti/drivers/UART",
                 "/ti/drivers/Watchdog"
-            ],
-            "categories": [
-                {
-                    "displayName" : "TI Driver Apps",
-                    "description" : "TI Drivers Apps Configuration",
-                    "modules" : [
-                        "/ti/drivers/apps/Button",
-                        "/ti/drivers/apps/LED"
-                    ]
-                }
             ]
         }
     ];
@@ -108,24 +99,14 @@ if (deviceId.match(/CC13.0|CC26.0/)) {
                 "/ti/drivers/Power",
                 "/ti/drivers/PWM",
                 "/ti/drivers/RTOS",
+                "/ti/drivers/RF",
                 "/ti/drivers/SD",
                 "/ti/drivers/SHA2",
                 "/ti/drivers/SPI",
                 "/ti/drivers/Timer",
                 "/ti/drivers/TRNG",
                 "/ti/drivers/UART",
-                "/ti/drivers/UART2",
                 "/ti/drivers/Watchdog"
-            ],
-            "categories": [
-                {
-                    "displayName" : "TI Driver Apps",
-                    "description" : "TI Drivers Apps Configuration",
-                    "modules" : [
-                        "/ti/drivers/apps/Button",
-                        "/ti/drivers/apps/LED"
-                    ]
-                }
             ]
         }
     ];
@@ -153,16 +134,6 @@ if (deviceId.match(/CC13.0|CC26.0/)) {
                 "/ti/drivers/Timer",
                 "/ti/drivers/UART",
                 "/ti/drivers/Watchdog"
-            ],
-            "categories": [
-                {
-                    "displayName" : "TI Driver Apps",
-                    "description" : "TI Drivers Apps Configuration",
-                    "modules" : [
-                        "/ti/drivers/apps/Button",
-                        "/ti/drivers/apps/LED"
-                    ]
-                }
             ]
         }
     ];
@@ -190,16 +161,6 @@ if (deviceId.match(/CC13.0|CC26.0/)) {
                 "/ti/drivers/Timer",
                 "/ti/drivers/UART",
                 "/ti/drivers/Watchdog"
-            ],
-            "categories": [
-                {
-                    "displayName" : "TI Driver Apps",
-                    "description" : "TI Drivers Apps Configuration",
-                    "modules" : [
-                        "/ti/drivers/apps/Button",
-                        "/ti/drivers/apps/LED"
-                    ]
-                }
             ]
         }
     ];
@@ -219,8 +180,6 @@ if (deviceId.match(/CC13.0|CC26.0/)) {
                 "/ti/drivers/AESCCM",
                 "/ti/drivers/AESECB",
                 "/ti/drivers/AESGCM",
-                "/ti/drivers/CAN",
-                "/ti/drivers/Comparator",
                 "/ti/drivers/CRC",
                 "/ti/drivers/DMA",
                 "/ti/drivers/EMAC",
@@ -235,16 +194,6 @@ if (deviceId.match(/CC13.0|CC26.0/)) {
                 "/ti/drivers/Timer",
                 "/ti/drivers/UART",
                 "/ti/drivers/Watchdog"
-            ],
-            "categories": [
-                {
-                    "displayName" : "TI Driver Apps",
-                    "description" : "TI Drivers Apps Configuration",
-                    "modules" : [
-                        "/ti/drivers/apps/Button",
-                        "/ti/drivers/apps/LED"
-                    ]
-                }
             ]
         }
     ];
@@ -253,12 +202,12 @@ if (deviceId.match(/CC13.0|CC26.0/)) {
 let templates = [
     {
         "name": "/ti/drivers/templates/Board.c.xdt",
-        "outputPath": "ti_drivers_config.c",
+        "outputPath": "Board.c",
         "alwaysRun": false
     },
     {
         "name": "/ti/drivers/templates/Board.h.xdt",
-        "outputPath": "ti_drivers_config.h",
+        "outputPath": "Board.h",
         "alwaysRun": false
     }
 ];

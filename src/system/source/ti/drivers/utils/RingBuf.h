@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019, Texas Instruments Incorporated
+ * Copyright (c) 2015, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,15 +33,15 @@
 #ifndef ti_drivers_uart_RingBuf__include
 #define ti_drivers_uart_RingBuf__include
 
-#include <stdint.h>
-#include <stddef.h>
-#include <stdbool.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct {
+#include <stdint.h>
+#include <stddef.h>
+#include <stdbool.h>
+
+typedef struct RingBuf_Object {
     unsigned char      *buffer;
     size_t              length;
     size_t              count;

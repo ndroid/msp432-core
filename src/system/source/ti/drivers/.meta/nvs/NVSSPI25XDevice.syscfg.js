@@ -160,7 +160,7 @@ function moduleInstances(inst) {
                 displayName: "Slave Select GPIO Instance",
                 moduleName: "/ti/drivers/GPIO",
                 args: gpioInit(),
-                hardware: inst.$hardware ? inst.$hardware.subComponents.SELECT : null
+                hardware: inst.$hardware ? inst.$hardware.subComponents.select : null
             }
         );
     }
@@ -181,25 +181,6 @@ function moduleInstances(inst) {
 }
 
 /*
- *  ======== onHardwareChanged ========
- */
-function onHardwareChanged(inst, ui) {
-
-    /*
-     * If a SPI flash device is passed to us, we should always use the provided
-     * SPI bus. Therefore, the SPI instance will be managed by NVS. Otherwise,
-     * we would be "throwing away" the hardware by not using it.
-     */
-    if (inst.$hardware) {
-        inst.manager = "NVS";
-        ui.manager.readOnly = true;
-    }
-    else {
-        ui.manager.readOnly = false;
-    }
-}
-
-/*
  *  ======== sharedModuleInstances ========
  */
 function sharedModuleInstances(inst) {
@@ -212,7 +193,7 @@ function sharedModuleInstances(inst) {
                 name: "sharedSpiInstance",
                 displayName: "Shared SPI Flash Instance",
                 moduleName: "/ti/drivers/SPI",
-                hardware: inst.$hardware ? inst.$hardware.subComponents.SPI : null
+                hardware: inst.$hardware ? inst.$hardware.subComponents.spi : null
             }
         );
     }
@@ -225,10 +206,9 @@ function sharedModuleInstances(inst) {
  */
 exports = {
     config: config,
-    defaultInstanceName: "CONFIG_NVS_SPI_",
+    defaultInstanceName: "Board_NVS_SPI",
     filterHardware: filterHardware,
     sharedModuleInstances: sharedModuleInstances,
     moduleInstances: moduleInstances,
-    onHardwareChanged: onHardwareChanged,
     validate: validate
 };

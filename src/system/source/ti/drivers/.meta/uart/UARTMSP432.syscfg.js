@@ -37,8 +37,13 @@
 
 "use strict";
 
+/* $super is used to call generic module's methods */
+let $super = {};
+
 /* get Common /ti/drivers utility functions */
 let Common = system.getScript("/ti/drivers/Common.js");
+
+let Power  = system.getScript("/ti/drivers/Power");
 
 let intPriority = Common.newIntPri()[0];
 intPriority.name = "interruptPriority";
@@ -94,9 +99,6 @@ __Power Performance Level__ configured in the __Power Module__.
             name        : "ringBufferSize",
             displayName : "Ring Buffer Size",
             description : "Number of bytes in the ring buffer",
-            longDescription : `The ring buffer serves as an extension of the
-FIFO. If data is received when UART_read() is not called, data will be stored
-in the ring buffer. The size can be changed to suit the application.`,
             default     : 32
         },
         {
@@ -125,45 +127,13 @@ in the ring buffer. The size can be changed to suit the application.`,
         boardh : "/ti/drivers/uart/UART.Board.h.xdt"
     },
 
-    /* override generic filterHardware with ours */
+    /* override generic validation with ours */
+    validate              : validate,
     filterHardware        : filterHardware,
-
-    /* define MSP432 UART specific methods */
+    maxInstances          : 4,
     autoAssignClockSource : autoAssignClockSource,
-    genBaudRateTable      : genBaudRateTable,
-
-    _getPinResources: _getPinResources
+    genBaudRateTable      : genBaudRateTable
 };
-
-/*
- *  ======== _getPinResources ========
- */
-function _getPinResources(inst)
-{
-    let pin;
-    let rxPin = "Unassigned";
-    let txPin = "Unassigned";
-
-    if (inst.uart) {
-        if (inst.uart.rxPin) {
-            rxPin = inst.uart.rxPin.$solution.devicePinName;
-            rxPin = rxPin.match(/P\d+\.\d+/)[0];
-        }
-        if (inst.uart.txPin) {
-            txPin = inst.uart.txPin.$solution.devicePinName;
-            txPin = txPin.match(/P\d+\.\d+/)[0];
-        }
-
-        pin = "\nTX: " + txPin + "\nRX: " + rxPin;
-
-        if (inst.$hardware && inst.$hardware.displayName) {
-            pin += "\n" + inst.$hardware.displayName;
-        }
-    }
-
-    return (pin);
-}
-
 
 /*
  *  ======== autoAssignClockSource ========
@@ -201,7 +171,6 @@ function autoAssignClockSource(baudRates)
             continue;
         }
 
-        let Power = system.modules["/ti/drivers/Power"];
         let frequencies = Power.getClockFrequencies(optionName);
         if (frequencies.length === 0) {
             throw new Error(optionName +
@@ -255,7 +224,6 @@ function autoAssignClockSource(baudRates)
  */
 function genBaudRateTable(baudRates, clockSource)
 {
-    let Power = system.modules["/ti/drivers/Power"];
     let frequencies = Power.getClockFrequencies(clockSource);
     if (frequencies.length === 0) {
         throw new Error(clockSource +
@@ -425,10 +393,8 @@ function filterHardware(component)
  *
  *  param inst       - UART instance to be validated
  *  param validation - object to hold detected validation issues
- *
- *  @param $super    - needed to call the generic module's functions
  */
-function validate(inst, validation, $super)
+function validate(inst, validation)
 {
     let baudRates   = inst.baudRates;
     let clockName   = inst.clockSource;
@@ -464,7 +430,6 @@ function validate(inst, validation, $super)
  */
 function validateBaudRates(inst, validation, clockName)
 {
-    let Power = system.modules["/ti/drivers/Power"];
     let frequencies = Power.getClockFrequencies(clockName);
     let baudRates   = inst.baudRates;
     let message     = '';
@@ -505,10 +470,8 @@ function validateBaudRates(inst, validation, clockName)
  */
 function extend(base)
 {
-    /* override base validate */
-    devSpecific.validate = function (inst, validation) {
-        return validate(inst, validation, base);
-    };
+    /* save base properies/methods, to use in our methods */
+    $super = base;
 
     /* merge and overwrite base module attributes */
     let result = Object.assign({}, base, devSpecific);

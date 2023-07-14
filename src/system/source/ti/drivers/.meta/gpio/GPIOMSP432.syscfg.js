@@ -37,39 +37,23 @@
 
 "use strict";
 
+/* $super is used to call generic module's methods */
+let $super = {};
+
 /*
  *  ======== devSpecific ========
  *  Device-specific extensions to be added to base GPIO configuration
  */
 let devSpecific = {
 
+    pinmuxRequirements: pinmuxRequirements,
+
     templates:
     {
         boardc : "/ti/drivers/gpio/GPIOMSP432.Board.c.xdt",
         boardh : "/ti/drivers/gpio/GPIO.Board.h.xdt"
-    },
-
-    _getPinResources: _getPinResources
-};
-
-/*
- *  ======== _getPinResources ========
- */
-function _getPinResources(inst)
-{
-    let pin;
-
-    if (inst.gpioPin) {
-        pin = inst.gpioPin.$solution.devicePinName;
-        pin = pin.match(/P\d+\.\d+/)[0];
-
-        if (inst.$hardware && inst.$hardware.displayName) {
-            pin += ", " + inst.$hardware.displayName;
-        }
     }
-
-    return (pin);
-}
+};
 
 /*
  *  ======== resourcesWithoutInterruptsFilter ========
@@ -103,7 +87,7 @@ function noFilter (devicePin, peripheralPin)
  *  Return peripheral pin requirements as a function of config
  *  Called on instantiation and every config change.
  */
-function pinmuxRequirements(inst, $super)
+function pinmuxRequirements(inst)
 {
     let result = $super.pinmuxRequirements ? $super.pinmuxRequirements(inst) : [];
 
@@ -132,10 +116,8 @@ function pinmuxRequirements(inst, $super)
  */
 function extend(base)
 {
-    /* override base pinmuxRequirements */
-    devSpecific.pinmuxRequirements = function (inst) {
-        return pinmuxRequirements(inst, base);
-    };
+    /* save base properies/methods, to use in our methods */
+    $super = base;
 
     /* merge and overwrite base module attributes */
     return (Object.assign({}, base, devSpecific));

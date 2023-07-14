@@ -2,7 +2,7 @@
  *  Do not modify this file; it is automatically 
  *  generated and any modifications will be overwritten.
  *
- * @(#) xdc-H32
+ * @(#) xdc-F14
  */
 
 /*
@@ -34,12 +34,10 @@
 #define ti_uia_runtime_LoggerTypes__top__
 #endif
 
-#ifndef __extern
 #ifdef __cplusplus
 #define __extern extern "C"
 #else
 #define __extern extern
-#endif
 #endif
 
 #define ti_uia_runtime_LoggerTypes___VERS 200
@@ -244,7 +242,7 @@ __extern __FAR__ const CT__ti_uia_runtime_LoggerTypes_Object__table ti_uia_runti
 
 /* Module__startupDone__S */
 xdc__CODESECT(ti_uia_runtime_LoggerTypes_Module__startupDone__S, "ti_uia_runtime_LoggerTypes_Module__startupDone__S")
-__extern xdc_Bool ti_uia_runtime_LoggerTypes_Module__startupDone__S( void);
+__extern xdc_Bool ti_uia_runtime_LoggerTypes_Module__startupDone__S( void );
 
 
 /*

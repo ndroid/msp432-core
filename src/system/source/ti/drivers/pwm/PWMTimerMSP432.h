@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019, Texas Instruments Incorporated
+ * Copyright (c) 2015-2018, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -82,8 +82,8 @@
  *
  *  ### MPS432 PWM Driver Configuration #
  *
- *  In order to use the PWM APIs, the application is required to define
- *  4 configuration items in the application ti_drivers_config.c file:
+ *  In order to use the PWM APIs, the application is required
+ *  to define 4 configuration items in the application Board.c file:
  *
  *  1.  An array of PWMTimerMSP432_Object elements, which will be used by
  *  by the driver to maintain instance state.
@@ -190,6 +190,10 @@
 #ifndef ti_driver_pwm_PWMTimerMSP432__include
 #define ti_driver_pwm_PWMTimerMSP432__include
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 
 #include <ti/devices/DeviceFamily.h>
@@ -199,10 +203,6 @@
 
 #include <ti/devices/msp432p4xx/driverlib/pmap.h>
 #include <ti/devices/msp432p4xx/driverlib/timer_a.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*! \cond */
 /*
@@ -725,7 +725,7 @@ extern const PWM_FxnTable PWMTimerMSP432_fxnTable;
  *  };
  *  @endcode
  */
-typedef struct {
+typedef struct PWMTimerMSP432_HWAttrsV2 {
     uint16_t clockSource;          /*!< TIMER A Clock Source
                                         (see timer_a.h for options) */
     uint32_t pwmPin;               /*!< Pin to output PWM signal on
@@ -737,7 +737,7 @@ typedef struct {
  *
  *  The application must not access any member variables of this structure!
  */
-typedef struct {
+typedef struct PWMTimerMSP432_Status {
     Power_NotifyObj perfChangeNotify;
     PWM_Period_Units periodUnits;
     uint32_t perfConstraintMask;
@@ -755,7 +755,7 @@ typedef struct {
  *
  *  The application must not access any member variables of this structure!
  */
-typedef struct {
+typedef struct PWMTimerMSP432_Object {
     PWMTimerMSP432_Status *timerStatus;
     uint32_t               baseAddress;     /* PWMTimer base address */
     PWM_Duty_Units         dutyUnits;       /* Current duty cycle unit */

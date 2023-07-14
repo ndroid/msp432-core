@@ -106,13 +106,13 @@ function validate(inst, validation)
     if((inst.sd0DataDirection == "Disabled") &&
         (inst.sd1DataDirection == "Disabled")) {
             Common.logInfo(validation, inst, "sd0DataDirection",
-              "Consider activating one of the two data interfaces (SD0 or SD1)");
+              "Consider activate one of the two data interfaces (SD0 or SD1)");
     }
 
     if((inst.sd0DataDirection == "Disabled") &&
         (inst.sd1DataDirection == "Disabled")) {
             Common.logInfo(validation, inst, "sd1DataDirection",
-              "Consider activating one of the two data interfaces (SD0 or SD1)");
+              "Consider activate one of the two data interfaces (SD0 or SD1)");
     }
 }
 
@@ -134,16 +134,6 @@ function filterHardware(component)
 }
 
 /*
- *  ======== _getPinResources ========
- */
-/* istanbul ignore next */
-function _getPinResources(inst)
-{
-    return;
-}
-
-
-/*
  *  ======== base ========
  *  Define the base I2S properties and methods
  */
@@ -161,13 +151,11 @@ peripherals on an I2S bus.
 [2]: /tidrivers/doxygen/html/_i2_s_8h.html#ti_drivers_I2S_Examples "C usage examples"
 [3]: /tidrivers/syscfg/html/ConfigDoc.html#I2S_Configuration_Options "Configuration options reference"
 `,
-    defaultInstanceName: "CONFIG_I2S_",
-    config: Common.addNameConfig(config, "/ti/drivers/I2S", "CONFIG_I2S_"),
+    defaultInstanceName: "Board_I2S",
+    config: Common.addNameConfig(config, "/ti/drivers/I2S", "Board_I2S"),
     validate: validate,
     busModule: true,
-    filterHardware: filterHardware,
-
-    _getPinResources: _getPinResources
+    filterHardware: filterHardware
 };
 
 /* extend the base exports to include family-specific content */

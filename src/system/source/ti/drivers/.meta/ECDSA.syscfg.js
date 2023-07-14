@@ -78,8 +78,8 @@ and verifying digital signatures.
 [4]: /tidrivers/syscfg/html/ConfigDoc.html#ECDSA_Configuration_Options "Configuration options reference"
 `,
     validate            : validate,
-    defaultInstanceName : "CONFIG_ECDSA_",
-    config              : Common.addNameConfig(config, "/ti/drivers/ECDSA", "CONFIG_ECDSA_"),
+    defaultInstanceName : "Board_ECDSA",
+    config              : Common.addNameConfig(config, "/ti/drivers/ECDSA", "Board_ECDSA"),
     modules             : Common.autoForceModules(["Board", "Power"])
 };
 

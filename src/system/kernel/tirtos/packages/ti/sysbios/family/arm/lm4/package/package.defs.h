@@ -2,7 +2,7 @@
  *  Do not modify this file; it is automatically 
  *  generated and any modifications will be overwritten.
  *
- * @(#) xdc-H32
+ * @(#) xdc-F14
  */
 
 #ifndef ti_sysbios_family_arm_lm4__
@@ -37,6 +37,7 @@ typedef struct ti_sysbios_family_arm_lm4_Timer_Params ti_sysbios_family_arm_lm4_
 typedef struct ti_sysbios_family_arm_lm4_Timer_Object ti_sysbios_family_arm_lm4_Timer_Object;
 typedef struct ti_sysbios_family_arm_lm4_Timer_Struct ti_sysbios_family_arm_lm4_Timer_Struct;
 typedef ti_sysbios_family_arm_lm4_Timer_Object* ti_sysbios_family_arm_lm4_Timer_Handle;
+typedef struct ti_sysbios_family_arm_lm4_Timer_Object__ ti_sysbios_family_arm_lm4_Timer_Instance_State;
 typedef ti_sysbios_family_arm_lm4_Timer_Object* ti_sysbios_family_arm_lm4_Timer_Instance;
 
 

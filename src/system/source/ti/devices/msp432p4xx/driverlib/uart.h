@@ -63,8 +63,6 @@ extern "C"
 #define EUSCI_A_UART_ODD_PARITY                         0x01
 #define EUSCI_A_UART_EVEN_PARITY                        0x02
 
-#define EUSCI_A_UART_8_BIT_LEN                          0x00
-#define EUSCI_A_UART_7_BIT_LEN                          0x01
 #define EUSCI_A_UART_MSB_FIRST                          EUSCI_A_CTLW0_MSB
 #define EUSCI_A_UART_LSB_FIRST                          0x00
 
@@ -111,17 +109,17 @@ extern "C"
 
 //*****************************************************************************
 //
-//!     ypedef eUSCI_eUSCI_UART_ConfigV1
+//!     ypedef eUSCI_eUSCI_UART_Config
 //! \brief Type definition for \link _eUSCI_UART_Config \endlink
 //!     structure
 //!
-//! \struct _eUSCI_eUSCI_UART_ConfigV1
+//! \struct _eUSCI_eUSCI_UART_Config
 //! \brief Configuration structure for compare mode in the \b UART module. See
 //!          \link UART_initModule \endlink for parameter
 //!                 documentation.
 //
 //*****************************************************************************
-typedef struct _eUSCI_eUSCI_UART_ConfigV1
+typedef struct _eUSCI_eUSCI_UART_Config
 {
     uint_fast8_t selectClockSource;
     uint_fast16_t clockPrescalar;
@@ -132,8 +130,7 @@ typedef struct _eUSCI_eUSCI_UART_ConfigV1
     uint_fast16_t numberofStopBits;
     uint_fast16_t uartMode;
     uint_fast8_t overSampling;
-    uint_fast16_t dataLength;
-} eUSCI_UART_ConfigV1;
+} eUSCI_UART_Config;
 
 //*****************************************************************************
 //
@@ -150,7 +147,7 @@ typedef struct _eUSCI_eUSCI_UART_ConfigV1
 //! \param config Configuration structure for the UART module
 //!
 //! <hr>
-//! <b>Configuration options for \link eUSCI_UART_ConfigV1 \endlink
+//! <b>Configuration options for \link eUSCI_UART_Config \endlink
 //!         structure.</b>
 //! <hr>
 //!  <br> It is important to note that for eUSCI modules, only "A" modules such
@@ -190,10 +187,6 @@ typedef struct _eUSCI_eUSCI_UART_ConfigV1
 //!     Valid values are
 //!      - \b EUSCI_A_UART_OVERSAMPLING_BAUDRATE_GENERATION
 //!      - \b EUSCI_A_UART_LOW_FREQUENCY_BAUDRATE_GENERATION
-//! \param dataLength indicates Character length. Selects 7-bit or 8-bit character length.
-//!     Valid values are
-//!      - \b EUSCI_A_UART_8_BIT_LEN
-//!      - \b EUSCI_A_UART_7_BIT_LEN
 //!
 //! Upon successful initialization of the UART block, this function
 //! will have initialized the module, but the UART block still remains
@@ -212,7 +205,7 @@ typedef struct _eUSCI_eUSCI_UART_ConfigV1
 //
 //*****************************************************************************
 extern bool UART_initModule(uint32_t moduleInstance,
-        const eUSCI_UART_ConfigV1 *config);
+        const eUSCI_UART_Config *config);
 
 //*****************************************************************************
 //

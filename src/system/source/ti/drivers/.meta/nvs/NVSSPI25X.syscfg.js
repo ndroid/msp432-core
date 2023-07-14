@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Texas Instruments Incorporated - http://www.ti.com
+ * Copyright (c) 2018 Texas Instruments Incorporated - http://www.ti.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -94,16 +94,6 @@ function filterHardware(component) {
 }
 
 /*
- *  ======== onHardwareChanged ========
- */
-function onHardwareChanged(inst, ui) {
-    /* Default to max size of spi flash if specified */
-    if (inst.$hardware.settings && inst.$hardware.settings.capacity) {
-        inst.regionSize = inst.$hardware.settings.capacity;
-    }
-}
-
-/*
  *  ======== validate ========
  */
 function validate(inst, validation) {
@@ -180,7 +170,6 @@ function sharedModuleInstances(inst) {
 exports = {
     config: config,
     filterHardware: filterHardware,
-    onHardwareChanged : onHardwareChanged,
     sharedModuleInstances: sharedModuleInstances,
     validate: validate
 };

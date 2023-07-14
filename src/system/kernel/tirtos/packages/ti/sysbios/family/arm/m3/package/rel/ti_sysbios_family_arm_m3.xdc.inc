@@ -5,6 +5,9 @@ package.bld
 linkcmd.xdt
 Hwi__epilogue.h
 Hwi__prologue.h
+TimestampProvider__prologue.h
+TimestampProvider__epilogue.h
+TimestampProvider_svc.c
 Hwi_smp.c
 Hwi_link.xdt
 doc-files

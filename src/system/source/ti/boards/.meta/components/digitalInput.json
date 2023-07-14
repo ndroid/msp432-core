@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Texas Instruments Incorporated - http://www.ti.com
+ * Copyright (c) 2018 Texas Instruments Incorporated - http://www.ti.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,10 +38,9 @@
 {
     "type": "DIN",
     "displayName": "Generic Digital Input",
-    "description": "Generic digital input",
-    "longDescription": "Generic digital input",
+    "partNum": "digitalInput",
     "signals": {
-        "INPUT": {
+        "input": {
             "type": "DIN"
         }
     }

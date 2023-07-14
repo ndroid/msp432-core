@@ -40,7 +40,7 @@
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/hal/Hwi.h>
 
-#if (defined ti_targets_arm_elf_R5F) || (defined ti_targets_arm_elf_R5Ft)
+#if (defined ti_targets_arm_elf_R5F)
 #include <ti/sysbios/family/arm/v7r/Cache.h>
 #else
 #include <ti/sysbios/hal/Cache.h>
@@ -302,21 +302,19 @@ Void MPU_setRegionRaw(UInt32 rbar, UInt32 rasr)
     UInt32 key;
     Bool   enabled;
 
-    if (MPU_isMemoryMapped) {
-        key = Hwi_disable();
+    key = Hwi_disable();
 
-        enabled = MPU_isEnabled();
+    enabled = MPU_isEnabled();
 
-        /* disable the MPU (if already disabled, does nothing) */
-        MPU_disable();
+    /* disable the MPU (if already disabled, does nothing) */
+    MPU_disable();
 
-        MPU_deviceRegs.RBAR = rbar;
-        MPU_deviceRegs.RASR = rasr;
+    MPU_deviceRegs.RBAR = rbar;
+    MPU_deviceRegs.RASR = rasr;
 
-        if (enabled) {
-            MPU_enable();
-        }
-
-        Hwi_restore(key);
+    if (enabled) {
+        MPU_enable();
     }
+
+    Hwi_restore(key);
 }

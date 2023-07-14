@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2014, Texas Instruments Incorporated
+ * Copyright (c) 2012-2017, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,6 @@
  */
 /*
  *  ======== ISettings.xdc ========
- *
  */
 package ti.sysbios.interfaces;
 
@@ -75,6 +74,9 @@ metaonly interface ISettings
 
     /*! returns the family-specific Seconds module delegate */
     String getDefaultSecondsDelegate();
+
+    /*! returns the family-specific SysCall module delegate */
+    String getDefaultSysCallDelegate();
 
     /*! returns the family-specific Boot module. */
     String getDefaultBootModule();

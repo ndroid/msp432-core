@@ -47,4 +47,6 @@ module TaskSupport inherits ti.sysbios.interfaces.ITaskSupport
 
     /*! required stack alignment (in MAUs). */
     override readonly config UInt stackAlignment = 8;
+
+    metaonly config Bool usesMonitors = true;
 }

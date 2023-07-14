@@ -2,7 +2,7 @@
  *  Do not modify this file; it is automatically 
  *  generated and any modifications will be overwritten.
  *
- * @(#) xdc-H32
+ * @(#) xdc-F14
  */
 
 #ifndef ti_uia_sysbios__
@@ -37,6 +37,7 @@ typedef struct ti_uia_sysbios_LoggerStreamer_Params ti_uia_sysbios_LoggerStreame
 typedef struct ti_uia_sysbios_LoggerStreamer_Object ti_uia_sysbios_LoggerStreamer_Object;
 typedef struct ti_uia_sysbios_LoggerStreamer_Struct ti_uia_sysbios_LoggerStreamer_Struct;
 typedef ti_uia_sysbios_LoggerStreamer_Object* ti_uia_sysbios_LoggerStreamer_Handle;
+typedef struct ti_uia_sysbios_LoggerStreamer_Object__ ti_uia_sysbios_LoggerStreamer_Instance_State;
 typedef ti_uia_sysbios_LoggerStreamer_Object* ti_uia_sysbios_LoggerStreamer_Instance;
 
 /*
@@ -50,6 +51,7 @@ typedef struct ti_uia_sysbios_LoggerStreamer2_Params ti_uia_sysbios_LoggerStream
 typedef struct ti_uia_sysbios_LoggerStreamer2_Object ti_uia_sysbios_LoggerStreamer2_Object;
 typedef struct ti_uia_sysbios_LoggerStreamer2_Struct ti_uia_sysbios_LoggerStreamer2_Struct;
 typedef ti_uia_sysbios_LoggerStreamer2_Object* ti_uia_sysbios_LoggerStreamer2_Handle;
+typedef struct ti_uia_sysbios_LoggerStreamer2_Object__ ti_uia_sysbios_LoggerStreamer2_Instance_State;
 typedef ti_uia_sysbios_LoggerStreamer2_Object* ti_uia_sysbios_LoggerStreamer2_Instance;
 
 /*
@@ -63,6 +65,7 @@ typedef struct ti_uia_sysbios_LoggerIdle_Params ti_uia_sysbios_LoggerIdle_Params
 typedef struct ti_uia_sysbios_LoggerIdle_Object ti_uia_sysbios_LoggerIdle_Object;
 typedef struct ti_uia_sysbios_LoggerIdle_Struct ti_uia_sysbios_LoggerIdle_Struct;
 typedef ti_uia_sysbios_LoggerIdle_Object* ti_uia_sysbios_LoggerIdle_Handle;
+typedef struct ti_uia_sysbios_LoggerIdle_Object__ ti_uia_sysbios_LoggerIdle_Instance_State;
 typedef ti_uia_sysbios_LoggerIdle_Object* ti_uia_sysbios_LoggerIdle_Instance;
 
 

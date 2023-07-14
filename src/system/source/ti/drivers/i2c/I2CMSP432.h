@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019, Texas Instruments Incorporated
+ * Copyright (c) 2015-2018, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,6 +55,10 @@
 #ifndef ti_drivers_i2c_I2CMSP432__include
 #define ti_drivers_i2c_I2CMSP432__include
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -62,10 +66,6 @@
 #include <ti/drivers/dpl/HwiP.h>
 #include <ti/drivers/dpl/SemaphoreP.h>
 #include <ti/drivers/Power.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*
  *  I2C port/pin defines for pin configuration.  Ports P2, P3, and P7 are
@@ -387,11 +387,10 @@ extern const I2C_FxnTable I2CMSP432_fxnTable;
  *
  *  This enum defines the state of the I2C driver's state machine.
  */
-typedef enum {
+typedef enum I2CMSP432_Mode {
     I2CMSP432_IDLE_MODE = 0,  /* I2C is not performing a transaction */
     I2CMSP432_WRITE_MODE,     /* I2C is currently performing write operations */
     I2CMSP432_READ_MODE,      /* I2C is currently performing read operations */
-    I2CMSP432_TIMEOUT,        /* I2C timed-out */
     I2CMSP432_ERROR = 0xFF    /* I2C error has occurred, exit gracefully */
 } I2CMSP432_Mode;
 /*! @endcond */
@@ -433,7 +432,7 @@ typedef enum {
  *  };
  *  @endcode
  */
-typedef struct {
+typedef struct I2CMSP432_HWAttrsV1 {
     /*! EUSCI_B_I2C peripheral's base address */
     uint32_t baseAddr;
     /*! EUSCI_B_I2C peripheral's interrupt number */
@@ -453,7 +452,7 @@ typedef struct {
  *  I2CMSP432 Object. The application must not access any member variables of
  *  this structure!
  */
-typedef struct {
+typedef struct I2CMSP432_Object {
     SemaphoreP_Handle mutex;               /* Grants exclusive access to I2C */
     SemaphoreP_Handle transferComplete;    /* Notify finished I2C transfer */
 

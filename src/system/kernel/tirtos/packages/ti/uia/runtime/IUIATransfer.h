@@ -2,7 +2,7 @@
  *  Do not modify this file; it is automatically 
  *  generated and any modifications will be overwritten.
  *
- * @(#) xdc-H32
+ * @(#) xdc-F14
  */
 
 /*
@@ -34,12 +34,10 @@
 #define ti_uia_runtime_IUIATransfer__top__
 #endif
 
-#ifndef __extern
 #ifdef __cplusplus
 #define __extern extern "C"
 #else
 #define __extern extern
-#endif
 #endif
 
 #define ti_uia_runtime_IUIATransfer___VERS 200
@@ -456,7 +454,7 @@ static inline ti_uia_runtime_IUIATransfer_Module ti_uia_runtime_IUIATransfer_Mod
             return (ti_uia_runtime_IUIATransfer_Module)m;
         }
     }
-    return NULL;
+    return 0;
 }
 
 /* Module_from_xdc_runtime_IFilterLogger */
@@ -509,7 +507,7 @@ static inline ti_uia_runtime_IUIATransfer_Module ti_uia_runtime_IUIATransfer_Mod
             return (ti_uia_runtime_IUIATransfer_Module)m;
         }
     }
-    return NULL;
+    return 0;
 }
 
 /* Module_from_xdc_runtime_ILogger */

@@ -59,23 +59,27 @@ function validate(inst, validation)
 
 /*
  *  ======== base ========
- *  Define the base Crypto properties and methods
+ *  Define the base ADC properties and methods
  */
 let base = {
     displayName         : "Crypto",
     description         : "Crypto Driver",
     longDescription     : `
-The __Crypto driver__ simplifies reading and writing to
+The [__Crypto driver__][1] simplifies reading and writing to
 the crypto peripheral with multiple modes of operation and
 performance.
 
-* [Configuration Options][1]
-
-[1]: /tidrivers/syscfg/html/ConfigDoc.html#Crypto_Configuration_Options "Configuration options reference"
+* [Usage Synopsis][2]
+* [Examples][3]
+* [Configuration Options][4]
+[1]: /tidrivers/doxygen/html/_c_r_y_p_t_o_8h.html#details "C API reference"
+[2]: /tidrivers/doxygen/html/_c_r_y_p_t_o_8h.html#ti_drivers_Crypto_Synopsis "Basic C usage summary"
+[3]: /tidrivers/doxygen/html/_c_r_y_p_t_o_8h.html#ti_drivers_Crypto_Examples "C usage examples"
+[4]: /tidrivers/syscfg/html/ConfigDoc.html#Crypto_Configuration_Options "Configuration options reference"
 `,
     validate            : validate,
-    defaultInstanceName : "CONFIG_Crypto_",
-    config              : Common.addNameConfig(config, "/ti/drivers/Crypto", "CONFIG_Crypto_"),
+    defaultInstanceName : "Board_Crypto",
+    config              : Common.addNameConfig(config, "/ti/drivers/Crypto", "Board_Crypto"),
     modules: Common.autoForceModules(["Board", "Power"])
 };
 

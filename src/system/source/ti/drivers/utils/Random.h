@@ -75,13 +75,13 @@
 #ifndef ti_drivers_utils_Random__include
 #define ti_drivers_utils_Random__include
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
+#include <stdbool.h>
+#include <stddef.h>
 
 #define Random_STATUS_SUCCESS   (0)
 #define Random_STATUS_ERROR     (-1)

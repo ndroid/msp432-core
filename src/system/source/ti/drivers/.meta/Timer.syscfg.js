@@ -92,8 +92,8 @@ and portable APIs.
 [3]: /tidrivers/doxygen/html/_timer_8h.html#ti_drivers_Timer_Examples "C usage examples"
 [4]: /tidrivers/syscfg/html/ConfigDoc.html#Timer_Configuration_Options "Configuration options reference"
 `,
-    defaultInstanceName : "CONFIG_TIMER_",
-    config              : Common.addNameConfig(timerConfig, "/ti/drivers/Timer", "CONFIG_TIMER_"),
+    defaultInstanceName : "Board_TIMER",
+    config              : Common.addNameConfig(timerConfig, "/ti/drivers/Timer", "Board_TIMER"),
     modules             : Common.autoForceModules(["Board", "Power"]),
     validate            : validate
 };

@@ -81,8 +81,8 @@ Unlike ECB, it guarantees confidentiality of the entire message.
 [4]: /tidrivers/syscfg/html/ConfigDoc.html#AESCBC_Configuration_Options "Configuration options reference"
 `,
     validate            : validate,
-    defaultInstanceName : "CONFIG_AESCBC_",
-    config              : Common.addNameConfig(config, "/ti/drivers/AESCBC", "CONFIG_AESCBC_"),
+    defaultInstanceName : "Board_AESCBC",
+    config              : Common.addNameConfig(config, "/ti/drivers/AESCBC", "Board_AESCBC"),
     modules             : Common.autoForceModules(["Board", "DMA", "Power"])
 };
 

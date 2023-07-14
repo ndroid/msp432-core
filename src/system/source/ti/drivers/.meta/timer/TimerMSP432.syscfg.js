@@ -81,6 +81,7 @@ let devSpecific = {
         boardh : "/ti/drivers/timer/Timer.Board.h.xdt"
     },
 
+    maxInstances       : 6,
     pinmuxRequirements : pinmuxRequirements
 };
 

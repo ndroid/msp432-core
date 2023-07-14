@@ -8,6 +8,8 @@ Core.xs
 CoreNull.xdc
 Hwi.xdc
 Hwi.xs
+MemProtect.xdc
+MemProtect.xs
 Power.xdc
 Power.xs
 PowerNull.xdc
@@ -17,6 +19,9 @@ Seconds.xs
 SecondsCallback.xdc
 SecondsClock.xdc
 SecondsClock.xs
+SysCall.xdc
+SysCall.xs
+SysCallNull.xdc
 Timer.xdc
 Timer.xs
 TimerNull.xdc
@@ -25,12 +30,16 @@ Core__prologue.h
 Core__epilogue.h
 Hwi__prologue.h
 Hwi__epilogue.h
+MemProtect__prologue.h
+MemProtect__epilogue.h
 Seconds.xdt
+SysCall__prologue.h
+SysCall__epilogue.h
 package/ti.sysbios.hal.sch
 package/.vers_g200
 package/.vers_r200
 package/.vers_b200
-package/.xdc-H32
+package/.xdc-F14
 package/ti_sysbios_hal.java
 package/ti_sysbios_hal.class
 package/package_ti.sysbios.hal.c
@@ -45,6 +54,8 @@ CoreNull.h
 package/internal/CoreNull.xdc.h
 Hwi.h
 package/internal/Hwi.xdc.h
+MemProtect.h
+package/internal/MemProtect.xdc.h
 Power.h
 package/internal/Power.xdc.h
 PowerNull.h
@@ -55,6 +66,10 @@ SecondsCallback.h
 package/internal/SecondsCallback.xdc.h
 SecondsClock.h
 package/internal/SecondsClock.xdc.h
+SysCall.h
+package/internal/SysCall.xdc.h
+SysCallNull.h
+package/internal/SysCallNull.xdc.h
 Timer.h
 package/internal/Timer.xdc.h
 TimerNull.h
@@ -69,6 +84,8 @@ package/Power_PowerProxy.h
 package/internal/Power_PowerProxy.xdc.h
 package/Seconds_SecondsProxy.h
 package/internal/Seconds_SecondsProxy.xdc.h
+package/SysCall_SysCallProxy.h
+package/internal/SysCall_SysCallProxy.xdc.h
 package/Timer_TimerProxy.h
 package/internal/Timer_TimerProxy.xdc.h
 package/ti.sysbios.hal.ccs

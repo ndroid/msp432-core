@@ -2,7 +2,7 @@
  *  Do not modify this file; it is automatically 
  *  generated and any modifications will be overwritten.
  *
- * @(#) xdc-H32
+ * @(#) xdc-F14
  */
 
 #ifndef ti_uia_runtime__
@@ -51,6 +51,7 @@ typedef struct ti_uia_runtime_LogSync_Params ti_uia_runtime_LogSync_Params;
 typedef struct ti_uia_runtime_LogSync_Object ti_uia_runtime_LogSync_Object;
 typedef struct ti_uia_runtime_LogSync_Struct ti_uia_runtime_LogSync_Struct;
 typedef ti_uia_runtime_LogSync_Object* ti_uia_runtime_LogSync_Handle;
+typedef struct ti_uia_runtime_LogSync_Object__ ti_uia_runtime_LogSync_Instance_State;
 typedef ti_uia_runtime_LogSync_Object* ti_uia_runtime_LogSync_Instance;
 
 /*
@@ -65,6 +66,7 @@ typedef struct ti_uia_runtime_LoggerSM_Params ti_uia_runtime_LoggerSM_Params;
 typedef struct ti_uia_runtime_LoggerSM_Object ti_uia_runtime_LoggerSM_Object;
 typedef struct ti_uia_runtime_LoggerSM_Struct ti_uia_runtime_LoggerSM_Struct;
 typedef ti_uia_runtime_LoggerSM_Object* ti_uia_runtime_LoggerSM_Handle;
+typedef struct ti_uia_runtime_LoggerSM_Object__ ti_uia_runtime_LoggerSM_Instance_State;
 typedef ti_uia_runtime_LoggerSM_Object* ti_uia_runtime_LoggerSM_Instance;
 
 /*

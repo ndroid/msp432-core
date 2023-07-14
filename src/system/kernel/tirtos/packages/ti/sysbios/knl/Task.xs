@@ -56,6 +56,9 @@ function getCFiles(targetName)
     if (BIOS.smpEnabled) {
         return (["Task_smp.c"]);
     }
+    else if (BIOS.mpeEnabled) {
+        return (["Task.c", "Task_svc.c"]);
+    }
     else {
         return (["Task.c"]);
     }
@@ -193,6 +196,7 @@ function module$static$init(mod, params)
     mod.vitalTasks = 0;
     mod.workFlag = 0;
     mod.curTask = null;
+    mod.curTaskPrivileged = true;
     mod.curQ = null;
 
     Queue.construct(mod.inactiveQ);
@@ -420,6 +424,12 @@ function instance$static$init(obj, fxn, params)
     obj.mask = 1 << params.priority;
     obj.context = null;
     obj.readyQ = null;  /* readyQ filled in by Task_postInit() */
+
+    obj.privileged = params.privileged;
+    obj.domain = params.domain;
+
+    obj.checkValue = 0;
+    obj.tls = null;
 
     /* add constructed tasks to constructedTasks array */
     if (this.$category == "Struct") {
@@ -918,7 +928,7 @@ function checkSemPendQ(sem, task)
         catch (e) {
             return false;
         }
-        if (Number(pendElem.tpElem.task) == Number(task.$addr)) {
+        if (Number(pendElem.tpElem.taskHandle) == Number(task.$addr)) {
             return true;
         }
     }
@@ -999,7 +1009,7 @@ function checkEvents(view, obj)
                                      ": " + e.toString());
                 return false;
             }
-            if (Number(pendElem.tpElem.task) == Number(obj.$addr)) {
+            if (Number(pendElem.tpElem.taskHandle) == Number(obj.$addr)) {
                 view.blockedOn = "Event: 0x" +
                     Number(eventRawView.instStates[i].$addr).toString(16);
                 return true;
@@ -1079,8 +1089,8 @@ function checkTaskSleep(view, obj)
         return false;
     }
 
-    /* Check if 'clock' is null. */
-    if (Number(pendElem.clock) == 0) {
+    /* Check if 'clockHandle' is null. */
+    if (Number(pendElem.clockHandle) == 0) {
         return (false);
     }
 
@@ -1088,12 +1098,12 @@ function checkTaskSleep(view, obj)
     try {
         var clockView =
             Program.scanHandleView('ti.sysbios.knl.Clock',
-                                   pendElem.clock, 'Basic');
+                                   pendElem.clockHandle, 'Basic');
     }
     catch (e) {
         Program.displayError(view, "blockedOn",
             "Problem scanning pending Clock 0x" +
-            Number(pendElem.clock).toString(16) + ": " + e.toString());
+            Number(pendElem.clockHandle).toString(16) + ": " + e.toString());
         return false;
     }
 
@@ -1176,7 +1186,7 @@ function checkGateMutexPris(view, obj)
                 return false;
             }
 
-            var currTaskHandle = pendElem.task;
+            var currTaskHandle = pendElem.taskHandle;
 
             if (Number(currTaskHandle.$addr) == Number(obj.$addr)) {
                 view.blockedOn = "GateMutexPri: 0x" + Number(gateRawView.instStates[i].$addr).toString(16);

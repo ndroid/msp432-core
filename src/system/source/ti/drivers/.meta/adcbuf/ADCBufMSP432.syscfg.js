@@ -39,6 +39,8 @@
 
 const MAXCHANNELS = 24; /* max number of channels per ADCBuf */
 
+let $super = {};
+
 /* get Common /ti/drivers utility functions */
 let Common = system.getScript("/ti/drivers/Common.js");
 
@@ -53,6 +55,8 @@ intPriority.description = "If the DMA is enabled, this is the DMA interrupt"
  *  Device-specific extensions to be added to base ADCBuf configuration
  */
 let devSpecific = {
+    maxInstances: 1,
+
     config: [
         {
             name: "channels",
@@ -122,45 +126,11 @@ per __Power Performance Level__ configured in the __Power Module__.
 
     templates: {
         boardc: "/ti/drivers/adcbuf/ADCBufMSP432.Board.c.xdt",
-        boardh: "/ti/drivers/adcbuf/ADCBufMSP432.Board.h.xdt"
+        boardh: "/ti/drivers/adcbuf/ADCBuf.Board.h.xdt"
     },
 
-    _getADCPinResources : _getADCPinResources
+    validate: validate
 };
-
-/*
- *  ======== _getADCPinResources ========
- *  Assume 'inst' is a channel
- */
-function _getADCPinResources(inst)
-{
-    let pin;
-
-    if (inst.inputSource) {
-        if (inst.inputSource === "Internal Temperature") {
-            return ("Temperature Sensor, ADC14 TCMAP");
-        }
-        else if (inst.inputSource === "Internal Battery") {
-            return ("Battery Voltage, ADC14 BATMAP");
-        }
-    }
-
-    if (inst.inputSource === "External Pin") {
-        let adcPin = inst.adc.adcPin.$solution.devicePinName;
-        pin = adcPin.match(/P\d\.\d/)[0];
-    }
-
-    if (inst.$hardware && inst.$hardware.displayName) {
-        pin = "\n" + pin + ", " + inst.$hardware.displayName;
-    }
-
-    if (inst.mode === "Differential") {
-        let adcPin = inst.differentialPin.adc.adcDifferentialPin.$solution.devicePinName;
-        pin = "\n" + pin + "\nDifferential Pin: " + adcPin.match(/P\d\.\d/)[0];
-    }
-
-    return (pin);
-}
 
 /*
  *  ======== pinmuxRequirements ========
@@ -260,10 +230,8 @@ function moduleInstances(inst)
  *
  *  @param inst - ADCBuf instance to be validated
  *  @param vo - object to hold detected validation issues
- *
- *  @param $super - needed to call the generic module's functions
  */
-function validate(inst, vo, $super)
+function validate(inst, vo)
 {
     if ($super.validate) {
         $super.validate(inst, vo);
@@ -291,10 +259,8 @@ function validate(inst, vo, $super)
  */
 function extend(base)
 {
-    /* override base validate */
-    devSpecific.validate = function (inst, validation) {
-        return validate(inst, validation, base);
-    };
+
+    $super = base;
 
     /* merge and overwrite base module attributes */
     let result = Object.assign({}, base, devSpecific);

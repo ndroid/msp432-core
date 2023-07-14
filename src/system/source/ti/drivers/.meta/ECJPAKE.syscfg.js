@@ -67,7 +67,7 @@ let base = {
     description : "Elliptic Curve Password Authenticated Key Exchange by"
         + " Juggling Driver",
     longDescription : `
-The [__ECJPAKE driver__][1] provides a key agreement
+The [__ECJPAKE driver__][1] provides is a key agreement
 scheme that establishes a secure channel over an insecure network.
 It only requires sharing a password offline and does not require
 public key infrastructure or trusted third parties such as
@@ -82,8 +82,8 @@ certificate authorities.
 [4]: /tidrivers/syscfg/html/ConfigDoc.html#ECJPAKE_Configuration_Options "Configuration options reference"
 `,
     validate            : validate,
-    defaultInstanceName : "CONFIG_ECJPAKE_",
-    config              : Common.addNameConfig(config, "/ti/drivers/ECJPAKE", "CONFIG_ECJPAKE_"),
+    defaultInstanceName : "Board_ECJPAKE",
+    config              : Common.addNameConfig(config, "/ti/drivers/ECJPAKE", "Board_ECJPAKE"),
     modules             : Common.autoForceModules(["Board", "Power"])
 };
 

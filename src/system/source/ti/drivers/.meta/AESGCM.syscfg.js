@@ -76,13 +76,13 @@ length and not only multiples of the block cipher block size.
 * [Examples][3]
 * [Configuration Options][4]
 [1]: /tidrivers/doxygen/html/_a_e_s_g_c_m_8h.html#details "C API reference"
-[2]: /tidrivers/doxygen/html/_a_e_s_g_c_m_8h.html#ti_drivers_AESGCM_Synopsis "Basic C usage summary"
-[3]: /tidrivers/doxygen/html/_a_e_s_g_c_m_8h.html#ti_drivers_AESGCM_Examples "C usage examples"
+[2]: /tidrivers/doxygen/html/_a_e_s_g_c_m_8h.html#ti_drivers_GCM_Synopsis "Basic C usage summary"
+[3]: /tidrivers/doxygen/html/_a_e_s_g_c_m_8h.html#ti_drivers_GCM_Examples "C usage examples"
 [4]: /tidrivers/syscfg/html/ConfigDoc.html#AESGCM_Configuration_Options "Configuration options reference"
 `,
     validate            : validate,
-    defaultInstanceName : "CONFIG_AESGCM_",
-    config              : Common.addNameConfig(config, "/ti/drivers/AESGCM", "CONFIG_AESGCM_"),
+    defaultInstanceName : "Board_AESGCM",
+    config              : Common.addNameConfig(config, "/ti/drivers/AESGCM", "Board_AESGCM"),
     modules             : Common.autoForceModules(["Board", "Power", "DMA"])
 };
 

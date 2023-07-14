@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019, Texas Instruments Incorporated
+ * Copyright (c) 2014-2018, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -200,7 +200,6 @@ Clock_TimerProxy_Handle Clock_getTimerHandle(Void)
  *  ======== Clock_scheduleNextTick  ========
  *  Must be called with global interrupts disabled!
  */
-/* LCOV_EXCL_START */
 Void Clock_scheduleNextTick(UInt32 deltaTicks, UInt32 absTick)
 {
     /* now reprogram the timer for the new period and next interrupt */
@@ -210,7 +209,6 @@ Void Clock_scheduleNextTick(UInt32 deltaTicks, UInt32 absTick)
     Clock_module->numTickSkip = (UInt)deltaTicks;
     Clock_module->nextScheduledTick = absTick;
 }
-/* LCOV_EXCL_STOP */
 
 /*
  *  ======== Clock_tickStop  ========
@@ -378,7 +376,6 @@ Void Clock_workFunc(UArg arg0, UArg arg1)
  *  Walk the Clock Queue for TickMode_DYNAMIC, optionally servicing a
  *  specific tick
  */
-/* LCOV_EXCL_START */
 UInt32 Clock_walkQueueDynamic(Bool service, UInt32 thisTick)
 {
     UInt32 distance = ~(0U);
@@ -527,7 +524,6 @@ Void Clock_workFuncDynamic(UArg arg0, UArg arg1)
 
     Hwi_restore(hwiKey);
 }
-/* LCOV_EXCL_STOP */
 
 /*
  *  ======== Clock_tick ========
@@ -556,7 +552,7 @@ Void Clock_Instance_init(Clock_Object *obj, Clock_FuncPtr func, UInt timeout,
                         Clock_A_badThreadType);
 
     Assert_isTrue(!((params->startFlag != FALSE) && (timeout == 0U)),
-            (Assert_Id)0U);
+            (Assert_Id)NULL);
 
     obj->timeout = (UInt32)timeout;
     obj->period = params->period;
@@ -701,7 +697,7 @@ Void Clock_start(Clock_Object *obj)
 {
     UInt key;
 
-    Assert_isTrue(obj->timeout != 0U, (Assert_Id)0U);
+    Assert_isTrue(obj->timeout != 0U, (Assert_Id)NULL);
 
     key = Hwi_disable();
 

@@ -5,14 +5,13 @@ ITarget.xs
 C64P.xdc
 C674.xdc
 C66.xdc
-C71.xdc
 C28_float.xdc
 C28_float.xs
 package/ti.targets.elf.sch
 package/.vers_g200
 package/.vers_r200
 package/.vers_b200
-package/.xdc-H32
+package/.xdc-F14
 package/ti_targets_elf.java
 package/ti_targets_elf.class
 package/package_ti.targets.elf.c
@@ -21,6 +20,5 @@ ITarget.h
 C64P.h
 C674.h
 C66.h
-C71.h
 C28_float.h
 package/ti.targets.elf.ccs

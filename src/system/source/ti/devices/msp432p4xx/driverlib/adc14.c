@@ -325,34 +325,26 @@ bool repeatMode)
         BITBAND_PERI(*(_ctlRegs[ii]), ADC14_MCTLN_EOS_OFS) = 0;
     }
 
-	uint_fast8_t memEndIndex = _getIndexForMemRegister(memoryEnd);
-	if (memEndIndex != ADC_INVALID_MEM)
-	{
-		/* Setting Start/Stop locations */
-		BITBAND_PERI(
-				(*(_ctlRegs[memEndIndex])),
-				ADC14_MCTLN_EOS_OFS) = 1;
+    /* Setting Start/Stop locations */
+    BITBAND_PERI(
+            (*(_ctlRegs[_getIndexForMemRegister(memoryEnd)])),
+            ADC14_MCTLN_EOS_OFS) = 1;
 
-		ADC14->CTL1 = (ADC14->CTL1 & ~(ADC14_CTL1_CSTARTADD_MASK))
-						| (_getIndexForMemRegister(memoryStart) << 16);
+    ADC14->CTL1 = (ADC14->CTL1 & ~(ADC14_CTL1_CSTARTADD_MASK))
+                    | (_getIndexForMemRegister(memoryStart) << 16);
 
-		/* Setting multiple sample mode */
-		if (!repeatMode)
-		{
-			ADC14->CTL0 = (ADC14->CTL0 & ~(ADC14_CTL0_CONSEQ_MASK))
-					| (ADC14_CTL0_CONSEQ_1);
-		} else
-		{
-			ADC14->CTL0 = (ADC14->CTL0 & ~(ADC14_CTL0_CONSEQ_MASK))
-					| (ADC14_CTL0_CONSEQ_3);
-		}
+    /* Setting multiple sample mode */
+    if (!repeatMode)
+    {
+        ADC14->CTL0 = (ADC14->CTL0 & ~(ADC14_CTL0_CONSEQ_MASK))
+                | (ADC14_CTL0_CONSEQ_1);
+    } else
+    {
+        ADC14->CTL0 = (ADC14->CTL0 & ~(ADC14_CTL0_CONSEQ_MASK))
+                | (ADC14_CTL0_CONSEQ_3);
+    }
 
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+    return true;
 }
 
 bool ADC14_configureSingleSampleMode(uint32_t memoryDestination,
@@ -442,28 +434,21 @@ bool ADC14_configureConversionMemory(uint32_t memorySelect, uint32_t refSelect,
         memorySelect &= ~ii;
         ii = ii << 1;
 
-		uint_fast8_t currRegIndex = _getIndexForMemRegister(currentReg);
-		if (currRegIndex != ADC_INVALID_MEM)
-		{
-			curReg = (uint32_t*) _ctlRegs[currRegIndex];
+        curReg = (uint32_t*) _ctlRegs[_getIndexForMemRegister(currentReg)];
 
-			if (differntialMode)
-			{
-				(*curReg) = ((*curReg)
-						& ~(ADC14_MCTLN_VRSEL_MASK | ADC14_MCTLN_INCH_MASK
-								| ADC14_MCTLN_DIF))
-						| (channelSelect | refSelect | ADC14_MCTLN_DIF);
-			} else
-			{
-				(*curReg) = ((*curReg)
-						& ~(ADC14_MCTLN_VRSEL_MASK | ADC14_MCTLN_INCH_MASK
-								| ADC14_MCTLN_DIF)) | (channelSelect | refSelect);
-			}
-		}
-		else
-		{
-			return false;
-		}
+        if (differntialMode)
+        {
+            (*curReg) = ((*curReg)
+                    & ~(ADC14_MCTLN_VRSEL_MASK | ADC14_MCTLN_INCH_MASK
+                            | ADC14_MCTLN_DIF))
+                    | (channelSelect | refSelect | ADC14_MCTLN_DIF);
+        } else
+        {
+            (*curReg) = ((*curReg)
+                    & ~(ADC14_MCTLN_VRSEL_MASK | ADC14_MCTLN_INCH_MASK
+                            | ADC14_MCTLN_DIF)) | (channelSelect | refSelect);
+        }
+
     }
 
     return true;
@@ -493,26 +478,18 @@ bool ADC14_enableComparatorWindow(uint32_t memorySelect, uint32_t windowSelect)
         memorySelect &= ~ii;
         ii = ii << 1;
 
-		uint_fast8_t currRegIndex = _getIndexForMemRegister(currentReg);
-		if (currRegIndex != ADC_INVALID_MEM)
-		{
-			curRegPoint =
-					(uint32_t*) _ctlRegs[currRegIndex];
+        curRegPoint =
+                (uint32_t*) _ctlRegs[_getIndexForMemRegister(currentReg)];
 
-			if (windowSelect == ADC_COMP_WINDOW0)
-			{
-				(*curRegPoint) = ((*curRegPoint)
-						& ~(ADC14_MCTLN_WINC | ADC14_MCTLN_WINCTH))
-						| (ADC14_MCTLN_WINC);
-			} else if (windowSelect == ADC_COMP_WINDOW1)
-			{
-				(*curRegPoint) |= ADC14_MCTLN_WINC | ADC14_MCTLN_WINCTH;
-			}
-		}
-		else
-		{
-			return false;
-		}
+        if (windowSelect == ADC_COMP_WINDOW0)
+        {
+            (*curRegPoint) = ((*curRegPoint)
+                    & ~(ADC14_MCTLN_WINC | ADC14_MCTLN_WINCTH))
+                    | (ADC14_MCTLN_WINC);
+        } else if (windowSelect == ADC_COMP_WINDOW1)
+        {
+            (*curRegPoint) |= ADC14_MCTLN_WINC | ADC14_MCTLN_WINCTH;
+        }
 
     }
 
@@ -601,32 +578,31 @@ bool ADC14_setResultFormat(uint32_t resultFormat)
 
 uint_fast16_t ADC14_getResult(uint32_t memorySelect)
 {
-	uint_fast8_t memSelIndex = _getIndexForMemRegister(memorySelect);
-	if (memSelIndex != ADC_INVALID_MEM)
-	{
-		return *((uint16_t*) (_ctlRegs[memSelIndex]
-				+ 0x20));
-	}
-	else
-	{
-		return 0;
-	}
+    return *((uint16_t*) (_ctlRegs[_getIndexForMemRegister(memorySelect)]
+            + 0x20));
 }
 
 void ADC14_getMultiSequenceResult(uint16_t* res)
 {
+    uint32_t *startAddr, *curAddr;
+    uint32_t ii;
 
-    uint32_t startIndex, ii;
+    startAddr = (uint32_t*) _ctlRegs[(ADC14->CTL1 & ADC14_CTL1_CSTARTADD_MASK)
+            >> 16];
 
-    startIndex = (ADC14->CTL1 & ADC14_CTL1_CSTARTADD_MASK)>>16;
+    curAddr = startAddr;
 
-    for (ii = startIndex; ii < 32; ii++)
+    for (ii = 0; ii < 32; ii++)
     {
-        res[ii] = ADC14->MEM[ii];
+        res[ii] = *((uint16_t*)(curAddr + 32));
 
-        if(ADC14->MCTL[ii] & ADC14_MCTLN_EOS)
+        if (BITBAND_PERI((*curAddr), ADC14_MCTLN_EOS_OFS))
             break;
 
+        if (curAddr == _ctlRegs[31])
+            curAddr = (uint32_t*) _ctlRegs[0];
+        else
+            curAddr++;
     }
 
 }
@@ -639,34 +615,27 @@ void ADC14_getResultArray(uint32_t memoryStart, uint32_t memoryEnd,
 
     bool foundEnd = false;
 
-	uint_fast8_t memStartIndex, memEndIndex; 
-	
-	memStartIndex = _getIndexForMemRegister(memoryStart);
-	memEndIndex = _getIndexForMemRegister(memoryEnd);
-
     ASSERT(
             _getIndexForMemRegister(memoryStart) != ADC_INVALID_MEM
             && _getIndexForMemRegister(memoryEnd) != ADC_INVALID_MEM);
 
-    if (memStartIndex != ADC_INVALID_MEM && memEndIndex!= ADC_INVALID_MEM) {
-		firstPoint = (uint32_t*) _ctlRegs[memStartIndex];
-		secondPoint = (uint32_t*) _ctlRegs[memEndIndex];
-    
-		while (!foundEnd)
-		{
-			if (firstPoint == secondPoint)
-			{
-				foundEnd = true;
-			}
+    firstPoint = (uint32_t*) _ctlRegs[_getIndexForMemRegister(memoryStart)];
+    secondPoint = (uint32_t*) _ctlRegs[_getIndexForMemRegister(memoryEnd)];
 
-			res[ii] = *(((uint16_t*) firstPoint) + 0x40);
+    while (!foundEnd)
+    {
+        if (firstPoint == secondPoint)
+        {
+            foundEnd = true;
+        }
 
-			if (firstPoint == _ctlRegs[31])
-				firstPoint = (uint32_t*) _ctlRegs[0];
-			else
-				firstPoint += 0x04;
-		}
-	}
+        res[ii] = *(((uint16_t*) firstPoint) + 0x40);
+
+        if (firstPoint == _ctlRegs[31])
+            firstPoint = (uint32_t*) _ctlRegs[0];
+        else
+            firstPoint += 0x04;
+    }
 }
 
 bool ADC14_enableReferenceBurst(void)

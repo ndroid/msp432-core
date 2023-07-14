@@ -58,15 +58,6 @@ function validate(inst, validation)
 }
 
 /*
- *  ======== _getPinResources ========
- */
-/* istanbul ignore next */
-function _getPinResources(inst)
-{
-    return;
-}
-
-/*
  *  ======== base  ========
  *  Define the base Capture properties and methods
  */
@@ -75,7 +66,7 @@ let base = {
     description: "Input Capture Driver",
     longDescription: `
 The [__Capture driver__][1] allows you to detect and time edge triggered events
-on a GPIO pin.
+on a GPIO pin. 
 
 * [Usage Synopsis][2]
 * [Examples][3]
@@ -86,12 +77,10 @@ on a GPIO pin.
 [3]: /tidrivers/doxygen/html/_capture_8h.html#ti_drivers_Capture_Examples "C usage examples"
 [4]: /tidrivers/syscfg/html/ConfigDoc.html#Capture_Configuration_Options "Configuration options reference"
 `,
-    defaultInstanceName: "CONFIG_CAPTURE_",
-    config: Common.addNameConfig(config, "/ti/drivers/Capture", "CONFIG_CAPTURE_"),
+    defaultInstanceName: "Board_CAPTURE",
+    config: Common.addNameConfig(config, "/ti/drivers/Capture", "Board_CAPTURE"),
     validate: validate,
-    modules: Common.autoForceModules(["Board", "Power"]),
-
-    _getPinResources: _getPinResources
+    modules: Common.autoForceModules(["Board", "Power"])
 };
 
 /* extend the base exports to include family-specific content */

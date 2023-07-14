@@ -77,15 +77,6 @@ function validate(inst, validation)
 }
 
 /*
- *  ======== _getPinResources ========
- */
-/* istanbul ignore next */
-function _getPinResources(inst)
-{
-    return;
-}
-
-/*
  *  ======== base ========
  *  Define the base ADC properties and methods
  */
@@ -107,13 +98,11 @@ via simple and portable APIs.
 [4]: /tidrivers/syscfg/html/ConfigDoc.html#ADC_Configuration_Options "Configuration options reference"
 `,
 
-    defaultInstanceName: "CONFIG_ADC_",
-    config: Common.addNameConfig(config, "/ti/drivers/ADC", "CONFIG_ADC_"),
+    defaultInstanceName: "Board_ADC",
+    config: Common.addNameConfig(config, "/ti/drivers/ADC", "Board_ADC"),
     validate: validate,
     filterHardware: filterHardware,
-    modules: Common.autoForceModules(["Board"]),
-
-    _getPinResources: _getPinResources
+    modules: Common.autoForceModules(["Board"])
 };
 
 /* extend the base exports to include family-specific content */

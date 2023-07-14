@@ -6,7 +6,6 @@
         <module name="C64P"/>
         <module name="C674"/>
         <module name="C66"/>
-        <module name="C71"/>
         <module name="C28_float"/>
     </units>
     <sources>

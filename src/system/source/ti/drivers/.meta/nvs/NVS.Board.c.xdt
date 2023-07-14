@@ -38,14 +38,13 @@
 
      /* passed by /ti/drivers/templates/Board.c.xdt */
     let NVS = args[0];
-    let instances = NVS.$instances;
-    if (instances.length == 0) return;
+    let instances   = NVS.$instances;
 
     /* get ti/drivers common utility functions */
     let Common = system.getScript("/ti/drivers/Common.js");
     let family = Common.device2Family(system.deviceData);
 
-    /* CONFIG_XXXCOUNT string, derived from defaultInstanceName */
+    /* Board_XXXCOUNT string, derived from defaultInstanceName */
     let countDef = NVS.defaultInstanceName + "COUNT";
     let nvsIntBoardAttrs = system.getTemplate("NVS" + family + ".Board.attrs.xdt");
     let nvsExtBoardAttrs = system.getTemplate("NVSSPI25X.Board.attrs.xdt");

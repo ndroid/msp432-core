@@ -370,7 +370,7 @@ the controller to ensure data coherency.
  */
 function getClockSourceFreq(clk, inst)
 {
-    let pow = inst.$ownedBy;
+    let pow = system.getScript("/ti/drivers/Power").$static;
 
     switch (clk) {
         case 'VLO'   : { return VLOCLK; }
@@ -384,7 +384,7 @@ function getClockSourceFreq(clk, inst)
                 return inst.dcoFrequency;
             }
         }
-        case 'HFXT'  : { return pow.enableHFXTClock ? pow.hfxtFrequency : 0; }
+        case 'HFXT'  : { return pow.enableHFXTClock ? pow.HFXTFREQ : 0; }
         case 'LFXT'  : { return pow.enableLFXTClock ? LFXTCLK      : 0; }
     }
     return 0;
@@ -452,7 +452,7 @@ function validate(inst, vo)
     }
 
     if (inst.smclk > 24000000) {
-        logError(vo, inst, ["smclk", "smclkDivider"],
+        logError(vo, inst, ["hsmclkSource", "smclkDivider"],
                  'SMCLK frequency must be 24000000 or lower.');
     }
 

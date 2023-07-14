@@ -322,9 +322,10 @@ function getAttrs(inst)
  */
 let base = {
     displayName: "PIN",
-    defaultInstanceName: "CONFIG_PIN_",
+    defaultInstanceName: "Board_PIN",
     description: "General Purpose PIN Driver",
     longDescription: longDescription,
+    documentation: "/tidrivers/doxygen/html/_p_i_n_8h.html",
     validate: validate,
     config: [],
     pinConfig: pinConfig,

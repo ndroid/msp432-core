@@ -2,7 +2,7 @@
  *  Do not modify this file; it is automatically 
  *  generated and any modifications will be overwritten.
  *
- * @(#) xdc-H32
+ * @(#) xdc-F14
  */
 
 /*
@@ -33,12 +33,10 @@
 #define ti_uia_runtime_IUIATraceSyncProvider__top__
 #endif
 
-#ifndef __extern
 #ifdef __cplusplus
 #define __extern extern "C"
 #else
 #define __extern extern
-#endif
 #endif
 
 #define ti_uia_runtime_IUIATraceSyncProvider___VERS 200
@@ -166,7 +164,7 @@ static inline ti_uia_runtime_IUIATraceSyncProvider_Module ti_uia_runtime_IUIATra
             return (ti_uia_runtime_IUIATraceSyncProvider_Module)m;
         }
     }
-    return NULL;
+    return 0;
 }
 
 /* Module_from_ti_uia_events_IUIAMetaProvider */

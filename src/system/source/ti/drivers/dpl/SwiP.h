@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2019, Texas Instruments Incorporated
+ * Copyright (c) 2017, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,13 +40,11 @@
 #ifndef ti_dpl_SwiP__include
 #define ti_dpl_SwiP__include
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
 
 /*!
  *  @brief    Number of bytes greater than or equal to the size of any RTOS
@@ -68,6 +66,10 @@ typedef union SwiP_Struct {
     char     data[SwiP_STRUCT_SIZE];
 } SwiP_Struct;
 
+#include <stdint.h>
+#include <stdbool.h>
+#include <stddef.h>
+
 /*!
  *  @brief    Opaque client reference to an instance of a SwiP
  *
@@ -79,7 +81,7 @@ typedef  void *SwiP_Handle;
  *  @brief    Status codes for SwiP APIs
  *  TODO: See if we need more error codes.
  */
-typedef enum {
+typedef enum SwiP_Status {
     SwiP_OK = 0,
     SwiP_FAILURE = -1
 } SwiP_Status;
@@ -107,7 +109,7 @@ typedef void (*SwiP_Fxn)(uintptr_t arg0, uintptr_t arg1);
  *  SwiP_inc functions also modify the trigger value. SwiP_or
  *  sets bits, and SwiP_andn clears bits.
  */
-typedef struct {
+typedef struct SwiP_Params {
     uintptr_t  arg0;      /*!< Argument passed into the SwiP function. */
     uintptr_t  arg1;      /*!< Argument passed into the SwiP function. */
     uint32_t   priority;  /*!< priority, 0 is min, 1, 2, ..., ~0 for max */

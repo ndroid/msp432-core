@@ -9,6 +9,7 @@ armSettings.xs
 Settings.xml
 MPU.xml
 MPU_link.xdt
+AsmMacros.h
 package/package.cfg.xdc.inc
 lib/debug/ti.sysbios.family.arm.aem4f
 package/package_ti.sysbios.family.arm.c

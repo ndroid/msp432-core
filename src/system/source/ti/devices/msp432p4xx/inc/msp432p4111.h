@@ -64,6 +64,17 @@
 /* Remap MSP432 intrinsics to ARM equivalents */
 #include "msp_compatibility.h"
 
+/******************************************************************************
+* include MSP430 legacy definitions to make porting of code from MSP430       *
+* code base easier                                                            *
+* With fully CMSIS compliant code, NO_MSP_CLASSIC_DEFINES may be defined in   *
+* your project to omit including the classic defines                          *
+******************************************************************************/
+#ifndef NO_MSP_CLASSIC_DEFINES
+#include "msp432p4111_classic.h"
+#endif
+
+
 #ifndef __CMSIS_CONFIG__
 #define __CMSIS_CONFIG__
 

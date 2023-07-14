@@ -213,7 +213,7 @@ See the __Performance Level Configuration__ for more information.
         displayName : "Custom Performance Levels",
         description : "Advanced option. Select the number of Custom"
             + " Performance Levels to configure.",
-        longDescription:"See the __Performance Level Configuration__ for more"
+        longDescription:"See the _Performance Level Configuration__ for more"
             + " information.",
         default     : 0,
         onChange    : onChangeCustomLevels,
@@ -657,14 +657,14 @@ function firstUniq (element, index, list)
 function getClockFrequencies(clockSource)
 {
     let freqArray  = [];
+    let enablePerf = true;
+    let inst = this.$static;
     let clock = clockSource.toLowerCase();
-    let inst = null;
 
     if ("/ti/drivers/Power" in system.modules) {
-        inst = system.modules["/ti/drivers/Power"].$static;
+        enablePerf = system.modules["/ti/drivers/Power"].$static.enablePerformanceLevels;
     }
-
-    if (inst !== null && inst.enablePerformanceLevels == true) {
+    if (inst && enablePerf) {
         for (let level = 0; level < 8; ++level) {
             let levelName = "performanceLevel" + level;
 

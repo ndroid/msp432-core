@@ -43,6 +43,10 @@
 #ifndef ti_drivers_adc_ADCMSP432__include
 #define ti_drivers_adc_ADCMSP432__include
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -50,10 +54,6 @@
 #include <ti/drivers/dpl/HwiP.h>
 #include <ti/drivers/dpl/SemaphoreP.h>
 #include <ti/drivers/Power.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*
  *  ADC port/pin defines for pin configuration.  Ports P2, P3, and P7 are
@@ -143,7 +143,7 @@ extern const ADC_FxnTable ADCMSP432_fxnTable;
  *
  *  A sample structure is shown below:
  *  @code
- *  const ADCMSP432_HWAttrsV1 adcMSP432HWAttrs[1] = {
+ *  const ADCMSP432_HWAttrsV1 adcMSP432HWAttrs[Board_ADCCHANNELCOUNT] = {
  *      {
  *          .adcPin = ADCMSP432_P5_5_A0,
  *          .refVoltage = ADCMSP432_REF_VOLTAGE_INT_2_5V,
@@ -153,7 +153,7 @@ extern const ADC_FxnTable ADCMSP432_fxnTable;
  *  };
  *  @endcode
  */
-typedef struct {
+typedef struct ADCMSP432_HWAttrsV1 {
     uint_fast16_t  adcPin;      /*!< ADC pin, port channel */
     uint_fast16_t  refVoltage;  /*!< Reference voltage for ADC channel */
     uint_fast32_t  resolution;  /*!< ADC resolution for ADC channel  */
@@ -165,10 +165,9 @@ typedef struct {
  *
  *  The application must not access any member variables of this structure!
  */
-typedef struct {
+typedef struct ADCMSP432_Object {
     bool isOpen;               /* To determine if the ADC is open */
-    bool isProtected;          /* Flag to indicate if thread safety is ensured
-                                  by the driver */
+    bool isProtected;          /* Flag to indicate if thread safety is ensured by the driver */
 } ADCMSP432_Object;
 
 #ifdef __cplusplus

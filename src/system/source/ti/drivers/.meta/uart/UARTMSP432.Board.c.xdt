@@ -37,15 +37,14 @@
  */
 
     let UART = args[0];
+    if (UART.$instances.length == 0) return;
 
     let Common      = system.getScript("/ti/drivers/Common.js");
     let instances   = UART.$instances;
     let combinedBRT = {};
     let uniqueBRT   = [];
 
-    if (instances.length == 0) return;
-
-    /* CONFIG_XXXCOUNT string, derived from defaultInstanceName */
+    /* Board_XXXCOUNT string, derived from defaultInstanceName */
     let countDef = UART.defaultInstanceName + "COUNT";
 
     for (let ix = 0; ix < instances.length; ix++) {

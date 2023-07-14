@@ -91,13 +91,20 @@ static const uint8_t portInterruptIds[NUM_INTERRUPT_PORTS] = {
     INT_PORT4, INT_PORT5, INT_PORT6
 };
 
+/*
+ * Extracts the GPIO interrupt type from the pinConfig.  Value to index into the
+ * interruptType table.
+ */
+#define getIntTypeNumber(pinConfig) \
+    ((pinConfig & GPIO_CFG_INT_MASK) >> GPIO_CFG_INT_LSB)
+
 /* uninitialized callbackInfo pinIndex */
 #define CALLBACK_INDEX_NOT_CONFIGURED 0xFF
 
 /*
  * Device specific interpretation of the GPIO_PinConfig content
  */
-typedef struct {
+typedef struct PinConfig {
     uint8_t pin;
     uint8_t port;
     uint16_t config;
@@ -108,7 +115,7 @@ typedef struct {
  * Used by port interrupt function to located callback assigned
  * to a pin.
  */
-typedef struct {
+typedef struct PortCallbackInfo {
     /*
      * the port's 8 corresponding
      * user defined pinId indices
@@ -134,27 +141,7 @@ static uint8_t portHwiCreatedBitMask = 0;
  */
 static bool initCalled = false; /* Also used to check status for initialization */
 
-__attribute__((weak))extern const GPIOMSP432_Config GPIOMSP432_config;
-
-/*
- *  ======== getInterruptTypeIndex ========
- */
-static inline uint32_t getInterruptTypeIndex(uint32_t pinConfig)
-{
-    uint32_t index;
-
-    index = (pinConfig & GPIO_CFG_INT_MASK) >> GPIO_CFG_INT_LSB;
-
-    /*
-     * If index is out-of-range, default to 0. This should never
-     * happen, but it's needed to keep Klocwork checker happy.
-     */
-    if (index >= sizeof(interruptType) / sizeof(interruptType[0])) {
-        index = 0;
-    }
-
-    return (index);
-};
+extern const GPIOMSP432_Config GPIOMSP432_config;
 
 /*
  *  ======== getPinNumber ========
@@ -565,7 +552,7 @@ int_fast16_t GPIO_setConfig(uint_least8_t index, GPIO_PinConfig pinConfig)
         }
 
         MAP_GPIO_interruptEdgeSelect(port, pin,
-            interruptType[getInterruptTypeIndex(pinConfig)]);
+            interruptType[getIntTypeNumber(pinConfig)]);
         MAP_GPIO_clearInterruptFlag(port, pin);
 
         /* Update the table entry */

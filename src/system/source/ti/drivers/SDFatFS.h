@@ -61,7 +61,7 @@
  *  @code
  *  SDFatFS_Handle handle;
  *
- *  handle = SDFatFS_open(CONFIG_SDFatFS0, driveNum, NULL);
+ *  handle = SDFatFS_open(Board_SDFatFS0, driveNum, NULL);
  *  if (handle == NULL) {
  *      //Error opening SDFatFS driver
  *      while (1);
@@ -83,6 +83,10 @@
 #ifndef ti_drivers_SDFatFS__include
 #define ti_drivers_SDFatFS__include
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 #include <ti/drivers/SD.h>
@@ -90,20 +94,22 @@
 #include <third_party/fatfs/ff.h>
 #include <third_party/fatfs/diskio.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*!
  *  @brief SDFatFS Object
  *  The application must not access any member variables of this structure!
  */
-typedef struct {
+typedef struct SDFatFS_Object_ {
     uint_fast32_t driveNum;
     DSTATUS       diskState;
     FATFS         filesystem; /* FATFS data object */
     SD_Handle     sdHandle;
 } SDFatFS_Object;
+
+/*!
+ *  @brief A handle that is returned from a SDFatFS_open() call.
+ */
+typedef struct SDFatFS_Config_      *SDFatFS_Handle;
+
 
 /*!
  *  @brief SDFatFS Global configuration
@@ -116,16 +122,10 @@ typedef struct {
  *
  *  @sa SDFatFS_init()
  */
-typedef struct {
+typedef struct SDFatFS_Config_ {
     /*! Pointer to a SDFatFS object */
-    SDFatFS_Object *object;
+    void       *object;
 } SDFatFS_Config;
-
-
-/*!
- *  @brief A handle that is returned from a SDFatFS_open() call.
- */
-typedef SDFatFS_Config *SDFatFS_Handle;
 
 /*!
  *  @brief Function to open a SDFatFS instance on the specified drive.

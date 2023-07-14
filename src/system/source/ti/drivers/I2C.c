@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019, Texas Instruments Incorporated
+ * Copyright (c) 2015-2017, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,6 @@
 #include <stdlib.h>
 
 #include <ti/drivers/dpl/HwiP.h>
-#include <ti/drivers/dpl/SemaphoreP.h>
 #include <ti/drivers/I2C.h>
 
 extern const I2C_Config I2C_config[];
@@ -134,20 +133,5 @@ void I2C_Params_init(I2C_Params *params)
  */
 bool I2C_transfer(I2C_Handle handle, I2C_Transaction *transaction)
 {
-    int_fast16_t result = (handle->fxnTablePtr->transferFxn(handle, transaction, I2C_WAIT_FOREVER));
-
-    if(result == I2C_STATUS_SUCCESS) {
-        return (true);
-    }
-    else {
-        return (false);
-    }
-}
-
-/*
- *  ======== I2C_transferTimeout ========
- */
-int_fast16_t I2C_transferTimeout(I2C_Handle handle, I2C_Transaction *transaction, uint32_t timeout)
-{
-    return (handle->fxnTablePtr->transferFxn(handle, transaction, timeout));
+    return (handle->fxnTablePtr->transferFxn(handle, transaction));
 }

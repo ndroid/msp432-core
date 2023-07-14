@@ -1,6 +1,6 @@
 %%{
 /*
- * Copyright (c) 2012-2019, Texas Instruments Incorporated
+ * Copyright (c) 2012, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -51,8 +51,7 @@ Void ti_sysbios_knl_Clock_doTick__I(UArg arg)
     {
 %}
 %else {
-    if (ti_sysbios_knl_Queue_empty(ti_sysbios_knl_Clock_Module_State_clockQ())
-        == 0U) {
+    if (!ti_sysbios_knl_Queue_empty(ti_sysbios_knl_Clock_Module_State_clockQ())) {
         `mobj`->swiCount++;
 
 %}
@@ -61,10 +60,10 @@ Void ti_sysbios_knl_Clock_doTick__I(UArg arg)
 %}
 %else {
 %   if (Clock.tickMode == Clock.TickMode_DYNAMIC) {
-        ti_sysbios_knl_Clock_workFuncDynamic__E(0U, 0U);
+        ti_sysbios_knl_Clock_workFuncDynamic__E(0, 0);
 %   }
 %   else {
-        ti_sysbios_knl_Clock_workFunc__E(0U, 0U);
+        ti_sysbios_knl_Clock_workFunc__E(NULL, NULL);
 %   }
 %}
     }

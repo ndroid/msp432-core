@@ -63,18 +63,6 @@ let configs = [
         name: "nvsType",
         displayName: "NVS Type",
         description: "Specifies the type of non-volatile storage used by the NVS region.",
-        longDescription:`
-* [__Internal__][1] allows you to configure in a CPU addressable internal flash
-region.
-* [__External__][2] allows you to configure a flash
-region accessible via SPI.
-* [__RAM__][3] allows you to configure in a CPU addressable internal RAM
-region.
-
-[1]: /tidrivers/syscfg/html/ConfigDoc.html#NVS${family}_Configuration_Options
-[2]: /tidrivers/syscfg/html/ConfigDoc.html#NVSSPI25X_Configuration_Options
-[3]: /tidrivers/syscfg/html/ConfigDoc.html#NVSRAM_Configuration_Options
-`,
         default: "Internal",
         options: [
             {
@@ -90,8 +78,7 @@ region.
                 description: "Region is in CPU directly addressable RAM.",
                 longDescription: `
 Typically used to emulate flash memory while developing applications that use
-real flash memory. This avoids wearing out device flash during software
-development.
+real flash memory. This avoids wearing out device flash during software development.
 `
             }
         ]
@@ -170,46 +157,15 @@ function moduleInstances(inst)
 }
 
 /*
- *  ======== _getPinResources ========
+ *  ======== exports ========
  */
-function _getPinResources(inst)
-{
-    let pin;
-    let ss;
-    let mod;
-
-    if (inst.externalFlash && inst.externalFlash.spiFlashDevice) {
-
-        let spiFlash = inst.externalFlash.spiFlashDevice;
-
-        if (spiFlash.slaveSelectGpioInstance) {
-            mod = system.getScript("/ti/drivers/GPIO.syscfg.js");
-            ss = "SS: " + mod._getPinResources(spiFlash.slaveSelectGpioInstance);
-        }
-
-        if (spiFlash.sharedSpiInstance) {
-            mod = system.getScript("/ti/drivers/SPI.syscfg.js");
-            pin = mod._getPinResources(spiFlash.sharedSpiInstance);
-            pin += "\n" + ss;
-        }
-        else {
-            pin = ss;
-        }
-    }
-
-    return (pin);
-}
-
-/*
- *  ======== base ========
- *  Define the base NVS properties and methods
- */
-let base = {
+exports = {
     displayName: "NVS",
-    defaultInstanceName: "CONFIG_NVS_",
+    defaultInstanceName: "Board_NVS",
     description: "Non-Volatile Storage Driver",
     longDescription: longDescription,
-    config: Common.addNameConfig(configs, "/ti/drivers/NVS", "CONFIG_NVS_"),
+    documentation: "/tidrivers/doxygen/html/_n_v_s_8h.html",
+    config: Common.addNameConfig(configs, "/ti/drivers/NVS", "Board_NVS"),
     validate: validate,
     moduleInstances: moduleInstances,
     modules: Common.autoForceModules(["Board"]),
@@ -218,11 +174,5 @@ let base = {
     templates: {
         boardc: "/ti/drivers/nvs/NVS.Board.c.xdt",
         boardh: "/ti/drivers/nvs/NVS.Board.h.xdt"
-    },
-
-    _getPinResources: _getPinResources
+    }
 };
-
-/* Allow device specific NVS modules to extend the base configuration */
-let devNVS = system.getScript("/ti/drivers/nvs/NVS" + family);
-exports = devNVS.extend(base);

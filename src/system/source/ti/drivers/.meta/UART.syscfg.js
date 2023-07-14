@@ -59,11 +59,10 @@ let config = [
         displayName : "Error callback function",
         description : 'Optional application defined error function to be '
                       + 'called on receive errors.',
-        default     : '',
-        placeholder : "Enter a function name to enable"
+        default     : ''
     },
 
-    /* baudRates is only needed by MSP432P but exists for all devs to enable
+    /* baudRates is only needed by MSP432P but exists for all devs to enable 
      * more portable syscfg scripts.
      */
     {
@@ -110,15 +109,6 @@ function validate(inst, validation)
 }
 
 /*
- *  ======== _getPinResources ========
- */
-/* istanbul ignore next */
-function _getPinResources(inst)
-{
-    return;
-}
-
-/*
  *  ======== base ========
  *  Define the base UART properties and methods
  */
@@ -140,12 +130,10 @@ and writing to the UART peripherals.
 [4]: /tidrivers/syscfg/html/ConfigDoc.html#UART_Configuration_Options "Configuration options reference"
 `,
     /* instance properties and methods */
-    defaultInstanceName: "CONFIG_UART_",
-    config        : Common.addNameConfig(config, "/ti/drivers/UART", "CONFIG_UART_"),
+    defaultInstanceName: "Board_UART",
+    config        : Common.addNameConfig(config, "/ti/drivers/UART", "Board_UART"),
     modules       : Common.autoForceModules(["Board", "Power"]),
-    validate      : validate,
-
-    _getPinResources: _getPinResources
+    validate      : validate
 };
 
 /* get family-specific UART module */

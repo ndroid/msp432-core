@@ -2,7 +2,7 @@
  *  Do not modify this file; it is automatically 
  *  generated and any modifications will be overwritten.
  *
- * @(#) xdc-H32
+ * @(#) xdc-F14
  */
 
 #ifndef ti_uia_family_c64p__
@@ -26,6 +26,7 @@ typedef struct ti_uia_family_c64p_TimestampC6472Timer_Params ti_uia_family_c64p_
 typedef struct ti_uia_family_c64p_TimestampC6472Timer_Object ti_uia_family_c64p_TimestampC6472Timer_Object;
 typedef struct ti_uia_family_c64p_TimestampC6472Timer_Struct ti_uia_family_c64p_TimestampC6472Timer_Struct;
 typedef ti_uia_family_c64p_TimestampC6472Timer_Object* ti_uia_family_c64p_TimestampC6472Timer_Handle;
+typedef struct ti_uia_family_c64p_TimestampC6472Timer_Object__ ti_uia_family_c64p_TimestampC6472Timer_Instance_State;
 typedef ti_uia_family_c64p_TimestampC6472Timer_Object* ti_uia_family_c64p_TimestampC6472Timer_Instance;
 
 /*
@@ -38,6 +39,7 @@ typedef struct ti_uia_family_c64p_TimestampC6474Timer_Params ti_uia_family_c64p_
 typedef struct ti_uia_family_c64p_TimestampC6474Timer_Object ti_uia_family_c64p_TimestampC6474Timer_Object;
 typedef struct ti_uia_family_c64p_TimestampC6474Timer_Struct ti_uia_family_c64p_TimestampC6474Timer_Struct;
 typedef ti_uia_family_c64p_TimestampC6474Timer_Object* ti_uia_family_c64p_TimestampC6474Timer_Handle;
+typedef struct ti_uia_family_c64p_TimestampC6474Timer_Object__ ti_uia_family_c64p_TimestampC6474Timer_Instance_State;
 typedef ti_uia_family_c64p_TimestampC6474Timer_Object* ti_uia_family_c64p_TimestampC6474Timer_Instance;
 
 /*
@@ -51,6 +53,7 @@ typedef struct ti_uia_family_c64p_TimestampC64XLocal_Params ti_uia_family_c64p_T
 typedef struct ti_uia_family_c64p_TimestampC64XLocal_Object ti_uia_family_c64p_TimestampC64XLocal_Object;
 typedef struct ti_uia_family_c64p_TimestampC64XLocal_Struct ti_uia_family_c64p_TimestampC64XLocal_Struct;
 typedef ti_uia_family_c64p_TimestampC64XLocal_Object* ti_uia_family_c64p_TimestampC64XLocal_Handle;
+typedef struct ti_uia_family_c64p_TimestampC64XLocal_Object__ ti_uia_family_c64p_TimestampC64XLocal_Instance_State;
 typedef ti_uia_family_c64p_TimestampC64XLocal_Object* ti_uia_family_c64p_TimestampC64XLocal_Instance;
 
 /*

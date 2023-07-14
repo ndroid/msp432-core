@@ -86,8 +86,8 @@ with negligible probability of collision.
 [4]: /tidrivers/syscfg/html/ConfigDoc.html#SHA2_Configuration_Options "Configuration options reference"
 `,
     validate            : validate,
-    defaultInstanceName : "CONFIG_SHA2_",
-    config              : Common.addNameConfig(config, "/ti/drivers/SHA2", "CONFIG_SHA2_"),
+    defaultInstanceName : "Board_SHA2",
+    config              : Common.addNameConfig(config, "/ti/drivers/SHA2", "Board_SHA2"),
     modules: Common.autoForceModules(["Board", "Power"])
 };
 

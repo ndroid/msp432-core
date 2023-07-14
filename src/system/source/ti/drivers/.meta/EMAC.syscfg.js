@@ -44,15 +44,6 @@ let Common = system.getScript("/ti/drivers/Common.js");
 let family = Common.device2Family(system.deviceData, "EMAC");
 
 /*
- *  ======== _getPinResources ========
- */
-/* istanbul ignore next */
-function _getPinResources(inst)
-{
-    return;
-}
-
-/*
  *  ======== base ========
  *  Define the base EMAC properties and methods
  */
@@ -60,7 +51,7 @@ let base = {
     displayName         : "EMAC",
     description         : "Ethernet Media Access Control (EMAC) Driver"
         +" Configuration",
-    defaultInstanceName : "CONFIG_EMAC_",
+    defaultInstanceName : "Board_EMAC",
     longDescription     :
 `The [__EMAC driver__][1] is used by the
 [__TI Network Developer's Kit (NDK)__][2] to provide networking capabilities.
@@ -72,9 +63,7 @@ let base = {
 [3]: /tidrivers/syscfg/html/ConfigDoc.html#EMAC_Configuration_Options "Configuration options reference"
 `,
     validate            : validate,
-    modules: Common.autoForceModules(["Board", "Power", "DMA"]),
-
-    _getPinResources: _getPinResources
+    modules: Common.autoForceModules(["Board", "Power", "DMA"])
 };
 
 /*

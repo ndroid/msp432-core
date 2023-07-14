@@ -79,8 +79,8 @@ the Diffie-Hellman key exchange protocol.
 [4]: /tidrivers/syscfg/html/ConfigDoc.html#ECDH_Configuration_Options "Configuration options reference"
 `,
     validate            : validate,
-    defaultInstanceName : "CONFIG_ECDH_",
-    config              : Common.addNameConfig(config, "/ti/drivers/ECDH", "CONFIG_ECDH_"),
+    defaultInstanceName : "Board_ECDH",
+    config              : Common.addNameConfig(config, "/ti/drivers/ECDH", "config_ECDH"),
     modules             : Common.autoForceModules(["Board", "Power"])
 };
 
