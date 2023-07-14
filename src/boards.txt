@@ -13,8 +13,9 @@ MSP-EXP432P401R.build.f_cpu=48000000L
 MSP-EXP432P401R.build.core=msp432
 MSP-EXP432P401R.build.variant=MSP_EXP432P401R
 MSP-EXP432P401R.build.board=MSP_EXP432P401R
+MSP-EXP432P4111.build.family=MSP432P401x
 MSP-EXP432P401R.build.ldscript=linker.cmd
-MSP-EXP432P401R.build.extra_flags=-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mabi=aapcs -g -Dxdc_target_types__=gnu/targets/arm/std.h -Dxdc_target_name__=M4F -Dxdc_cfg__xheader__="configPkg/package/cfg/energia_pm4fg.h" -DBOARD_MSP_EXP432P401R -Dxdc__nolocalstring=1 -D__MSP432P401R__ -DCORE_VERSION={version.string}
+MSP-EXP432P401R.build.extra_flags=-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mabi=aapcs -g -Dxdc_target_types__=gnu/targets/arm/std.h -Dxdc_target_name__=M4F -Dxdc_cfg__xheader__="configPkg/package/cfg/energia_pm4fg.h" -DBOARD_MSP_EXP432P401R -Dxdc__nolocalstring=1 -D__MSP432P401R__ -DDeviceFamily_MSP432P401x -DCORE_VERSION={version.string}
 MSP-EXP432P401R.upload.tool=dslite
 MSP-EXP432P401R.upload.protocol=dslite
 MSP-EXP432P401R.upload.maximum_size=262144
@@ -31,8 +32,9 @@ MSP-EXP432P4111.build.f_cpu=48000000L
 MSP-EXP432P4111.build.core=msp432
 MSP-EXP432P4111.build.variant=MSP_EXP432P4111
 MSP-EXP432P4111.build.board=MSP_EXP432P4111
+MSP-EXP432P4111.build.family=MSP432P4x1xI
 MSP-EXP432P4111.build.ldscript=linker.cmd
-MSP-EXP432P4111.build.extra_flags=-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mabi=aapcs -g -Dxdc_target_types__=gnu/targets/arm/std.h -Dxdc_target_name__=M4F -Dxdc_cfg__xheader__="configPkg/package/cfg/energia_pm4fg.h" -DBOARD_MSP_EXP432P4111 -Dxdc__nolocalstring=1 -D__MSP432P4111__ -DCORE_VERSION={version.string}
+MSP-EXP432P4111.build.extra_flags=-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mabi=aapcs -g -Dxdc_target_types__=gnu/targets/arm/std.h -Dxdc_target_name__=M4F -Dxdc_cfg__xheader__="configPkg/package/cfg/energia_pm4fg.h" -DBOARD_MSP_EXP432P4111 -Dxdc__nolocalstring=1 -D__MSP432P4111__ -DDeviceFamily_MSP432P4x1xI -DCORE_VERSION={version.string}
 MSP-EXP432P4111.upload.tool=dslite
 MSP-EXP432P4111.upload.protocol=dslite
 MSP-EXP432P4111.upload.maximum_size=2097152
