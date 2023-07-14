@@ -4,7 +4,7 @@
 # For more info:
 # https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5-3rd-party-Hardware-specification
 
-name=Energia MSP432 (32-bits) RED Boards
+name=Energia MSP432 (32-bits) RED LaunchPad Boards
 version=5.29.4
 version.string=5294
 

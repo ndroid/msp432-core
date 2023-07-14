@@ -68,7 +68,7 @@ static const uint8_t A18 = 58;
 static const uint8_t A19 = 57;
 static const uint8_t A20 = 41;
 static const uint8_t A21 = 43;
-static const uint8_t A22 = 69;
+static const uint8_t A22 = 60;
 static const uint8_t A23 = 44;
 
 #endif

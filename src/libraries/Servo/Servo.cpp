@@ -209,7 +209,7 @@ Void ServoIntHandler(UArg arg0)
 	// Set the current servo pin HIGH
 	if(currentServo < SERVOS_PER_TIMER)
 	{
-		if (servos[currentServo - 1].enabled)
+		if (servos[currentServo].enabled)
 		{
 			digitalWrite(servos[currentServo].pin_number, HIGH);
 		}
