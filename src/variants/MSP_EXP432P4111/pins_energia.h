@@ -40,8 +40,9 @@
 static const uint8_t RED_LED = 75;
 static const uint8_t GREEN_LED = 76;
 static const uint8_t BLUE_LED = 77;
-static const uint8_t YELLOW_LED = 78; /* Mapped to the other RED LED */
-static const uint8_t LED1 = 78; /* Mapped to the other RED LED */
+static const uint8_t YELLOW_LED = 78;   /* Mapped to the other RED LED */
+static const uint8_t LED1 = 78;         /* Mapped to the other RED LED */
+static const uint8_t LED_BUILTIN = 78;  /* Defined to support Arduino examples */
 
 static const uint8_t PUSH1 = 73;
 static const uint8_t PUSH2 = 74;
