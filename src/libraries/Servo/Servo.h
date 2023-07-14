@@ -9,8 +9,8 @@
 //#include <ti/sysbios/family/arm/msp432/Timer.h>
 
 // Hardware limitations information
-#define MIN_SERVO_PULSE_WIDTH 		544
-#define MAX_SERVO_PULSE_WIDTH 		2400
+#define MIN_SERVO_PULSE_WIDTH 		510
+#define MAX_SERVO_PULSE_WIDTH 		2490
 #define DEFAULT_SERVO_PULSE_WIDTH   1500
 #define REFRESH_INTERVAL 		    20000
 

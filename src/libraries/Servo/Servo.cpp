@@ -40,10 +40,15 @@ Timer_Handle timerHandle;
 static void calculatePeriodRemainder(void)
 {
 	unsigned long servoPeriodSum = 0;
-	for (int i = 0; i < SERVOS_PER_TIMER; i++){
+	for (int i = 0; i < SERVOS_PER_TIMER; i++) {
 		servoPeriodSum += servos[i].pulse_width;
 	}
-	remainderPulseWidth = REFRESH_INTERVAL - servoPeriodSum;
+	if (servoPeriodSum < REFRESH_INTERVAL) {
+		remainderPulseWidth = REFRESH_INTERVAL - servoPeriodSum;
+	} else {
+		remainderPulseWidth = DEFAULT_SERVO_PULSE_WIDTH;
+	}
+	
 }
 
 void initServo(void) {
@@ -54,8 +59,7 @@ void initServo(void) {
 	remainderPulseWidth = 0;
 	currentServo = 0;
 
-	for(int i = 0; i < SERVOS_PER_TIMER; i++)
-	{
+	for (int i = 0; i < SERVOS_PER_TIMER; i++) {
 		servos[i].pin_number = 0;
 		servos[i].pulse_width = DEFAULT_SERVO_PULSE_WIDTH;
 		servos[i].enabled = false;
@@ -88,10 +92,8 @@ Servo::Servo()
 	this->index = INVALID_SERVO;
 
 	// Look for a free servo index.
-	for (int i = 0; i < SERVOS_PER_TIMER; i++)
-	{
-		if (((servoAssignedMask >> i) & 1) == 0)
-		{
+	for (int i = 0; i < SERVOS_PER_TIMER; i++) {
+		if (((servoAssignedMask >> i) & 1) == 0) {
 			// Save the index for this instance of Servo.
 			this->index = i;
 
@@ -119,12 +121,13 @@ void Servo::writeMicroseconds(int value)
 void Servo::write(int value)
 {
 	// treat values less than the min pulse width as angles in degrees (valid values in microseconds are handled as microseconds)
-	if(value < MIN_SERVO_PULSE_WIDTH)
-	{
+	if (value < this->min) {
 		if(value < 0) value = 0;
 		if(value > 180) value = 180;
 
 		value = map(value, 0, 180, this->min,  this->max);
+	} else if (value > this->max) {
+		value = this->max;
 	}
 	this->writeMicroseconds(value);
 }
@@ -145,8 +148,7 @@ int Servo::read() // return the value as degrees
 unsigned int Servo::attach(unsigned int pin, int min, int max)
 {
 	// If the module has not been initialized
-	if(!servoInitialized)
-	{
+	if (!servoInitialized) {
 		// Initialize it.
 		initServo();
 		// It has been initialized, prevent further calls to initServo().
@@ -175,6 +177,9 @@ void Servo::detach()
 	servos[this->index].enabled = false;
 	servos[this->index].pulse_width = DEFAULT_SERVO_PULSE_WIDTH;
 	calculatePeriodRemainder();
+
+	// Clear the bit in the assigned mask.
+	servoAssignedMask &= ~(1 << this->index);
 
 	digitalWrite(servos[this->index].pin_number, LOW);
 }
