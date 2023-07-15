@@ -100,7 +100,13 @@ String i32toa(int32_t number, int32_t unit, uint8_t decimal, uint8_t size)
 		else strcpy(bufferFormat, "%0d.");
 		sprintf(bufferOut, bufferFormat, number/multiplier);
         
-		if (number < 0) number  = -number;
+		if (number < 0) {
+            // For negative values greater than -1, need to insert '-' character
+            char *negIndex = strstr(bufferOut, " 0.");
+            if (negIndex > 0) *negIndex = '-';
+            // invert negative value before obtaining fractional value with MOD
+            number = -number;
+        }
 		sprintf(bufferFormat, "%%0%dd", decimal);
 		sprintf(bufferOut+strlen(bufferOut), bufferFormat, number%multiplier);
         
