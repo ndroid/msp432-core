@@ -202,7 +202,27 @@ int HardwareSerial::available(void)
 
         return (numChars);
     }
- }
+}
+
+int HardwareSerial::availableForWrite(void)
+{
+    int numChars;
+    unsigned int key;
+
+    if (uart == NULL) {
+        return (0);
+    }
+
+    key = Hwi_disable();
+
+    numChars = (txWriteIndex <= txReadIndex) ?
+            (txReadIndex - txWriteIndex - 1)
+            : SERIAL_TX_BUFFER_SIZE - (txWriteIndex - txReadIndex) - 1;
+
+    Hwi_restore(key);
+
+    return (numChars);
+}
 
 int HardwareSerial::peek(void)
 {

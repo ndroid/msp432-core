@@ -84,6 +84,7 @@ class HardwareSerial : public Stream
         void release(void);  /* release serial port */
         void end(void);
         virtual int available(void);
+        virtual int availableForWrite(void);
         virtual int peek(void);
         virtual int read(void);
         virtual void flush(void);

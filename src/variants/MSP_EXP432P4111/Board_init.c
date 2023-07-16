@@ -1163,11 +1163,11 @@ const UART_FxnTable myUARTMSP432_fxnTable = {
     UARTMSP432_init,
     UARTMSP432_open,
     UARTMSP432_read,
-    NULL, /* UARTMSP432_readPolling, */
-    NULL, /* UARTMSP432_readCancel, */
+    UARTMSP432_readPolling,
+    UARTMSP432_readCancel,
     UARTMSP432_write,
-    NULL, /* UARTMSP432_writePolling, */
-    NULL /* UARTMSP432_writeCancel, */
+    UARTMSP432_writePolling,
+    UARTMSP432_writeCancel
 };
 
 /* UART objects */
