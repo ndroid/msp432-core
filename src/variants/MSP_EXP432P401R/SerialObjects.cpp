@@ -44,6 +44,16 @@ void uartReadCallback1(UART_Handle uart, void *buf, size_t count)
     Serial1.readCallback(uart, buf, count);
 }
 
+void uartReadCallback2(UART_Handle uart, void *buf, size_t count)
+{
+    Serial2.readCallback(uart, buf, count);
+}
+
+void uartReadCallback3(UART_Handle uart, void *buf, size_t count)
+{
+    Serial3.readCallback(uart, buf, count);
+}
+
 void uartWriteCallback(UART_Handle uart, void *buf, size_t count)
 {
     Serial.writeCallback(uart, buf, count);
@@ -54,11 +64,21 @@ void uartWriteCallback1(UART_Handle uart, void *buf, size_t count)
     Serial1.writeCallback(uart, buf, count);
 }
 
+void uartWriteCallback2(UART_Handle uart, void *buf, size_t count)
+{
+    Serial2.writeCallback(uart, buf, count);
+}
+
+void uartWriteCallback3(UART_Handle uart, void *buf, size_t count)
+{
+    Serial3.writeCallback(uart, buf, count);
+}
+
 /*
  * Pre-Initialize Serial instances
  */
 HardwareSerial Serial(0, uartReadCallback, uartWriteCallback);
 HardwareSerial Serial1(1, uartReadCallback1, uartWriteCallback1);
-
-
+HardwareSerial Serial2(2, uartReadCallback2, uartWriteCallback2);
+HardwareSerial Serial3(3, uartReadCallback3, uartWriteCallback3);
 

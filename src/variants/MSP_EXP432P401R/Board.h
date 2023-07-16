@@ -179,6 +179,8 @@ typedef enum Board_TimerName {
 typedef enum Board_UARTName {
     Board_UARTA0 = 0,
     Board_UARTA2,
+    Board_UARTA1,
+    Board_UARTA3,
 
     Board_UARTCOUNT
 } Board_UARTName;

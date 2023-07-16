@@ -1174,6 +1174,7 @@ const UART_FxnTable myUARTMSP432_fxnTable = {
 UARTMSP432_Object uartMSP432Objects[Board_UARTCOUNT];
 unsigned char uartMSP432RingBuffer0[128];
 unsigned char uartMSP432RingBuffer1[128];
+unsigned char uartMSP432RingBuffer2[128];
 
 
 /*
@@ -1256,6 +1257,21 @@ const UARTMSP432_HWAttrsV1 uartMSP432HWAttrs[Board_UARTCOUNT] = {
         .rxPin = UARTMSP432_P3_2_UCA2RXD,
         .txPin = UARTMSP432_P3_3_UCA2TXD,
         .errorFxn = NULL
+    },
+    {
+        .baseAddr = EUSCI_A1_BASE,
+        .intNum = INT_EUSCIA1,
+        .intPriority = (0xc0),
+        .clockSource = EUSCI_A_UART_CLOCKSOURCE_SMCLK,
+        .bitOrder = EUSCI_A_UART_LSB_FIRST,
+        .numBaudrateEntries = sizeof(uartMSP432Baudrates) /
+                              sizeof(UARTMSP432_BaudrateConfig),
+        .baudrateLUT = uartMSP432Baudrates,
+        .ringBufPtr  = uartMSP432RingBuffer2,
+        .ringBufSize = sizeof(uartMSP432RingBuffer2),
+        .rxPin = UARTMSP432_P2_2_UCA1RXD,
+        .txPin = UARTMSP432_P2_3_UCA1TXD,
+        .errorFxn = NULL
     }
 };
 
@@ -1269,6 +1285,11 @@ const UART_Config UART_config[] = {
         .fxnTablePtr = &myUARTMSP432_fxnTable,
         .object = &uartMSP432Objects[1],
         .hwAttrs = &uartMSP432HWAttrs[1]
+    },
+    {
+        .fxnTablePtr = &myUARTMSP432_fxnTable,
+        .object = &uartMSP432Objects[2],
+        .hwAttrs = &uartMSP432HWAttrs[2]
     },
 };
 

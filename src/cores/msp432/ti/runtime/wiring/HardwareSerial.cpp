@@ -93,11 +93,29 @@ void HardwareSerial::flushAll(void)
  */
 void HardwareSerial::begin(unsigned long baud)
 {
+    begin(baud, SERIAL_8N1, false);
+}
+
+void HardwareSerial::begin(unsigned long baud, uint16_t config)
+{
+    // Support compatibility with Arduino begin method with config and 
+    //  maintain backwards compatibility with Energia method defined as:
+    //      begin(unsigned long baud, bool blockModeEnabled)
+    if (config < 0x2U) {
+        begin(baud, SERIAL_8N1, config);
+    } else {
+        begin(baud, config, false);
+    }
+}
+
+void HardwareSerial::begin(unsigned long baud, uint16_t config, bool blockModeEnabled)
+{
     UART_Params uartParams;
 
     if (begun == true) return;
 
     baudRate = baud;
+    blockingModeEnabled = blockModeEnabled;
 
     UART_init();
 
@@ -106,8 +124,7 @@ void HardwareSerial::begin(unsigned long baud)
     if (blockingModeEnabled == true) {
         uartParams.readMode = UART_MODE_BLOCKING;
         uartParams.writeMode = UART_MODE_BLOCKING;
-    }
-    else {
+    } else {
         uartParams.readMode = UART_MODE_CALLBACK;
         uartParams.readCallback = rxCallback;
         uartParams.writeMode = UART_MODE_CALLBACK;
@@ -126,6 +143,51 @@ void HardwareSerial::begin(unsigned long baud)
     uartParams.writeDataMode = UART_DATA_BINARY;
     uartParams.baudRate = baud;
 
+    switch (config & SERIAL_DATA_MASK) {
+        case SERIAL_DATA_5:
+                uartParams.dataLength = UART_LEN_5;
+                break;
+        case SERIAL_DATA_6:
+                uartParams.dataLength = UART_LEN_6;
+                break;
+        case SERIAL_DATA_7:
+                uartParams.dataLength = UART_LEN_7;
+                break;
+        case SERIAL_DATA_8:
+        default:
+                uartParams.dataLength = UART_LEN_8;
+                break;
+    }
+
+    switch (config & SERIAL_PARITY_MASK) {
+        case SERIAL_PARITY_EVEN:
+                uartParams.parityType = UART_PAR_EVEN;
+                break;
+        case SERIAL_PARITY_ODD:
+                uartParams.parityType = UART_PAR_ODD;
+                break;
+        case SERIAL_PARITY_MARK:
+                uartParams.parityType = UART_PAR_ONE;
+                break;
+        case SERIAL_PARITY_SPACE:
+                uartParams.parityType = UART_PAR_ZERO;
+                break;
+        case SERIAL_PARITY_NONE:
+        default:
+                uartParams.parityType = UART_PAR_NONE;
+                break;
+    }
+
+    switch (config & SERIAL_STOP_BIT_MASK) {
+        case SERIAL_STOP_BIT_2:
+                uartParams.stopBits = UART_STOP_TWO;
+                break;
+        case SERIAL_STOP_BIT_1:
+        default:
+                uartParams.stopBits = UART_STOP_ONE;
+                break;
+    }
+
     uart = UART_open(uartModule, &uartParams);
 
     if (uart != NULL) {
@@ -136,12 +198,6 @@ void HardwareSerial::begin(unsigned long baud)
         }
         begun = true;
     }
-}
-
-void HardwareSerial::begin(unsigned long baud, bool blockModeEnabled)
-{
-    blockingModeEnabled = blockModeEnabled;
-    begin(baud);
 }
 
 void HardwareSerial::setModule(unsigned long module)
