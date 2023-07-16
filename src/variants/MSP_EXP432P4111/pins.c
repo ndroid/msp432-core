@@ -71,8 +71,8 @@ uint8_t digital_pin_to_pin_function[] = {
     PIN_FUNC_UNUSED,    /*  26 - P4.4_A9 */
     PIN_FUNC_UNUSED,    /*  27 - P4.5_A8 */
     PIN_FUNC_UNUSED,    /*  28 - P4.7_A6 */
-    PIN_FUNC_UNUSED,    /*  29 - P5.4_IO */
-    PIN_FUNC_UNUSED,    /*  30 - P5.5_IO */
+    PIN_FUNC_UNUSED,    /*  29 - P5.4_A1 */
+    PIN_FUNC_UNUSED,    /*  30 - P5.5_A0 */
 
     PIN_FUNC_UNUSED,    /*  31 - P3.7_IO */
     PIN_FUNC_UNUSED,    /*  32 - P3.5_IO */

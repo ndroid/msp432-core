@@ -167,7 +167,19 @@ void stopDigitalRead(uint8_t pin)
  */
 
 #define PWM_PERIOD_IN_COUNTS 24480
-#define PWM_SCALE_FACTOR 24480/255
+//#define PWM_SCALE_FACTOR 24480/255
+
+uint16_t pwmMaxDuty = 255;      /* default to 8 bit resolution  */
+
+/*
+ * \brief sets the number of bits for duty cycle range of analogWrite()
+ */
+void analogWriteResolution(uint16_t bits)
+{
+    if ((bits > 0) && (bits <= 16)) {
+        pwmMaxDuty = (1 << bits) - 1;
+    }
+}
 
 void analogWrite(uint8_t pin, int val)
 {
@@ -307,7 +319,8 @@ void analogWrite(uint8_t pin, int val)
 
     Hwi_restore(hwiKey);
 
-    PWM_setDuty((PWM_Handle)&(PWM_config[pwmIndex]), (val * PWM_SCALE_FACTOR));
+    PWM_setDuty((PWM_Handle)&(PWM_config[pwmIndex]), 
+                        ((uint32_t) val * PWM_PERIOD_IN_COUNTS / pwmMaxDuty));
 }
 
 /*

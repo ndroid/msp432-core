@@ -134,6 +134,7 @@ void analogWrite(uint8_t, int);
 void analogReference(uint16_t);
 void analogFrequency(uint32_t);
 void analogReadResolution(uint16_t);
+void analogWriteResolution(uint16_t);
 
 void delay(uint32_t milliseconds);
 
