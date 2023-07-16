@@ -99,10 +99,10 @@ unsigned long millis(void)
  */
 void delayMicroseconds(unsigned int us)
 {
-    if (us <7) {
+    if (us < 7) {
         //The overhead in calling and returning from this function takes about 6us
     }
-    else if (us <=20) {
+    else if (us <= 20) {
         int time;
         for (time = 5*(us-6); time > 0; time--) {
             asm("   nop");

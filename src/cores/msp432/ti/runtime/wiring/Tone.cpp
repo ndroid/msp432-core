@@ -98,6 +98,9 @@ void tone(uint8_t _pin, unsigned int frequency, unsigned long duration)
 
         timerHandle = Timer_create(Timer_ANY, ToneIntHandler, &timerParams, &eb);
 
+        if (timerHandle == NULL) {
+            return;
+        }
         initTimer = false;
     }
 

@@ -177,7 +177,7 @@ uint16_t pwmMaxDuty = 255;      /* default to 8 bit resolution  */
 void analogWriteResolution(uint16_t bits)
 {
     if ((bits > 0) && (bits <= 16)) {
-        pwmMaxDuty = (1 << bits) - 1;
+        pwmMaxDuty = bit(bits) - 1;
     }
 }
 

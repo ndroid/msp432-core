@@ -126,6 +126,7 @@ unsigned long getCpuFrequency(void);
 void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val);
 uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder);
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout);
+unsigned long pulseInLong(uint8_t pin, uint8_t state, unsigned long timeout);
 void pinMode(uint8_t, uint8_t);
 void digitalWrite(uint8_t, uint8_t);
 int digitalRead(uint8_t);
@@ -172,7 +173,8 @@ uint16_t makeWord(byte h, byte l);
 
 #define word(...) makeWord(__VA_ARGS__)
 
-unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
+unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout = 3000000L);
+unsigned long pulseInLong(uint8_t pin, uint8_t state, unsigned long timeout = 3000000L);
 
 void tone(uint8_t _pin, unsigned int frequency, unsigned long duration = 0);
 void noTone(uint8_t _pin);
