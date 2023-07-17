@@ -34,7 +34,7 @@
 #define P3_7 31   /*  31 - P3.7_IO */
 #define P3_5 32   /*  32 - P3.5_IO */
 #define P5_1 33   /*  33 - P5.1_IO */
-#define P2_3 34   /*  34 - P2.3_IO */
+#define P2_3 34   /*  34 - P2.3_A1TXD */
 #define P6_7 35   /*  35 - P6.7_IO_CAPT */
 #define P6_6 36   /*  36 - P6.6_IO_CAPT */
 #define P5_6 37   /*  37 - P5.6_PWM */
@@ -52,7 +52,7 @@
 #define P7_3 47   /*  47 - P7.3 */
 #define P7_1 48   /*  48 - P7.1 */
 #define P9_4 49   /*  49 - P9.4 */
-#define P9_6 50   /*  50 - P9.6 */
+#define P9_6 50   /*  50 - P9.6_A3RXD */
 #define P8_0 51   /*  51 - P8.0 */
 #define P7_4 52   /*  52 - P7.4 */
 #define P7_6 53   /*  53 - P7.6 */
@@ -71,7 +71,7 @@
 #define P7_2 64   /*  64 - P7.2 */
 #define P7_0 65   /*  65 - P7.0 */
 #define P9_5 66   /*  66 - P9.5 */
-#define P9_7 67   /*  67 - P9.7 */
+#define P9_7 67   /*  67 - P9.7_A3TXD */
 #define P7_5 68   /*  68 - P7.5 */
 #define P7_7 69   /*  69 - P7.7 */
 #define P10_1 70  /*  70 - P10.1 */
@@ -83,6 +83,6 @@
 #define P1_4 74   /*  74 - P1.4 SW2 */
 #define P2_0 75   /*  75 - P2.0 RED_LED */
 #define P2_1 76   /*  76 - P2.1 GREEN_LED */
-#define P2_2 77   /*  77 - P2.2 BLUE_LED */
+#define P2_2 77   /*  77 - P2.2 BLUE_LED A1RXD */
 #define P1_0 78   /*  78 - P1.0 LED1 */
 

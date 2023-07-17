@@ -1,0 +1,59 @@
+#######################################
+# Syntax Coloring Map For TinyIRremote
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+IRData	                       KEYWORD1
+decode_type_t                  KEYWORD1
+IRsend                         KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+initTinyIRReceiver              KEYWORD2
+decodeIR                        KEYWORD2
+handleReceivedTinyIRData        KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+PULSE_DISTANCE          LITERAL1
+PULSE_WIDTH             LITERAL1
+DENON                   LITERAL1
+DISH                    LITERAL1
+JVC                     LITERAL1
+LG                      LITERAL1
+LG2                     LITERAL1
+NEC                     LITERAL1
+PANASONIC               LITERAL1
+KASEIKYO                LITERAL1
+KASEIKYO_JVC            LITERAL1
+KASEIKYO_DENON          LITERAL1
+KASEIKYO_SHARP          LITERAL1
+KASEIKYO_MITSUBISHI     LITERAL1
+RC5                     LITERAL1
+RC6                     LITERAL1
+SAMSUNG                 LITERAL1
+SHARP                   LITERAL1
+SONY                    LITERAL1
+ONKYO                   LITERAL1
+APPLE                   LITERAL1
+BOSEWAVE                LITERAL1
+LEGO_PF                 LITERAL1
+MAGIQUEST               LITERAL1
+WHYNTER                 LITERAL1
+UNKNOWN                 LITERAL1
+IR_FEEDBACK_LED_PIN     LITERAL1
+IR_FREQUENCY_KHZ        LITERAL1
+IR_SEND_DUTY_CYCLE      LITERAL1
+NO_REPEATS              LITERAL1
+USE_DEFAULT_FEEDBACK_LED_PIN        LITERAL1
+DO_NOT_ENABLE_LED_FEEDBACK          LITERAL1
+LED_FEEDBACK_DISABLED_COMPLETELY    LITERAL1
+LED_FEEDBACK_ENABLED_FOR_RECEIVE    LITERAL1
+LED_FEEDBACK_ENABLED_FOR_SEND       LITERAL1
