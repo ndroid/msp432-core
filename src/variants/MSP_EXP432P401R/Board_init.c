@@ -626,24 +626,30 @@ const GPIOMSP432_Config GPIOMSP432_config = {
  */
 void Board_initGPIO(void)
 {
-    /* Terminate all IO pins on the device */
-    P1DIR |= 0xFF; P1OUT = 0;
-    P2DIR |= 0xFF; P2OUT = 0;
-    P3DIR |= 0xFF; P3OUT = 0;
-    P4DIR |= 0xFF; P4OUT = 0;
-    P5DIR |= 0xFF; P5OUT = 0;
-    P6DIR |= 0xFF; P6OUT = 0;
-    P7DIR |= 0xFF; P7OUT = 0;
-    P8DIR |= 0xFF; P8OUT = 0;
-    P9DIR |= 0xFF; P9OUT = 0;
-    P10DIR |= 0xFF; P10OUT = 0;
+    /* Terminate all IO pins on the device. Set pins exposed on development
+     *  board to input with pulldown to reduce potential for short.
+     */
+    P1DIR = 0x0C;  P1OUT = 0;  P1REN |= 0xFF;
+    P2DIR = 0x00;  P2OUT = 0;  P2REN |= 0xFF;
+    P3DIR = 0x12;  P3OUT = 0;  P3REN |= 0xFF;
+    P4DIR = 0x00;  P4OUT = 0;  P4REN |= 0xFF;
+    P5DIR = 0x00;  P5OUT = 0;  P5REN |= 0xFF;
+    P6DIR = 0x00;  P6OUT = 0;  P6REN |= 0xFF;
+    P7DIR = 0x00;  P7OUT = 0;  P7REN |= 0xFF;
+    P8DIR = 0x00;  P8OUT = 0;  P8REN |= 0xFF;
+    P9DIR = 0x00;  P9OUT = 0;  P9REN |= 0xFF;
+    P10DIR = 0xC0; P10OUT = 0; P10REN |= 0xFF;
 
-    /* Configure Port PJ.2 and PJ.3 as GPIO and write 0 */
-    PJDIR |= (BIT2 | BIT3); PJOUT &= ~(BIT2 | BIT3);
+    /* Configure Port PJ.4 and PJ.5 as GPIO and write 0 */
+    PJDIR |= (BIT4 | BIT5); PJOUT &= ~(BIT4 | BIT5);
 
     /* PJ.0 & PJ.1 configured for LFXT IN/OUT */
     PJSEL0 |= BIT0 | BIT1;
     PJSEL1 &= ~(BIT0 | BIT1);
+
+    /* PJ.2 & PJ.3 configured for HFXT IN/OUT */
+    PJSEL0 |= BIT2 | BIT3;
+    PJSEL1 &= ~(BIT2 | BIT3);
 
     /* Turn off PSS high-side & low-side supervisors */
     PSS->KEY = PSS_KEY_KEY_VAL;

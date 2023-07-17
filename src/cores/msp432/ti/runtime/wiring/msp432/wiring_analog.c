@@ -245,7 +245,7 @@ void analogWrite(uint8_t pin, int val)
         }
         else {
             /* find an unused PWM resource and port map it */
-            for (pwmIndex = 0; pwmIndex < PWM_MAX_MAPPABLE_INDEX; pwmIndex++) {
+            for (pwmIndex = 0; pwmIndex <= PWM_MAX_MAPPABLE_INDEX; pwmIndex++) {
                 timerId = pwmIndex >> 2;
                 /* Check if the timer is already taken or if already claimed by us */
                 if(!(timerAvailMask & (1 << timerId)) && (!timer_ccrs_in_use[timerId])) {
