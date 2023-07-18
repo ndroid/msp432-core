@@ -640,9 +640,6 @@ void Board_initGPIO(void)
     P9DIR |= 0xFF;  P9OUT = 0;  P9REN |= 0xFF;
     P10DIR |= 0xFF; P10OUT = 0; P10REN |= 0xFF;
 
-    /* Configure Port PJ.4 and PJ.5 as GPIO and write 0 */
-    PJDIR |= (BIT4 | BIT5); PJOUT &= ~(BIT4 | BIT5);
-
     /* PJ.0 & PJ.1 configured for LFXT IN/OUT */
     PJSEL0 |= BIT0 | BIT1;
     PJSEL1 &= ~(BIT0 | BIT1);

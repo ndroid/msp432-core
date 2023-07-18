@@ -58,8 +58,10 @@
 #include <driverlib/pmap.h>
 #include <driverlib/gpio.h>
 
-#define PWM_NOT_IN_USE 0xffff
-#define PWM_IN_USE     0xfffe
+#define PWM_NOT_IN_USE  0xffff
+#define PWM_IN_USE      0xfffe
+
+#define TIMER2_INDEX    0x02
 
 /*
  * analogWrite() support
@@ -77,7 +79,7 @@ void stopAnalogReadFxn(uint8_t);
 StopFunc stopAnalogWriteFxnPtr = NULL;
 StopFunc stopAnalogReadFxnPtr = NULL;
 
-uint32_t fixedTimerId = (1 << 2);
+uint32_t fixedTimerId = (1 << TIMER2_INDEX);
 
 /* port number to PXMAP translation */
 const uint8_t pxmap[] = {
@@ -226,7 +228,8 @@ void analogWrite(uint8_t pin, int val)
         while (((1 << pinNum) & pinMask) == 0) pinNum++;
 
         if (pwmIndex < PWM_AVAILABLE_PWMS) { /* fixed mapping */
-            if(!(Timer_getAvailMask() & fixedTimerId) && (!timer_ccrs_in_use[fixedTimerId])) {
+            if(!(Timer_getAvailMask() & fixedTimerId) && (!timer_ccrs_in_use[TIMER2_INDEX])) {
+                Hwi_restore(hwiKey);
                 return; // fixed Timer is already taken by other function
             }
             if (used_pwm_port_pins[pwmIndex] != PWM_NOT_IN_USE) {
@@ -261,7 +264,7 @@ void analogWrite(uint8_t pin, int val)
                 }
             }
 
-            if (pwmIndex >= PWM_MAX_MAPPABLE_INDEX) {
+            if (pwmIndex > PWM_MAX_MAPPABLE_INDEX) {
                 Hwi_restore(hwiKey);
                 return; /* no unused PWM ports */
             }
