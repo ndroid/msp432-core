@@ -1,37 +1,19 @@
 #ifndef SERVO_H
 #define SERVO_H
 
-//#include "Energia.h"
-//#include <inttypes.h>
-//#include <ti/sysbios/hal/Timer.h>
-//#include <xdc/runtime/Types.h>
-//#include <xdc/runtime/Error.h>
-//#include <ti/sysbios/family/arm/msp432/Timer.h>
-
 // Hardware limitations information
+
 #define MIN_SERVO_PULSE_WIDTH 		510
 #define MAX_SERVO_PULSE_WIDTH 		2490
 #define DEFAULT_SERVO_PULSE_WIDTH   1500
 #define REFRESH_INTERVAL 		    20000
 
-// Aliases for timer config and loading
-//#define SERVO_TIMER				TIMERA0_BASE
-//#define SERVO_TIME_CFG			TIMER_CFG_B_PERIODIC | TIMER_CFG_SPLIT_PAIR
-//#define SERVO_TIMER_TRIGGER		TIMER_TIMB_TIMEOUT
-//#define SERVO_TIMER_INTERRUPT	INT_TIMERA0B
-//#define SERVO_TIMER_AB			TIMER_B
-//#define SERVO_TIMER_PERIPH		PRCM_TIMERA0
-
 // Other defines
+
 #define SERVOS_PER_TIMER 	8
 #define INVALID_SERVO 		255
+#define NOT_ATTACHED        -1
 
-typedef struct
-{
-	unsigned int pin_number;
-	unsigned int pulse_width;
-	bool enabled;
-} servo_t;
 
 class Servo
 {
@@ -40,18 +22,53 @@ private:
 	int min;
 	int max;
 public:
+    /* Instance of Servo class. May create up to 8 instances. */
 	Servo();
-//	static Timer_Params timerParams;
-//	static Timer_Handle timerHandle;
-	unsigned int attach(unsigned int pin, int min = MIN_SERVO_PULSE_WIDTH, int max = MAX_SERVO_PULSE_WIDTH);
+    /*
+     * Initializes instance of Servo and attaches pin.
+     * 
+     * \param pin   Arduino pin number for servo control signal
+     * \param min   minimum pulse width in uSeconds (Default: 510)
+     * \param max   maximum pulse width in uSeconds (Default: 2490)
+     * 
+     * returns index of Servo instance, or 255 if failed
+     */
+	unsigned int attach(unsigned int pin, int min = MIN_SERVO_PULSE_WIDTH, 
+							int max = MAX_SERVO_PULSE_WIDTH);
+    /* Detaches pin and disables instance of Servo. 
+     * No effect if not previously attached. */
 	void detach();
+    /*
+     * Set pulse width of servo control signal.
+     * 
+     * \param value   pulse width of servo control signal in microseconds
+     */
 	void writeMicroseconds(int value);
+    /*
+     * Read pulse width of servo control signal.
+     * 
+     * returns   pulse width of servo control signal in microseconds
+     */
 	int readMicroseconds();
+    /*
+     * Set angle of servo. Defaults to *writeMicroseconds* if value is above
+     *  180 degrees.
+     * 
+     * \param value   angle of servo (0 to 180)
+     */
 	void write(int value);
+    /*
+     * Read current angle of servo based on control signal setting.
+     * 
+     * returns   angle of servo
+     */
 	int read();
+    /*
+     * Check if Servo instance is attached.
+     * 
+     * returns   true if servo is attached and active
+     */
 	bool attached();
 };
-
-//extern "C" void ServoIntHandler(Timer_Handle handle);
 
 #endif // SERVO_H
