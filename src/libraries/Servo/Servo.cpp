@@ -21,22 +21,26 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <Energia.h>
+#include <ti/drivers/Timer.h>
+#include <ti/drivers/timer/TimerMSP432.h>
 
 #include "Servo.h"
 
 #include <stdlib.h>
 
 /** variables and functions common to all Servo instances **/
+void ServoIntHandler(Timer_Handle handle);
 
-volatile unsigned long ticksPerMicrosecond;  // Holds the calculated value
+//volatile unsigned long ticksPerMicrosecond;  // Holds the calculated value
 unsigned int servoAssignedMask;
 static servo_t servos[SERVOS_PER_TIMER];
 unsigned int remainderPulseWidth;
 volatile int currentServo;
 bool servoInitialized = false;
 
-Timer_Params timerParams;
-Timer_Handle timerHandle;
+//extern Timer_Config Timer_config[];	// Timer_Handle is (Timer_Config *)
+Timer_Handle timerHandle = NULL;
 
 // Calculate the new period remainder
 static void calculatePeriodRemainder(void)
@@ -53,10 +57,32 @@ static void calculatePeriodRemainder(void)
 	
 }
 
-void initServo(void) {
+bool initServo(void) {
+	Timer_Params timerParams;
 
-	// Initialize global variables
-	ticksPerMicrosecond = 0;
+//	Error_Block eb;
+//	Error_init(&eb);
+
+	Timer_Params_init(&timerParams);
+	timerParams.period = 10;
+	timerParams.timerCallback = ServoIntHandler;
+	timerParams.timerMode = Timer_ONESHOT_CALLBACK;	//.runMode = Timer_RunMode_ONESHOT;	
+	timerParams.periodUnits = Timer_PERIOD_US;	//.periodType = Timer_PeriodType_MICROSECS;	
+//	timerHandle = Timer_create(Timer_ANY, ServoIntHandler, &timerParams, &eb);
+
+	// Use Timer32 timers to avoid conflict with PWMs
+//	timerHandle = (Timer_Handle)(&Timer_config[Board_TIMER_T32_1]);
+//	timerHandle = timerHandle->fxnTablePtr->openFxn(timerHandle, &timerParams);
+	timerHandle = Timer_open(1, &timerParams);//Board_TIMER_T32_1
+
+	if (NULL == timerHandle) {
+		timerHandle = Timer_open(0, &timerParams);//Board_TIMER_T32_0
+
+		if (NULL == timerHandle) {
+			return false;
+		}		
+	}
+
 	servoAssignedMask = 0;
 	remainderPulseWidth = 0;
 	currentServo = 0;
@@ -69,17 +95,8 @@ void initServo(void) {
 
 	calculatePeriodRemainder();
 
-
-	Error_Block eb;
-	Error_init(&eb);
-
-	Timer_Params_init(&timerParams);
-	timerParams.period = 10;
-	//timerParams.clockSource = Timer_Source_SMCLK;
-	timerParams.runMode = Timer_RunMode_ONESHOT;
-	timerParams.periodType = Timer_PeriodType_MICROSECS;
-	timerHandle = Timer_create(Timer_ANY, ServoIntHandler, &timerParams, &eb);
-
+	// It has been initialized, prevent further calls to initServo().
+	servoInitialized = true;
 }
 
 /** end of static functions **/
@@ -152,9 +169,9 @@ unsigned int Servo::attach(unsigned int pin, int min, int max)
 	// If the module has not been initialized
 	if (!servoInitialized) {
 		// Initialize it.
-		initServo();
-		// It has been initialized, prevent further calls to initServo().
-		servoInitialized = true;
+		if (!initServo() ) {
+			return INVALID_SERVO;
+		}
 	}
 
 	this->min = min;
@@ -187,8 +204,9 @@ void Servo::detach()
 }
 
 //! ISR for generating the pulse widths
-Void ServoIntHandler(UArg arg0)
+void ServoIntHandler(Timer_Handle handle)
 {
+    TimerMSP432_Object *object = (TimerMSP432_Object *)timerHandle->object;
 
 	//Timer_stop(timerHandle);
 	// Get the pulse width value for the current servo from the array
@@ -197,11 +215,13 @@ Void ServoIntHandler(UArg arg0)
 	// then this value should be the 20ms period value
 	if(currentServo < SERVOS_PER_TIMER)
 	{
-		Timer_setPeriodMicroSecs(timerHandle, servos[currentServo].pulse_width);
+//		Timer_setPeriodMicroSecs(timerHandle, servos[currentServo].pulse_width);
+		object->period = servos[currentServo].pulse_width;
 	}
 	else
 	{
-		Timer_setPeriodMicroSecs(timerHandle, remainderPulseWidth);
+//		Timer_setPeriodMicroSecs(timerHandle, remainderPulseWidth);
+		object->period = remainderPulseWidth;
 	}
 
 	// End the servo pulse set previously (if any)
