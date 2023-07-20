@@ -30,9 +30,10 @@
 #include <stdlib.h>
 
 /** variables and functions common to all Servo instances **/
-static int_fast16_t servoPerfChangeNotify(uint_fast16_t eventType,
-    uintptr_t eventArg, uintptr_t clientArg);
 static void ServoIntHandler(Timer_Handle handle);
+static bool initServo(void); 
+static void releaseServo(void);
+static void calculatePeriodRemainder(void);
 
 //volatile unsigned long ticksPerMicrosecond;  // Holds the calculated value
 uint16_t servoAssignedMask;
@@ -190,7 +191,8 @@ void Servo::detach()
 
 /** static functions **/
 //! Reserve and initialize a Timer32 resource for the Servo 
-static bool initServo(void) {
+static bool initServo(void) 
+{
     Timer_Params timerParams;
 
     Timer_init();
