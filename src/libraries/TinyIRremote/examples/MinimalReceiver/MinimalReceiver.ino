@@ -6,13 +6,13 @@
  *  Receives IR protocol data of NEC protocol using pin change interrupts.
  *  On complete received IR command the function decodeIR(IRData *results) may 
  *  be called to fetch results. Return value indicates if new data is available.
- *  Repeats are included by default unless EXCLUDE_REPEATS is defined. 
+ *  Repeats are included by default, but may be disabled in call to init. 
  *  
- *  IR input pin must be specified in call to initTinyIRReceiver()
- *      any GPIO pin which supports interrupts may be used
+ *  Multiple receiver objects may be specified with the Class IRreceiver.
+ *  IR input pin must be specified in constructor.
  *
  *
- *  TinyIR is free software: you can redistribute it and/or modify
+ *  TinyIRremote is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
@@ -22,33 +22,7 @@
  *
  */
 
-
-/*
- * The following optional defines must be defined prior to including TinyIR header
- */
-/*
- * Uncomment the following line to change default feedback LED pin
- */
-//#define IR_FEEDBACK_LED_PIN    LED1
-/*
- * Uncommenting following line saves 12 bytes and reduces ISR handling time
- */
-//#define DO_NOT_USE_FEEDBACK_LED 
-/*
- * Uncomment the following line to exclude repeats in decodeIR(). 
- *  Otherwise, repeats are included and isRepeat is set. 
- */
-//#define EXCLUDE_REPEATS
-/*
- * Uncomment the following line in order to define handler for IR event.
- * If enabled, must define 
- *  void handleReceivedTinyIRData(uint16_t aAddress, uint8_t aCommand, bool isRepetition)
- */
-//#define HANDLE_IR_EVENT
-
-// Preceding defines (if enabled) must be included prior to including header file
 #include <TinyIRremote.h>
-
 
 /*
  * Helper macro for getting a macro definition as string
@@ -58,8 +32,10 @@
 
 #define IR_RCV_PIN      32
 
+IRreceiver irRX(IR_RCV_PIN);
+
 /**
- * Struct to hold IR data, defined as:
+ * Struct to hold IR data, defined as (defined in IRData.h):
  * 
  * struct {
  *   decode_type_t protocol;     ///< UNKNOWN, NEC, SONY, RC5, ...
@@ -76,9 +52,10 @@ void setup() {
     Serial.println(F("START " __FILE__ " from " __DATE__));
     /*
      * Must be called to initialize and set up IR receiver pin.
-     *  bool initTinyIRReceiver(uint8_t aRcvPin, bool aEnableLEDFeedback = false, uint8_t aFeedbackLEDPin = USE_DEFAULT_FEEDBACK_LED_PIN)
+     *  bool initIRReceiver(bool includeRepeats = true, bool enableCallback = false,
+                void (*callbackFunction)(uint16_t , uint8_t , bool) = NULL)
      */
-    if (initTinyIRReceiver(IR_RCV_PIN, true, GREEN_LED)) {
+    if (irRX.initIRReceiver()) {
         Serial.println(F("Ready to receive NEC IR signals at pin " STR(IR_RCV_PIN)));
     } else {
         Serial.println("Initialization of IR receiver failed!");
@@ -89,7 +66,7 @@ void setup() {
 void loop() {
     // decodeIR updates results and returns true if new command is available, 
     //  otherwise results struct is unchanged and returns false
-    if (decodeIR(&IRresults)) {
+    if (irRX.decodeIR(&IRresults)) {
         Serial.print("A=0x");
         Serial.print(IRresults.address, HEX);
         Serial.print(" C=0x");

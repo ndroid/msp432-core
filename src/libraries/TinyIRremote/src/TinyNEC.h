@@ -1,5 +1,5 @@
 /*
- *  TinyNECRX.h
+ *  TinyNEC.h
  *
  *
  *  Copyright (C) 2022  chris miller
@@ -75,14 +75,6 @@
 #endif
 
 
-#if defined(HANDLE_IR_EVENT)
-/*
- * This function is called if a complete command was received and must be 
- *  implemented by the including file (user code)
- */
-void handleReceivedTinyIRData(uint16_t aAddress, uint8_t aCommand, bool isRepeat);
-#endif
-
 #define IR_FREQUENCY_KHZ        38
 
 // LSB first, 1 start bit + 16 bit address + 8 bit data + 8 bit inverted data + 1 stop bit.
@@ -126,7 +118,8 @@ void handleReceivedTinyIRData(uint16_t aAddress, uint8_t aCommand, bool isRepeat
 #define IR_RECEIVER_STATE_WAITING_FOR_DATA_MARK         4
 #define IR_RECEIVER_STATE_WAITING_FOR_STOP_MARK         5
 
-#define MAX_SUPPORTED_PIN   40
+//#define MAX_SUPPORTED_PIN   40
+
 
 static const uint32_t GPIO_PORT_TO_BASE[] =
 {   0x00,
@@ -143,7 +136,7 @@ static const uint32_t GPIO_PORT_TO_BASE[] =
     (uint32_t)PJ
 };
 
-extern const GPIOMSP432_Config GPIOMSP432_config;
+//extern const GPIOMSP432_Config GPIOMSP432_config;
 /*
  * Device specific interpretation of the GPIO_PinConfig content
  */
@@ -153,60 +146,16 @@ typedef struct PinConfig {
     uint16_t config;
 } PinConfig;
 
-/**
- * An enum consisting of all formats supported by IRRemote library.
- * Included for consistancy with existing libraries.
- */
-typedef enum {
-    UNKNOWN = 0,
-    PULSE_DISTANCE,
-    PULSE_WIDTH,
-    DENON,
-    DISH,
-    JVC,
-    LG,
-    LG2,
-    NEC,
-    PANASONIC,
-    KASEIKYO,
-    KASEIKYO_JVC,
-    KASEIKYO_DENON,
-    KASEIKYO_SHARP,
-    KASEIKYO_MITSUBISHI,
-    RC5,
-    RC6,
-    SAMSUNG,
-    SHARP,
-    SONY,
-    ONKYO,
-    APPLE,
-    BOSEWAVE,
-    LEGO_PF,
-    MAGIQUEST,
-    WHYNTER,
-} decode_type_t;
-
-/**
- * Data structure for the user application, adapted from IRRemote library.
- * Minimal struct to only include necessary data.
- */
-typedef struct IRDataStruct {
-    decode_type_t protocol;     ///< UNKNOWN, NEC, SONY, RC5, ...
-    uint16_t address;           ///< Decoded address
-    uint16_t command;           ///< Decoded command
-    bool isRepeat;
-} IRData;
-
 
 /****************************************************
  *                     LED FEEDBACK
  ****************************************************/
 
-#define USE_DEFAULT_FEEDBACK_LED_PIN        0
-#define DO_NOT_ENABLE_LED_FEEDBACK          0x00
-#define LED_FEEDBACK_DISABLED_COMPLETELY    0x00
-#define LED_FEEDBACK_ENABLED_FOR_RECEIVE    0x01
-#define LED_FEEDBACK_ENABLED_FOR_SEND       0x02
+//#define USE_DEFAULT_FEEDBACK_LED_PIN        0
+//#define DO_NOT_ENABLE_LED_FEEDBACK          0x00
+//#define LED_FEEDBACK_DISABLED_COMPLETELY    0x00
+//#define LED_FEEDBACK_ENABLED_FOR_RECEIVE    0x01
+//#define LED_FEEDBACK_ENABLED_FOR_SEND       0x02
 
 /**
  * Contains pin number and enable status of the feedback LED
@@ -217,6 +166,7 @@ typedef struct IRDataStruct {
 //} FeedbackLEDControl;
 
 // Mapping of pin # to LED Feedback enable status (allows multiple objects to use same feedback LED)
+/*
 uint8_t feedbackLEDs[MAX_SUPPORTED_PIN + 1] = {0,    // BUILTIN_LED
     DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, 
     DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, 
@@ -227,112 +177,12 @@ uint8_t feedbackLEDs[MAX_SUPPORTED_PIN + 1] = {0,    // BUILTIN_LED
     DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, 
     DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK
 };
-
-uint8_t* setLEDFeedback(uint8_t aFeedbackLEDPin, uint8_t aEnableLEDFeedback);
-void setTxFeedbackLED(uint8_t aFeedbackLEDPin, bool aSwitchLedOn);
-void setRxFeedbackLED(uint8_t aFeedbackLEDPin, bool aSwitchLedOn);
-
-
-/****************************************************
- *                     RECEIVING
- ****************************************************/
-
-/**
- * Control and data variables of the state machine for TinyReceiver
- */
-struct TinyIRReceiverStruct {
-    /*
-     * State machine
-     */
-    uint32_t LastChangeMicros;      ///< microseconds of last Pin Change Interrupt.
-    uint8_t IRReceiverState;        ///< the state of the state machine.
-    uint8_t IRRawDataBitCounter;
-    /*
-     * Data
-     */
-    uint32_t IRRawDataMask;
-    LongUnion IRRawData;
-    bool IRRepeatDetected;
-    bool newCommandAvailable;
-};
-
-//const __FlashStringHelper* getProtocolString(decode_type_t aProtocol);
-
-bool initTinyIRReceiver(uint8_t aRcvPin, bool aEnableLEDFeedback = false, uint8_t aFeedbackLEDPin = USE_DEFAULT_FEEDBACK_LED_PIN);
-bool decodeIR(IRData *results);
+*/
+//uint8_t* setLEDFeedback(uint8_t aFeedbackLEDPin, uint8_t aEnableLEDFeedback);
+//void setTxFeedbackLED(uint8_t aFeedbackLEDPin, bool aSwitchLedOn);
+//void setRxFeedbackLED(uint8_t aFeedbackLEDPin, bool aSwitchLedOn);
 
 
-/****************************************************
- *                     SENDING
- ****************************************************/
-
-/**
- * Just for better readability of code
- */
-#define NO_REPEATS  0
-#define SEND_STOP_BIT true
-#define SEND_NO_STOP_BIT false
-#define SEND_REPEAT_COMMAND true ///< used for e.g. NEC, where a repeat is different from just repeating the data.
-
-/**
- * Duty cycle in percent for sent signals.
- */
-#if ! defined(IR_SEND_DUTY_CYCLE)
-#define IR_SEND_DUTY_CYCLE 30 // 30 saves power and is compatible to the old existing code
-#endif
-
-/**
- * Main class for sending IR signals
- */
-class IRsend {
-public:
-    IRsend();
-
-    bool begin(uint8_t aSendPin, bool aEnableLEDFeedback = false, uint8_t aFeedbackLEDPin = USE_DEFAULT_FEEDBACK_LED_PIN);
-
-    size_t write(IRData *aIRSendData, uint8_t aNumberOfRepeats = NO_REPEATS);
-
-private:
-    void enableIROut();
-
-    void sendPulseDistanceWidthData(unsigned int aOneMarkMicros, unsigned int aOneSpaceMicros, unsigned int aZeroMarkMicros, unsigned int aZeroSpaceMicros, uint32_t aData, uint8_t aNumberOfBits, bool aSendStopBit);
-
-    void mark(unsigned int aMarkMicros);
-    static void space(unsigned int aSpaceMicros);
-    void IRLedOff();
-    
-    void pwmStart();
-    void pwmStop();
-    bool timerConfigForSend(uint8_t aFrequencyKHz);
-
-    void setRegisters(uint8_t aSendPin);
-    
-    /*
-     * New send functions
-     */
-    void sendNECRepeat();
-    void sendNEC(uint16_t aAddress, uint8_t aCommand, uint8_t aNumberOfRepeats = NO_REPEATS, bool aIsRepeat = false);
-    void sendNECRaw(uint32_t aRawData, uint8_t aNumberOfRepeats = NO_REPEATS, bool aIsRepeat = false);
-
-
-    uint8_t feedbackLEDpin; 
-    uint8_t sendPin;
-    uint8_t pwmIndex;
-    uint8_t timerIndex;
-    PWM_Handle pwmHandle;
-//    volatile uint8_t *outReg;
-    uint16_t pinMask;
-    uint16_t sel0Mask;
-    uint16_t sel1Mask;
-    volatile uint16_t *dirReg;
-    volatile uint16_t *sel0Reg;
-    volatile uint16_t *sel1Reg;
-    volatile uint16_t *outReg;
-    volatile uint16_t *renReg;
-//#define HWREG8(x)         (*((volatile uint8_t *)(x)))
-
-    static void customDelayMicroseconds(unsigned long aMicroseconds);
-};
 
 
 /** @}*/

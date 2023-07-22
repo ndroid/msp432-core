@@ -6,17 +6,15 @@
  *  Receives IR protocol data of NEC protocol using pin change interrupts.
  *  On complete received IR command executes user-defined function 
  *  handleReceivedTinyIRData(uint16_t aAddress, uint8_t aCommand, bool isRepetition)
- *  (called in Interrupt context but with interrupts being enabled to enable use of delay() etc.)
- *  !!!!!!!!!!!!!!!!!!!!!!
- *  Functions called in interrupt context should be running as short as possible,
- *  so if you require longer action, save the data (address + command) and handle it in the main loop.
- *  !!!!!!!!!!!!!!!!!!!!!
+ *  (!!!!! Called in Interrupt context. Functions called in interrupt context 
+ *      should be running as short as possible, so if you require longer action, 
+ *      save the data (address + command) and handle it in the main loop. !!!!!)
  *  
- *  IR input pin must be specified in call to initTinyIRReceiver()
- *      any GPIO pin which supports interrupts may be used
+ *  Multiple receiver objects may be specified with the Class IRreceiver.
+ *  IR input pin must be specified in constructor.
  *
  *
- *  TinyIR is free software: you can redistribute it and/or modify
+ *  TinyIRremote is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
@@ -26,28 +24,6 @@
  *
  */
 
-
-/*
- * Uncomment the following line to change default feedback LED pin
- */
-//#define IR_FEEDBACK_LED_PIN    LED1
-/*
- * Uncommenting following line saves 12 bytes and reduces ISR handling time
- */
-//#define DO_NOT_USE_FEEDBACK_LED 
-/*
- * Uncomment the following line to exclude repeats in decodeIR(). 
- *  Otherwise, repeats are included and isRepeat is set. 
- */
-//#define EXCLUDE_REPEATS
-/*
- * Uncomment the following line in order to define handler for IR event.
- * If enabled, must define 
- *  void handleReceivedTinyIRData(uint16_t aAddress, uint8_t aCommand, bool isRepetition)
- */
-#define HANDLE_IR_EVENT
-
-// Preceding defines (if enabled) must be included prior to including header file
 #include <TinyIRremote.h>
 
 /*
@@ -58,8 +34,10 @@
 
 #define IR_RCV_PIN      32
 
+IRreceiver irRX(IR_RCV_PIN);
+
 /**
- * Struct to hold IR data, defined as:
+ * Struct to hold IR data, defined as (defined in IRData.h):
  * 
  * struct {
  *   decode_type_t protocol;     ///< UNKNOWN, NEC, SONY, RC5, ...
@@ -78,9 +56,10 @@ void setup() {
     Serial.println(F("START " __FILE__ " from " __DATE__));
     /*
      * Must be called to initialize and set up IR receiver pin.
-     *  bool initTinyIRReceiver(uint8_t aRcvPin, bool aEnableLEDFeedback = false, uint8_t aFeedbackLEDPin = USE_DEFAULT_FEEDBACK_LED_PIN)
+     *  bool initIRReceiver(bool includeRepeats = true, bool enableCallback = false,
+                void (*callbackFunction)(uint16_t , uint8_t , bool) = NULL)
      */
-    if (initTinyIRReceiver(IR_RCV_PIN, true, GREEN_LED)) {
+    if (irRX.initIRReceiver(true, true, handleReceivedTinyIRData)) {
         Serial.println(F("Ready to receive NEC IR signals at pin " STR(IR_RCV_PIN)));
     } else {
         Serial.println("Initialization of IR receiver failed!");
@@ -106,16 +85,16 @@ void loop() {
 
 /*
  * This function is called if a complete command was received, regardless if 
- *  it is a repeat (not impacted by EXCLUDE_REPEATS constant).
+ *  it is a repeat (not impacted by includeRepeats setting).
  *  !!!!!!!!!!!!!!!!!!!!!!
- *  Function called in interrupt context - should be running as short as possible,
- *  so if you require longer action, save the data (address + command) and handle it in the main loop.
+ *  Function called in interrupt context - should be running as short as possible, so if 
+ *  you require longer action, save the data (address + command) and handle it in the main loop.
  *  !!!!!!!!!!!!!!!!!!!!!
  */
 void handleReceivedTinyIRData(uint16_t aAddress, uint8_t aCommand, bool isRepeat) {
     /*
-     * Since we are in an interrupt context and do not want to miss the next interrupts of the repeats coming soon,
-     *  quickly save data and return to main loop
+     * Since we are in an interrupt context and do not want to miss the next interrupts 
+     *  of the repeats coming soon, quickly save data and return to main loop
      */
     IRresults.address = aAddress;
     IRresults.command = aCommand;

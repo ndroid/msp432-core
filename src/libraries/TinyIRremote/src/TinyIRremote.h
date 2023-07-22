@@ -32,6 +32,10 @@
 
 #include <Energia.h>
 
+#include "TinyNECRX.h"
+//#include "TinyNECTX.h"
+#include "IRData.h"
+#include "IRFeedbackLED.h"
 #include "LongUnion.h"
 
 
@@ -52,21 +56,21 @@
  */
 //#define HANDLE_IR_EVENT
 
-#if !defined(IR_FEEDBACK_LED_PIN)
-#define IR_FEEDBACK_LED_PIN     YELLOW_LED
-#endif
-#if !defined(LED_BUILTIN)
-#define LED_BUILTIN             LED1
-#endif
+//#if !defined(IR_FEEDBACK_LED_PIN)
+//#define IR_FEEDBACK_LED_PIN     YELLOW_LED
+//#endif
+//#if !defined(LED_BUILTIN)
+//#define LED_BUILTIN             LED1
+//#endif
 
-#if defined(__MSP432P401R__) || defined(__MSP432P4111__)
-#include "IRFeedbackLED.hpp"
-#include "TinyNECRX.hpp"
-#include "TinyNECTX.hpp"
+//#if defined(__MSP432P401R__) || defined(__MSP432P4111__)
+//#include "IRFeedbackLED.hpp"
+//#include "TinyNECRX.hpp"
+//#include "TinyNECTX.hpp"
 
-#else
-#error TinyIRremote receiver only defined for MSP432 platform on Energia
-#endif
+//#else
+//#error TinyIRremote receiver only defined for MSP432 platform on Energia
+//#endif
 
 
 

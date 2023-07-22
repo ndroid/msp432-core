@@ -845,20 +845,21 @@ void PWMTimerMSP432_init(PWM_Handle handle);
 PWM_Handle PWMTimerMSP432_open(PWM_Handle handle, PWM_Params *params);
 int_fast16_t PWMTimerMSP432_setDuty(PWM_Handle handle, uint32_t dutyValue);
 int_fast16_t PWMTimerMSP432_setPeriod(PWM_Handle handle, uint32_t periodValue);
+int_fast16_t PWMTimerMSP432_setDutyAndPeriod(PWM_Handle handle, uint32_t dutyValue, uint32_t periodValue);
 void PWMTimerMSP432_start(PWM_Handle handle);
 void PWMTimerMSP432_stop(PWM_Handle handle);
 
 /* PWM function table for PWMTimerMSP432 implementation */
 const PWM_FxnTable myPWMTimerMSP432_fxnTable = {
     PWMTimerMSP432_close,
-    NULL, /* PWMTimerMSP432_control, */
+    PWMTimerMSP432_control,
     PWMTimerMSP432_init,
     PWMTimerMSP432_open,
     PWMTimerMSP432_setDuty,
-    NULL, /* PWMTimerMSP432_setPeriod, */
-    NULL, /* PWMTimerMSP432_setDutyAndPeriod, */
+    PWMTimerMSP432_setPeriod,
+    PWMTimerMSP432_setDutyAndPeriod,
     PWMTimerMSP432_start,
-    NULL /* PWMTimerMSP432_stop */
+    PWMTimerMSP432_stop
 };
 
 PWMTimerMSP432_Object pwmTimerMSP432Objects[Board_PWMCOUNT];

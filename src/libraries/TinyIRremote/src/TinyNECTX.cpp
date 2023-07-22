@@ -34,12 +34,18 @@
 #define TINY_NEC_TX_CPP_H
 
 #include <Energia.h>
+#include <ti/runtime/wiring/wiring_private.h>
 #include "wiring_analog.h"
 
 #include <ti/drivers/PWM.h>
 #include <ti/drivers/pwm/PWMTimerMSP432.h>
+#include <ti/drivers/gpio/GPIOMSP432.h>
 
-#include "TinyNEC.h"
+/* DriverLib Includes */
+#include <ti/devices/msp432p4xx/driverlib/gpio.h>
+
+#include "TinyNECTX.h"
+#include "IRFeedbackLED.h"
 
 
 /** \addtogroup TinyReceiver Minimal receiver for NEC protocol
@@ -47,6 +53,7 @@
  */
 
 // Values defined  for timers and pins of MSP432 boards
+/*
 #define NON_PWM_PIN         0
 #define MAPPABLE_TIMERS     8
 #define MAPPABLE_INDEXES    (PWM_MAX_MAPPABLE_INDEX + 1)
@@ -60,7 +67,7 @@
 #define PIN_MASK            0x0f
 #define PORT_MASK           0xf0
 #define VALUE_MASK          0x3f
-
+*/
 #define MIN_TIMER_INDEX     PMAP_TA0CCR1A
 
 /* Pin and clock attributes for PWM timer objects.
@@ -72,6 +79,11 @@
  */
 extern PWMTimerMSP432_HWAttrsV2 pwmTimerMSP432HWAttrs[];
 
+/**
+ * Port number to peripheral register address mapping
+ */
+extern const uint32_t GPIO_PORT_TO_BASE[];
+
 
 /* Pin number to pwmPin translation, as defined in PWMTimerMSP432.h 
  *  All pins mapped to their default timer CCR output. Mappable pins
@@ -80,29 +92,30 @@ extern PWMTimerMSP432_HWAttrsV2 pwmTimerMSP432HWAttrs[];
  *  mapped CCR output is unavailable.
  *  See IRsend::timerConfigForSend()
  */
-const uint32_t pwmPinMap[] = {
-    NON_PWM_PIN, /* Pin numbers start at 1 */
-    NON_PWM_PIN, NON_PWM_PIN, PWMTimerMSP432_P3_2_TA1CCR1A, /* pin 3 - P3.2 (TA1.1) */
-    PWMTimerMSP432_P3_3_TA1CCR1A, /* pin 4 - P3.3 (TA1.1) */
-    NON_PWM_PIN, /* pins 5 */
-    NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, /* pins 6-10 */
-    PWMTimerMSP432_P3_6_TA1CCR1A, /* pin 11 - P3.6 (TA1.1) */
-    NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, /* pins 12-15 */
-    NON_PWM_PIN, PWMTimerMSP432_P5_7_TA2CCR2A, /* pin 17 - P5.7 (TA2.2) */
-    PWMTimerMSP432_P3_0_TA1CCR1A, /* pin 18 - P3.0 (TA1.1) */
-    PWMTimerMSP432_P2_5_TA0CCR2A, /* pin 19 - P2.5 (TA0.2) */
-    NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, /* pins 20-24 */
-    NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, /* pins 25-29 */
-    NON_PWM_PIN, PWMTimerMSP432_P3_7_TA1CCR1A, /* pin 31 - P3.7 (TA1.1) */
-    PWMTimerMSP432_P3_5_TA1CCR1A, /* pin 32 - P3.5 (TA1.1) */
-    NON_PWM_PIN, PWMTimerMSP432_P2_3_TA1CCR1A, /* pin 34 - P2.3 (TA1.1) */
-    PWMTimerMSP432_P6_7_TA2CCR4A, /* pin 35 - P6.7 (TA2.4) */
-    PWMTimerMSP432_P6_6_TA2CCR3A, /* pin 36 - P6.6 (TA2.3) */
-    PWMTimerMSP432_P5_6_TA2CCR1A, /* pin 37 - P5.6 (TA2.1) */
-    PWMTimerMSP432_P2_4_TA0CCR1A, /* pin 38 - P2.4 (TA0.1) */
-    PWMTimerMSP432_P2_6_TA0CCR3A, /* pin 39 - P2.6 (TA0.3) */
-    PWMTimerMSP432_P2_7_TA0CCR4A /* pin 40 - P2.7 (TA0.4) */
-};
+
+// const uint32_t pwmPinMap[] = {
+//     NON_PWM_PIN, /* Pin numbers start at 1 */
+//     NON_PWM_PIN, NON_PWM_PIN, PWMTimerMSP432_P3_2_TA1CCR1A, /* pin 3 - P3.2 (TA1.1) */
+//     PWMTimerMSP432_P3_3_TA1CCR1A, /* pin 4 - P3.3 (TA1.1) */
+//     NON_PWM_PIN, /* pins 5 */
+//     NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, /* pins 6-10 */
+//     PWMTimerMSP432_P3_6_TA1CCR1A, /* pin 11 - P3.6 (TA1.1) */
+//     NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, /* pins 12-15 */
+//     NON_PWM_PIN, PWMTimerMSP432_P5_7_TA2CCR2A, /* pin 17 - P5.7 (TA2.2) */
+//     PWMTimerMSP432_P3_0_TA1CCR1A, /* pin 18 - P3.0 (TA1.1) */
+//     PWMTimerMSP432_P2_5_TA0CCR2A, /* pin 19 - P2.5 (TA0.2) */
+//     NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, /* pins 20-24 */
+//     NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, /* pins 25-29 */
+//     NON_PWM_PIN, PWMTimerMSP432_P3_7_TA1CCR1A, /* pin 31 - P3.7 (TA1.1) */
+//     PWMTimerMSP432_P3_5_TA1CCR1A, /* pin 32 - P3.5 (TA1.1) */
+//     NON_PWM_PIN, PWMTimerMSP432_P2_3_TA1CCR1A, /* pin 34 - P2.3 (TA1.1) */
+//     PWMTimerMSP432_P6_7_TA2CCR4A, /* pin 35 - P6.7 (TA2.4) */
+//     PWMTimerMSP432_P6_6_TA2CCR3A, /* pin 36 - P6.6 (TA2.3) */
+//     PWMTimerMSP432_P5_6_TA2CCR1A, /* pin 37 - P5.6 (TA2.1) */
+//     PWMTimerMSP432_P2_4_TA0CCR1A, /* pin 38 - P2.4 (TA0.1) */
+//     PWMTimerMSP432_P2_6_TA0CCR3A, /* pin 39 - P2.6 (TA0.3) */
+//     PWMTimerMSP432_P2_7_TA0CCR4A /* pin 40 - P2.7 (TA0.4) */
+// };
 
 /* Only need to track use of mappable indexes (0-7), indexes 8-11 are fixed.
     Not sure how to correlate this with usage of indexes from other drivers,
