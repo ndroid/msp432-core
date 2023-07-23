@@ -33,6 +33,7 @@
 #include "TinyNEC.h"
 #include "IRData.h"
 #include "IRFeedbackLED.h"
+#include "LongUnion.h"
 
 
 /**
@@ -50,10 +51,11 @@ typedef void (*IRData_CallbackFxn)(uint16_t address, uint8_t command, bool isRep
 //struct TinyIRReceiverStruct {
 class IRreceiver {
 public:
-    /* Default (only) constructor 
-    *  Initializes register values based on LED_BUILTIN to avoid seg fault if begin() is not called.
-    *  @param receivePin   The Arduino pin number, where an IR receiver is connected.
-    */
+    /* Default (only) constructor. Must call initIRReceiver() and verify success
+     *  before using object.
+     *  
+     *  @param receivePin   The Arduino pin number, where an IR receiver is connected.
+     */
     IRreceiver(uint8_t receivePin);
 
     /**
@@ -66,7 +68,7 @@ public:
      *  @param enableCallback       enables callback to user defined function
      *  @param callbackFunction     reference to callback function handler
      * 
-     * returns true if successful (should always succeed for valid GPIO pin)
+     * @return true if successful (should always succeed for valid GPIO pin)
      */
     bool initIRReceiver(bool includeRepeats = true, bool enableCallback = false,
                 void (*callbackFunction)(uint16_t , uint8_t , bool) = NULL);
@@ -77,38 +79,38 @@ public:
      * Check for new IR command received. Will never return true if user
      *  callback function is enabled.
      * 
-     * returns true if new command available. Future calls will return FALSE 
+     * @return true if new command available. Future calls will return FALSE 
      *  until new IR command received.
      */
     bool newCommandReceived();
 
     /**
      * Fill IRData struct if new command has been received. Will never return 
-     *  true if user callback function is enabled.
+     *  true if user callback function is enabled. Calls to newCommandReceived() 
+     *  will return FALSE after calling this method.
      * 
      * @param results Reference to IRData struct to be populated with new command data.
      * 
-     * returns true if new command available (results populated with new command).
-     *      Calls to newCommandReceived() will return FALSE after calling this method.
+     * @return true if new command available (results populated with new command).
      */
     bool decodeIR(IRData *results);
 
     /**
      * Get address value of last received IR command.
      * 
-     * returns address value of last received IR command
+     * @return address value of last received IR command
      */
     uint16_t getAddress();
     /**
      * Get command value of last received IR command.
      * 
-     * returns command value of last received IR command
+     * @return command value of last received IR command
      */
     uint16_t getCommand();
     /**
      * Get repeat value of last received IR command.
      * 
-     * returns true if last received IR command is a repeat
+     * @return true if last received IR command is a repeat
      */
     bool getIsRepeat();
 
@@ -152,4 +154,4 @@ private:
 
 #endif // TINY_NEC_RX_H
 
-#pragma once
+//#pragma once

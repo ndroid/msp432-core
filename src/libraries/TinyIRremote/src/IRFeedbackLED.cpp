@@ -40,6 +40,11 @@
  * @{
  */
 
+uint8_t  rxFeedbackPin = 0;
+uint8_t  txFeedbackPin = 0;
+bool     rxEnableFeedback = false;
+bool     txEnableFeedback = false;
+
 void enableRXLEDFeedback(uint8_t feedbackLEDPin) {
     if (feedbackLEDPin == 0)    return;
     rxFeedbackPin = feedbackLEDPin;

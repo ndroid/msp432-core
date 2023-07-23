@@ -30,16 +30,16 @@
 #ifndef TINY_NEC_H
 #define TINY_NEC_H
 
-#include <Energia.h>
-#include <ti/drivers/PWM.h>
-#include <ti/drivers/GPIO.h>
-#include <ti/drivers/gpio/GPIOMSP432.h>
+//#include <Energia.h>
+//#include <ti/drivers/PWM.h>
+//#include <ti/drivers/GPIO.h>
+//#include <ti/drivers/gpio/GPIOMSP432.h>
 
 /* driverlib header files */
-#include <ti/devices/msp432p4xx/driverlib/driverlib.h>
+//#include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 #include <ti/devices/msp432p4xx/driverlib/gpio.h>
 
-#include "LongUnion.h"
+//#include "LongUnion.h"
 
 /** \addtogroup TinyReceiver Minimal receiver for NEC protocol
  * @{
@@ -118,9 +118,9 @@
 #define IR_RECEIVER_STATE_WAITING_FOR_DATA_MARK         4
 #define IR_RECEIVER_STATE_WAITING_FOR_STOP_MARK         5
 
-//#define MAX_SUPPORTED_PIN   40
+#define INVALID_PIN_PORT    0
 
-
+/* mapping of port number to peripheral base address */
 static const uint32_t GPIO_PORT_TO_BASE[] =
 {   0x00,
     (uint32_t)P1,
@@ -141,8 +141,11 @@ static const uint32_t GPIO_PORT_TO_BASE[] =
  * Device specific interpretation of the GPIO_PinConfig content
  */
 typedef struct PinConfig {
+    /* bit mask for pin */
     uint8_t pin;
+    /* port number */
     uint8_t port;
+    /* pin configuration mask as specified in GPIO.h */
     uint16_t config;
 } PinConfig;
 
@@ -189,4 +192,4 @@ uint8_t feedbackLEDs[MAX_SUPPORTED_PIN + 1] = {0,    // BUILTIN_LED
 
 #endif // TINY_NEC_H
 
-#pragma once
+//#pragma once

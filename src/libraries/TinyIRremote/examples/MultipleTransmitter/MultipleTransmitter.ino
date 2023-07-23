@@ -1,5 +1,5 @@
 /*
- *  MinimalTransmitter.ino
+ *  MultipleTransmitter.ino
  *
  *  Small memory footprint uses Timer PWM output for 38kHz IR signal.
  *
@@ -11,6 +11,7 @@
  * 
  *      bool IRsend::initIRSender()
  *  
+ *
  *  May declare up to four transmitters which use a mappable PWM timer (TA0/TA1) 
  *    pin, or up to four transmitters which use timer TA2 pins.
  *  Supported send pins include:
@@ -46,7 +47,6 @@
  *      69          P7.7        mappable
  * 
  * 
- * 
  *  TinyIRremote is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -65,9 +65,11 @@
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
-#define IR_TRX_PIN      32
+#define IR_TRX_PIN1      4
+#define IR_TRX_PIN2      19
 
-IRsender sendIR(IR_TRX_PIN);
+IRsender sendIR1(IR_TRX_PIN1);
+IRsender sendIR2(IR_TRX_PIN2);
 
 /**
  * Struct for IR data to transmit, defined as:
@@ -79,7 +81,7 @@ IRsender sendIR(IR_TRX_PIN);
  *   bool isRepeat;
  * } 
  */
-IRData IRmsg;
+IRData IRmsg1, IRmsg2;
 
 void setup() {
     Serial.begin(57600);
@@ -89,8 +91,14 @@ void setup() {
      * Must be called to initialize and set up IR transmit pin.
      *  bool IRsender::initIRSender( )
      */
-    if (sendIR.initIRSender()) {
-        Serial.println(F("Ready to transmit NEC IR signals on pin " STR(IR_TRX_PIN)));
+    if (sendIR1.initIRSender()) {
+        Serial.println(F("Ready to transmit NEC IR signals on pin " STR(IR_TRX_PIN1)));
+    } else {
+        Serial.println("Initialization of IR transmitter failed!");
+        while (1) {;}
+    }
+    if (sendIR2.initIRSender()) {
+        Serial.println(F("Ready to transmit NEC IR signals on pin " STR(IR_TRX_PIN2)));
     } else {
         Serial.println("Initialization of IR transmitter failed!");
         while (1) {;}
@@ -99,16 +107,25 @@ void setup() {
     // enable transmit feedback and specify LED pin number (defaults to LED_BUILTIN)
     enableTXLEDFeedback(GREEN_LED);
 
-    IRmsg.protocol = NEC;
-    IRmsg.address = 0xA5;
-    IRmsg.command = 0xC3;
-    IRmsg.isRepeat = false;
+    IRmsg1.protocol = NEC;
+    IRmsg1.address = 0xAA;
+    IRmsg1.command = 0xC3;
+    IRmsg1.isRepeat = false;
+
+    IRmsg2.protocol = NEC;
+    IRmsg2.address = 0x55;
+    IRmsg2.command = 0x4D;
+    IRmsg2.isRepeat = false;
 }
 
 void loop() {
     // send data specified in IRmsg struct using NEC encoding 
     //  size_t IRsender::write(IRData *aIRSendData, uint8_t aNumberOfRepeats = NO_REPEATS)
-    sendIR.write(&IRmsg);
+    sendIR1.write(&IRmsg1);
+    Serial.print('.');
+    delay(1000);
+
+    sendIR2.write(&IRmsg2, 2);
     Serial.print('.');
     delay(1000);
 }

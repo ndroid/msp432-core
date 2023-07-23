@@ -79,7 +79,7 @@ void stopAnalogReadFxn(uint8_t);
 StopFunc stopAnalogWriteFxnPtr = NULL;
 StopFunc stopAnalogReadFxnPtr = NULL;
 
-uint32_t fixedTimerId = (1 << TIMER2_INDEX);
+const uint32_t fixedTimerId = (1 << TIMER2_INDEX);
 
 /* port number to PXMAP translation */
 const uint8_t pxmap[] = {
@@ -109,7 +109,7 @@ uint16_t used_pwm_port_pins[] = {
     PWM_NOT_IN_USE,   /* Timer 2, CCR 4 Fixed mapping */
 };
 
-uint32_t fixed_map_pwm_pins[] = {
+const uint32_t fixed_map_pwm_pins[] = {
     PWMTimerMSP432_P5_6_TA2CCR1A,
     PWMTimerMSP432_P5_7_TA2CCR2A,
     PWMTimerMSP432_P6_6_TA2CCR3A,
@@ -117,7 +117,7 @@ uint32_t fixed_map_pwm_pins[] = {
 };
 
 /* Mappable PWM Timer capture pin encodings */
-uint32_t mapped_pwm_pin_ccrs[] = {
+const uint32_t mapped_pwm_pin_ccrs[] = {
     PWMTimerMSP432_TA0CCR1,
     PWMTimerMSP432_TA0CCR2,
     PWMTimerMSP432_TA0CCR3,

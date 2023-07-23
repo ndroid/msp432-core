@@ -33,7 +33,7 @@
 #include <Energia.h>
 
 #include "TinyNECRX.h"
-//#include "TinyNECTX.h"
+#include "TinyNECTX.h"
 #include "IRData.h"
 #include "IRFeedbackLED.h"
 #include "LongUnion.h"
@@ -78,4 +78,4 @@
 
 #endif // TINY_IR_REMOTE_H
 
-#pragma once
+//#pragma once

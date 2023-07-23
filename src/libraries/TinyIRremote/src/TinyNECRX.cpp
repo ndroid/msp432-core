@@ -41,9 +41,6 @@
  *
  */
 
-#ifndef TINY_NEC_RX_CPP_H
-#define TINY_NEC_RX_CPP_H
-
 #include <Energia.h>
 
 #include <ti/drivers/gpio/GPIOMSP432.h>
@@ -51,15 +48,13 @@
 #include <ti/devices/msp432p4xx/driverlib/gpio.h>
 
 #include "TinyNECRX.h"
-#include "IRFeedbackLED.h"
+//#include "IRFeedbackLED.h"
 
 
 /** \addtogroup TinyReceiver Minimal receiver for NEC protocol
  * @{
  */
 //#define TRACE
-#define PIN_NOT_SET         0
-#define INVALID_PIN_PORT    0
 /*
  * There are 11 8-bit ports total (1-10 and J)
  * but only 6 ports support interrupts
@@ -69,7 +64,7 @@
 /**
  * Port number to peripheral register address mapping
  */
-extern const uint32_t GPIO_PORT_TO_BASE[];
+//extern const uint32_t GPIO_PORT_TO_BASE[];
 
 extern const GPIOMSP432_Config GPIOMSP432_config;
 
@@ -383,6 +378,7 @@ IRreceiver::IRreceiver(uint8_t receivePin) {
         this->iesReg = NULL;
         this->ifgReg = NULL;
     }
+    this->newCommandAvailable = FALSE;
     this->incRepeats = false;
     this->enCallback = false;
     this->callback = NULL;
@@ -472,5 +468,3 @@ bool IRreceiver::getIsRepeat() {
 }
 
 /** @}*/
-
-#endif // TINY_NEC_RX_CPP_H

@@ -70,6 +70,8 @@ void setup() {
         Serial.println("Initialization of IR receiver 2 failed!");
         while (1) {;}
     }
+    // enable receive feedback and specify LED pin number (defaults to LED_BUILTIN)
+    enableRXLEDFeedback(BLUE_LED);
 }
 
 void loop() {

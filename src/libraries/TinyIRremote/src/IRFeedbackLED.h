@@ -47,10 +47,10 @@
 #define USE_DEFAULT_FEEDBACK_LED_PIN    0
 #endif
 
-static uint8_t  rxFeedbackPin = 0;
-static uint8_t  txFeedbackPin = 0;
-static bool     rxEnableFeedback = false;
-static bool     txEnableFeedback = false;
+extern uint8_t  rxFeedbackPin;
+extern uint8_t  txFeedbackPin;
+extern bool     rxEnableFeedback;
+extern bool     txEnableFeedback;
 
 #define RX_FEEDBACK(x)  if(rxEnableFeedback) digitalWrite(rxFeedbackPin, (x));
 #define TX_FEEDBACK(x)  if(txEnableFeedback) digitalWrite(txFeedbackPin, (x));

@@ -70,4 +70,4 @@ typedef struct IRDataStruct {
 
 #endif // IR_DATA_H
 
-#pragma once
+//#pragma once
