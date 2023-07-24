@@ -95,10 +95,10 @@
 /*
  * Macros for comparing timing values
  */
-#define lowerValue25Percent(aDuration)   (aDuration - (aDuration << 2))
-#define upperValue25Percent(aDuration)   (aDuration + (aDuration << 2))
-#define lowerValue(aDuration)   (aDuration - (aDuration << 1))
-#define upperValue(aDuration)   (aDuration + (aDuration << 1))
+#define lowerValue25Percent(aDuration)   (aDuration - (aDuration >> 2))
+#define upperValue25Percent(aDuration)   (aDuration + (aDuration >> 2))
+#define lowerValue(aDuration)   (aDuration - (aDuration >> 1))
+#define upperValue(aDuration)   (aDuration + (aDuration >> 1))
 
 /*
  * The states for the state machine

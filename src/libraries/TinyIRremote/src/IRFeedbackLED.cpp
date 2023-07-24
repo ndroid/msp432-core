@@ -52,7 +52,7 @@ void enableRXLEDFeedback(uint8_t feedbackLEDPin) {
     rxEnableFeedback = true;
 }
 
-void disableRXLEDFeedback(uint8_t aFeedbackLEDPin) {
+void disableRXLEDFeedback() {
     rxEnableFeedback = false;
 }
 

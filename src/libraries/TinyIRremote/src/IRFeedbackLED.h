@@ -67,7 +67,7 @@ void enableRXLEDFeedback(uint8_t feedbackLEDPin = USE_DEFAULT_FEEDBACK_LED_PIN);
 /**
  * Disable blinking of feedback LED for IR receiving.
  */
-void disableRXLEDFeedback(uint8_t aFeedbackLEDPin);
+void disableRXLEDFeedback();
 
 /**
  * Enable blinking of feedback LED (LED_BUILTIN is taken as default) on IR sending. 
