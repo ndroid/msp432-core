@@ -26,7 +26,7 @@
  *  This file adapted from source in IRMP https://github.com/ukw100/IRMP.
  *  This file adapted from source in Arduino-IRremote https://github.com/Arduino-IRremote/Arduino-IRremote.
  *
- *  TinyIR is free software: you can redistribute it and/or modify
+ *  TinyIRremote is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
@@ -48,23 +48,17 @@
 #include <ti/devices/msp432p4xx/driverlib/gpio.h>
 
 #include "TinyNECRX.h"
-//#include "IRFeedbackLED.h"
 
 
 /** \addtogroup TinyReceiver Minimal receiver for NEC protocol
  * @{
  */
-//#define TRACE
+
 /*
  * There are 11 8-bit ports total (1-10 and J)
  * but only 6 ports support interrupts
  */
 #define NUM_INTERRUPT_PORTS 6
-
-/**
- * Port number to peripheral register address mapping
- */
-//extern const uint32_t GPIO_PORT_TO_BASE[];
 
 extern const GPIOMSP432_Config GPIOMSP432_config;
 
@@ -169,14 +163,6 @@ IRreceiver* gpio_to_IRreceiver[] = {
     NULL,  /*  78 - P1.0 LED1 */
 };
 
-/**
- * IR receiver is defined as a single instance because of the limitation of the interrupt handler.
- *  The ISR must know the Port/Pin in order to change the interrupt edge and clear the flag, and there 
- *  is no efficient means for passing this to multiple ISR instances. Therefore, only one may be defined.
- */
-//TinyIRReceiverStruct TinyIRReceiverControl;
-
-//static uint8_t feedbackLEDpin; 
 
 /**
  * Static ISR to call to receiver object private method.
@@ -199,15 +185,14 @@ void IRreceiver::interruptHandler() {
      */
     uint8_t tIRLevel = digitalRead(this->rcvPin);
 
-    // Toggle triggering edge and clear flag (workaround to MSP432 limitation of not triggering on CHANGE)
+    // Toggle triggering edge and clear flag 
+    //  (workaround to MSP432 limitation of not triggering on CHANGE)
     *(this->iesReg) ^= this->config->pin;
     *(this->ifgReg) &= ~(this->config->pin);
 
     RX_FEEDBACK(!tIRLevel);
 
-    /*
-     * compute microseconds after last change
-     */
+    // compute microseconds since last change
     uint32_t tCurrentMicros = micros();
     uint16_t tMicrosOfMarkOrSpace = tCurrentMicros - this->LastChangeMicros;
     this->LastChangeMicros = tCurrentMicros;
@@ -225,9 +210,7 @@ void IRreceiver::interruptHandler() {
 #endif
 
     if (tIRLevel == LOW) {
-        /*
-         * We have a mark here
-         */
+        // We have a mark here
         if (tMicrosOfMarkOrSpace > 2 * NEC_HEADER_MARK) {
             // timeout -> must reset state machine
             tState = IR_RECEIVER_STATE_WAITING_FOR_START_MARK;
@@ -240,9 +223,7 @@ void IRreceiver::interruptHandler() {
         else if (tState == IR_RECEIVER_STATE_WAITING_FOR_FIRST_DATA_MARK) {
             if (tMicrosOfMarkOrSpace >= lowerValue25Percent(NEC_HEADER_SPACE)
                     && tMicrosOfMarkOrSpace <= upperValue25Percent(NEC_HEADER_SPACE)) {
-                /*
-                 * We have a valid data header space here -> initialize data
-                 */
+                // We have a valid data header space here -> initialize data
                 this->IRRawDataBitCounter = 0;
                 this->IRRawData.ULong = 0;
                 this->IRRawDataMask = 1;
@@ -251,9 +232,7 @@ void IRreceiver::interruptHandler() {
             } else if (tMicrosOfMarkOrSpace >= lowerValue25Percent(NEC_REPEAT_HEADER_SPACE)
                     && tMicrosOfMarkOrSpace <= upperValue25Percent(NEC_REPEAT_HEADER_SPACE)
                     && this->IRRawDataBitCounter >= NEC_BITS) {
-                /*
-                 * We have a repeat header here and no broken receive before -> set repeat flag
-                 */
+                // We have a repeat header here and no broken receive before -> set repeat flag
                 this->IRRepeatDetected = true;
                 tState = IR_RECEIVER_STATE_WAITING_FOR_DATA_SPACE;
             } else {
@@ -286,13 +265,9 @@ void IRreceiver::interruptHandler() {
             tState = IR_RECEIVER_STATE_WAITING_FOR_START_MARK;
         }
     } else {
-        /*
-         * We have a space here
-         */
+        // We have a space here
         if (tState == IR_RECEIVER_STATE_WAITING_FOR_START_SPACE) {
-            /*
-             * Check length of header mark here
-             */
+            // Check length of header mark here
             if (tMicrosOfMarkOrSpace >= lowerValue25Percent(NEC_HEADER_MARK)
                     && tMicrosOfMarkOrSpace <= upperValue25Percent(NEC_HEADER_MARK)) {
                 tState = IR_RECEIVER_STATE_WAITING_FOR_FIRST_DATA_MARK;
@@ -303,41 +278,26 @@ void IRreceiver::interruptHandler() {
         } else if (tState == IR_RECEIVER_STATE_WAITING_FOR_DATA_SPACE) {
             // Check data mark length
             if (tMicrosOfMarkOrSpace >= lowerValue(NEC_BIT_MARK) && tMicrosOfMarkOrSpace <= upperValue(NEC_BIT_MARK)) {
-                /*
-                 * We have a valid mark here, check for transmission complete
-                 */
+                // We have a valid mark here, check for transmission complete
                 if ((this->IRRawDataBitCounter >= NEC_BITS) || this->IRRepeatDetected) {
-                    /*
-                     * Code complete -> call callback, no parity check!
-                     */
+                    // Code complete -> call callback, no parity check!
                     // Reset state for new start
                     tState = IR_RECEIVER_STATE_WAITING_FOR_START_MARK;
-                    interrupts();
-                    /*
-                     * Address reduction to 8 bit
-                     */
+                    // Address reduction to 8 bit
                     if (this->IRRawData.UByte.LowByte
                             == (uint8_t) (~(this->IRRawData.UByte.MidLowByte))) {
                         // standard 8 bit address NEC protocol
                         this->IRRawData.UByte.MidLowByte = 0; // Address is the first 8 bit
                     }
 
-//#if defined(HANDLE_IR_EVENT)
                     if (this->enCallback) {
-                        /*
-                        * Call user provided callback here
-                        */
+                        interrupts();
+                        // Call user provided callback here
                         this->callback(this->IRRawData.UWord.LowWord,
                                 this->IRRawData.UByte.MidHighByte, this->IRRepeatDetected);
                     } else {
+                        // Only registers that new data is available if it is not a repeat
                         this->newCommandAvailable = this->incRepeats || !(this->IRRepeatDetected);
-//#endif
-//#if !defined(EXCLUDE_REPEATS)
-//                    this->newCommandAvailable = TRUE;
-//#else
-                    // Only registers that new data is available if it is not a repeat
-//                    this->newCommandAvailable = !(this->IRRepeatDetected);
-//#endif
                     }
                 } else {
                     // not finished yet
@@ -370,7 +330,6 @@ IRreceiver::IRreceiver(uint8_t receivePin) {
         this->config = (PinConfig *) &GPIOMSP432_config.pinConfigs[receivePin];
         // store references to registers for quick updates in ISR
         uint32_t baseAddress = GPIO_PORT_TO_BASE[this->config->port];
-//        pinMask = config->pin;
         this->iesReg = (volatile uint8_t *)(baseAddress + OFS_LIB_PAIES);   //HWREG16
         this->ifgReg = (volatile uint8_t *)(baseAddress + OFS_LIB_PAIFG);
     } else {
@@ -425,8 +384,8 @@ bool IRreceiver::initIRReceiver(bool includeRepeats, bool enableCallback,
 
     pinMode(this->rcvPin, INPUT_PULLUP);
 
-    // attach ISR for falling-edge on IR receiver pin (bug in MSP432 drivers 
-    //  prevents triggering on both edges, so have to swap triggering edge in ISR)
+    // attach ISR for falling-edge on IR receiver pin (MSP432 does not support 
+    //  triggering on both edges, so have to swap triggering edge in ISR)
     attachInterrupt(this->rcvPin, (void (*)())IRPinChangeInterruptHandler, FALLING); 
     gpio_to_IRreceiver[this->rcvPin] = this;
     this->initialized = true;

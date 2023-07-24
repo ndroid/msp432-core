@@ -69,5 +69,3 @@ typedef struct IRDataStruct {
 } IRData;
 
 #endif // IR_DATA_H
-
-//#pragma once

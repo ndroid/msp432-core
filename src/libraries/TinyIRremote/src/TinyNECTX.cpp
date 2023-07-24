@@ -44,7 +44,6 @@
 #include <ti/sysbios/family/arm/msp432/Timer.h>
 
 #include "TinyNECTX.h"
-//#include "IRFeedbackLED.h"
 #include "LongUnion.h"
 
 
@@ -53,22 +52,7 @@
  */
 
 // Values defined  for timers and pins of MSP432 boards
-/*
-#define NON_PWM_PIN         0
-#define MAPPABLE_TIMERS     8
-#define MAPPABLE_INDEXES    (PWM_MAX_MAPPABLE_INDEX + 1)
-
-// Values defined to interpret pwmpin values - as described in PWMTimerMSP432.h
-#define CCR_OFFSET          20
-#define TMRID_OFFSET        16
-#define VALUE_OFFSET        10
-#define PORT_OFFSET         4
-#define PIN_OFFSET          0
-#define PIN_MASK            0x0f
-#define PORT_MASK           0xf0
-#define VALUE_MASK          0x3f
-*/
-//#define MIN_TIMER_INDEX     PMAP_TA0CCR1A
+#define PORT_OFFSET             4
 #define TIMER_CCR_COUNT         4
 #define TIMER2_INDEX            2
 #define INVALID_TIMER_INDEX     0xff
@@ -87,70 +71,15 @@
  */
 extern PWMTimerMSP432_HWAttrsV2 pwmTimerMSP432HWAttrs[];
 
-/**
- * Port number to peripheral register address mapping
- */
-//extern const uint32_t GPIO_PORT_TO_BASE[];
-
-extern uint32_t fixed_map_pwm_pins[];
-extern uint32_t mapped_pwm_pin_ccrs[];
+extern const uint32_t fixed_map_pwm_pins[];
+extern const uint32_t mapped_pwm_pin_ccrs[];
 
 extern const GPIOMSP432_Config GPIOMSP432_config;
 
 static uint8_t timerIndex = INVALID_TIMER_INDEX;
 static uint8_t senderCnt = 0;
 
-/* Pin number to pwmPin translation, as defined in PWMTimerMSP432.h 
- *  All pins mapped to their default timer CCR output. Mappable pins
- *  which are not the default CCR output are mapped to TA1.1 out
- *  by default. Mappable pins may be reassigned if the initial 
- *  mapped CCR output is unavailable.
- *  See IRsend::timerConfigForSend()
- */
 
-// const uint32_t pwmPinMap[] = {
-//     NON_PWM_PIN, /* Pin numbers start at 1 */
-//     NON_PWM_PIN, NON_PWM_PIN, PWMTimerMSP432_P3_2_TA1CCR1A, /* pin 3 - P3.2 (TA1.1) */
-//     PWMTimerMSP432_P3_3_TA1CCR1A, /* pin 4 - P3.3 (TA1.1) */
-//     NON_PWM_PIN, /* pins 5 */
-//     NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, /* pins 6-10 */
-//     PWMTimerMSP432_P3_6_TA1CCR1A, /* pin 11 - P3.6 (TA1.1) */
-//     NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, /* pins 12-15 */
-//     NON_PWM_PIN, PWMTimerMSP432_P5_7_TA2CCR2A, /* pin 17 - P5.7 (TA2.2) */
-//     PWMTimerMSP432_P3_0_TA1CCR1A, /* pin 18 - P3.0 (TA1.1) */
-//     PWMTimerMSP432_P2_5_TA0CCR2A, /* pin 19 - P2.5 (TA0.2) */
-//     NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, /* pins 20-24 */
-//     NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, NON_PWM_PIN, /* pins 25-29 */
-//     NON_PWM_PIN, PWMTimerMSP432_P3_7_TA1CCR1A, /* pin 31 - P3.7 (TA1.1) */
-//     PWMTimerMSP432_P3_5_TA1CCR1A, /* pin 32 - P3.5 (TA1.1) */
-//     NON_PWM_PIN, PWMTimerMSP432_P2_3_TA1CCR1A, /* pin 34 - P2.3 (TA1.1) */
-//     PWMTimerMSP432_P6_7_TA2CCR4A, /* pin 35 - P6.7 (TA2.4) */
-//     PWMTimerMSP432_P6_6_TA2CCR3A, /* pin 36 - P6.6 (TA2.3) */
-//     PWMTimerMSP432_P5_6_TA2CCR1A, /* pin 37 - P5.6 (TA2.1) */
-//     PWMTimerMSP432_P2_4_TA0CCR1A, /* pin 38 - P2.4 (TA0.1) */
-//     PWMTimerMSP432_P2_6_TA0CCR3A, /* pin 39 - P2.6 (TA0.3) */
-//     PWMTimerMSP432_P2_7_TA0CCR4A /* pin 40 - P2.7 (TA0.4) */
-// };
-
-/* Only need to track use of mappable indexes (0-7), indexes 8-11 are fixed.
-    Not sure how to correlate this with usage of indexes from other drivers,
-    there does not appear to be a status getter for TI pwm driver.
- */
-//static uint32_t indexAssignedMask = 0x0;
-
-// Track mappable timers used when allocating pwm to mappable pins. 
-/*
-static uint32_t usedMappableTimers[MAPPABLE_TIMERS][2] = {
-    {PWMTimerMSP432_TA0CCR1, false},  // PMAP_TA0CCR1A    20
-    {PWMTimerMSP432_TA0CCR2, false},  // PMAP_TA0CCR2A    21
-    {PWMTimerMSP432_TA0CCR3, false},  // PMAP_TA0CCR3A    22
-    {PWMTimerMSP432_TA0CCR4, false},  // PMAP_TA0CCR4A    23
-    {PWMTimerMSP432_TA1CCR1, false},  // PMAP_TA1CCR1A    24
-    {PWMTimerMSP432_TA1CCR2, false},  // PMAP_TA1CCR2A    25
-    {PWMTimerMSP432_TA1CCR3, false},  // PMAP_TA1CCR3A    26
-    {PWMTimerMSP432_TA1CCR4, false}   // PMAP_TA1CCR4A    27
-};
-*/
 IRsender::IRsender(uint8_t sendPin) {
     this->txPin = sendPin;
     if (sendPin < GPIOMSP432_config.numberOfPinConfigs) {
@@ -211,12 +140,12 @@ void IRsender::pwmStop() {
     IR_DEBUG_PRINTLN("IRsend::pwmStop - begin");
     *(this->sel0Reg) &= ~(this->config->pin);
     *(this->sel1Reg) &= ~(this->config->pin);
-//        *(this->outReg)  &= ~(this->pinMask);
+    // *(this->outReg)  &= ~(this->pinMask);
     IR_DEBUG_PRINTLN("IRsend::pwmStop - stopped");
 }
 
 bool IRsender::timerConfigForSend() {
-    uint16_t pinId, pinNum;
+    uint16_t pinNum;
     uint_fast8_t port;
     uint_fast16_t pinMask;
     uint32_t hwiKey;
@@ -284,15 +213,14 @@ bool IRsender::timerConfigForSend() {
 
         this->pwmIndex = (TIMER_CCR_COUNT * timerIndex) + senderCnt;
 
-        pinId = *(uint32_t *)(this->config) & 0xffff;
-        port = pinId >> 8;
-        pinMask = pinId & 0xff;
+        port = this->config->port;      // config >> 8
+        pinMask = this->config->pin;    // config & 0xff
         pinNum = 0;
         while (((1 << pinNum) & pinMask) == 0)
             pinNum++;
 
         // encode pwmPin field with port/pin/TAxCCRyA info 
-        pwmPin = port << 4 | pinNum;
+        pwmPin = (port << PORT_OFFSET) | pinNum;
         pwmPin = pwmPin | mapped_pwm_pin_ccrs[this->pwmIndex];
     }
     IR_DEBUG_PRINT("IRsend::timerConfigForSend - index set to ");
@@ -348,9 +276,6 @@ bool IRsender::timerConfigForSend() {
 
     Hwi_restore(hwiKey);
 
-//    PWM_setDuty((PWM_Handle)&(PWM_config[this->pwmIndex]), 
-//                        ((uint32_t) val * PWM_PERIOD_IN_COUNTS / pwmMaxDuty));
-
     IRLedOff();
     return true;
 }
@@ -397,7 +322,7 @@ void IRsender::sendNECRepeat() {
     mark(NEC_HEADER_MARK);
     space(NEC_REPEAT_HEADER_SPACE);
     mark(NEC_BIT_MARK);
-//    ledOff(); // Always end with the LED off
+    //ledOff(); // Always end with the LED off
 }
 
 void IRsender::sendNEC(uint16_t address, uint8_t command, uint8_t numberOfRepeats, bool isRepeat) {

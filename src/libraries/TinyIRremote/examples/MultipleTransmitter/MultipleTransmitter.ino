@@ -12,8 +12,9 @@
  *      bool IRsend::initIRSender()
  *  
  *
- *  May declare up to four transmitters which use a mappable PWM timer (TA0/TA1) 
- *    pin, or up to four transmitters which use timer TA2 pins.
+ *  May declare up to four transmitters which use a mappable PWM timer (Ports 
+ *      2, 3, and 7 are mappable and may be connected to Timer_A0 or Timer_A1), 
+ *      OR up to four transmitters which use timer TA2 pins.
  *  Supported send pins include:
  *     pin#        port.pin     timer
  *      3           P3.2        mappable

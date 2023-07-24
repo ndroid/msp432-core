@@ -12,7 +12,7 @@
  *  This file adapted from source in IRMP https://github.com/ukw100/IRMP.
  *  This file adapted from source in Arduino-IRremote https://github.com/Arduino-IRremote/Arduino-IRremote.
  *
- *  TinyIR is free software: you can redistribute it and/or modify
+ *  TinyIRremote is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
@@ -30,16 +30,8 @@
 #ifndef TINY_NEC_H
 #define TINY_NEC_H
 
-//#include <Energia.h>
-//#include <ti/drivers/PWM.h>
-//#include <ti/drivers/GPIO.h>
-//#include <ti/drivers/gpio/GPIOMSP432.h>
-
 /* driverlib header files */
-//#include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 #include <ti/devices/msp432p4xx/driverlib/gpio.h>
-
-//#include "LongUnion.h"
 
 /** \addtogroup TinyReceiver Minimal receiver for NEC protocol
  * @{
@@ -103,10 +95,10 @@
 /*
  * Macros for comparing timing values
  */
-#define lowerValue25Percent(aDuration)   (aDuration - (aDuration / 4))
-#define upperValue25Percent(aDuration)   (aDuration + (aDuration / 4))
-#define lowerValue(aDuration)   (aDuration - (aDuration / 2))
-#define upperValue(aDuration)   (aDuration + (aDuration / 2))
+#define lowerValue25Percent(aDuration)   (aDuration - (aDuration << 2))
+#define upperValue25Percent(aDuration)   (aDuration + (aDuration << 2))
+#define lowerValue(aDuration)   (aDuration - (aDuration << 1))
+#define upperValue(aDuration)   (aDuration + (aDuration << 1))
 
 /*
  * The states for the state machine
@@ -136,7 +128,6 @@ static const uint32_t GPIO_PORT_TO_BASE[] =
     (uint32_t)PJ
 };
 
-//extern const GPIOMSP432_Config GPIOMSP432_config;
 /*
  * Device specific interpretation of the GPIO_PinConfig content
  */
@@ -150,46 +141,6 @@ typedef struct PinConfig {
 } PinConfig;
 
 
-/****************************************************
- *                     LED FEEDBACK
- ****************************************************/
-
-//#define USE_DEFAULT_FEEDBACK_LED_PIN        0
-//#define DO_NOT_ENABLE_LED_FEEDBACK          0x00
-//#define LED_FEEDBACK_DISABLED_COMPLETELY    0x00
-//#define LED_FEEDBACK_ENABLED_FOR_RECEIVE    0x01
-//#define LED_FEEDBACK_ENABLED_FOR_SEND       0x02
-
-/**
- * Contains pin number and enable status of the feedback LED
- */
-//typedef struct FeedbackLEDControlStruct {
-//    uint8_t FeedbackLEDPin;         ///< if 0, then take board specific FEEDBACK_LED_ON() and FEEDBACK_LED_OFF() functions
-//    uint8_t LedFeedbackEnabled; ///< LED_FEEDBACK_ENABLED_FOR_RECEIVE or LED_FEEDBACK_ENABLED_FOR_SEND -> enable blinking of pin on IR processing
-//} FeedbackLEDControl;
-
-// Mapping of pin # to LED Feedback enable status (allows multiple objects to use same feedback LED)
-/*
-uint8_t feedbackLEDs[MAX_SUPPORTED_PIN + 1] = {0,    // BUILTIN_LED
-    DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, 
-    DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, 
-    DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, 
-    DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, 
-    DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, 
-    DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, 
-    DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, 
-    DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK, DO_NOT_ENABLE_LED_FEEDBACK
-};
-*/
-//uint8_t* setLEDFeedback(uint8_t aFeedbackLEDPin, uint8_t aEnableLEDFeedback);
-//void setTxFeedbackLED(uint8_t aFeedbackLEDPin, bool aSwitchLedOn);
-//void setRxFeedbackLED(uint8_t aFeedbackLEDPin, bool aSwitchLedOn);
-
-
-
-
 /** @}*/
 
 #endif // TINY_NEC_H
-
-//#pragma once

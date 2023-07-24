@@ -12,7 +12,7 @@
  *  This file adapted from source in IRMP https://github.com/ukw100/IRMP.
  *  This file adapted from source in Arduino-IRremote https://github.com/Arduino-IRremote/Arduino-IRremote.
  *
- *  TinyIR is free software: you can redistribute it and/or modify
+ *  TinyIRremote is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
@@ -48,7 +48,6 @@ typedef void (*IRData_CallbackFxn)(uint16_t address, uint8_t command, bool isRep
 /**
  * Control and data variables of the state machine for TinyReceiver
  */
-//struct TinyIRReceiverStruct {
 class IRreceiver {
 public:
     /* Default (only) constructor. Must call initIRReceiver() and verify success
@@ -72,8 +71,6 @@ public:
      */
     bool initIRReceiver(bool includeRepeats = true, bool enableCallback = false,
                 void (*callbackFunction)(uint16_t , uint8_t , bool) = NULL);
-
-//    size_t write(IRData *aIRSendData, uint8_t aNumberOfRepeats = NO_REPEATS);
 
     /**
      * Check for new IR command received. Will never return true if user
@@ -118,7 +115,6 @@ private:
     /* pin configuration */
     uint8_t rcvPin;
     PinConfig *config;
-//    uint16_t pinMask;
     volatile uint8_t *iesReg;
     volatile uint8_t *ifgReg;
     /* state machine */
@@ -143,15 +139,10 @@ private:
     friend void IRPinChangeInterruptHandler(uint_least8_t);
 };
 
-//#if defined(HANDLE_IR_EVENT)
 /*
- * This function is called if a complete command was received and must be 
- *  implemented by the including file (user code)
+ * Template for user-defined callback handler
  */
 //void handleReceivedTinyIRData(uint16_t aAddress, uint8_t aCommand, bool isRepeat);
-//#endif
 
 
 #endif // TINY_NEC_RX_H
-
-//#pragma once

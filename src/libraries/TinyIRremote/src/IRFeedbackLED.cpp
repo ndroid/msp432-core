@@ -66,4 +66,3 @@ void enableTXLEDFeedback(uint8_t feedbackLEDPin) {
 void disableTXLEDFeedback() {
     txEnableFeedback = false;
 }
-

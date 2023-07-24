@@ -92,5 +92,3 @@ union LongUnion {
 };
 
 #endif // LONG_UNION_H
-
-#pragma once

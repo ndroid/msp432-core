@@ -8,15 +8,18 @@
 
 IRData	                       KEYWORD1
 decode_type_t                  KEYWORD1
-IRsend                         KEYWORD1
+IRsender                       KEYWORD1
+IRreceiver                     KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
-initTinyIRReceiver              KEYWORD2
-decodeIR                        KEYWORD2
-handleReceivedTinyIRData        KEYWORD2
+enableRXLEDFeedback              KEYWORD2
+disableRXLEDFeedback             KEYWORD2
+enableTXLEDFeedback              KEYWORD2
+disableTXLEDFeedback             KEYWORD2
+IRData_CallbackFxn               KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
@@ -48,12 +51,5 @@ LEGO_PF                 LITERAL1
 MAGIQUEST               LITERAL1
 WHYNTER                 LITERAL1
 UNKNOWN                 LITERAL1
-IR_FEEDBACK_LED_PIN     LITERAL1
 IR_FREQUENCY_KHZ        LITERAL1
 IR_SEND_DUTY_CYCLE      LITERAL1
-NO_REPEATS              LITERAL1
-USE_DEFAULT_FEEDBACK_LED_PIN        LITERAL1
-DO_NOT_ENABLE_LED_FEEDBACK          LITERAL1
-LED_FEEDBACK_DISABLED_COMPLETELY    LITERAL1
-LED_FEEDBACK_ENABLED_FOR_RECEIVE    LITERAL1
-LED_FEEDBACK_ENABLED_FOR_SEND       LITERAL1

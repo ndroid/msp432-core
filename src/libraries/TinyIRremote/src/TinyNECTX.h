@@ -154,6 +154,7 @@ private:
      * Repeat commands should be sent in a 110 ms raster.
      */
     void sendNECRepeat();
+
     /**
      * Send IR command in NEC encoding. Repeat commands should be sent 
      * in a 110 ms raster. There is NO delay after the last sent repeat! 
@@ -179,10 +180,10 @@ private:
     uint8_t txPin;
     uint8_t pwmIndex;
     PWM_Handle pwmHandle;
-//    volatile uint8_t *outReg;
     PinConfig *config;
     uint8_t sel0Mask;
     uint8_t sel1Mask;
+    // volatile uint8_t *outReg;
     volatile uint8_t *dirReg;
     volatile uint8_t *sel0Reg;
     volatile uint8_t *sel1Reg;
@@ -201,5 +202,3 @@ private:
 
 
 #endif // TINY_NEC_TX_H
-
-//#pragma once
