@@ -27,6 +27,7 @@
 #include <ti/drivers/timer/TimerMSP432.h>
 
 #include "Servo.h"
+#include "Board.h"
 #include <stdlib.h>
 
 /** variables and functions common to all Servo instances **/
@@ -53,7 +54,7 @@ typedef struct
 static servo_t servos[SERVOS_PER_TIMER];
 
 
-//extern Timer_Config Timer_config[];    // Timer_Handle is (Timer_Config *)
+// Timer_Handle is (Timer_Config *)
 Timer_Handle timerHandle = NULL;
 
 
@@ -199,17 +200,14 @@ static bool initServo(void)
     Timer_Params_init(&timerParams);
     timerParams.period = DEFAULT_SERVO_PULSE_WIDTH;
     timerParams.timerCallback = ServoIntHandler;
-    timerParams.timerMode = Timer_ONESHOT_CALLBACK;    //.runMode = Timer_RunMode_ONESHOT;    
-    timerParams.periodUnits = Timer_PERIOD_US;    //.periodType = Timer_PeriodType_MICROSECS;    
-//    timerHandle = Timer_create(Timer_ANY, ServoIntHandler, &timerParams, &eb);
+    timerParams.timerMode = Timer_ONESHOT_CALLBACK;  
+    timerParams.periodUnits = Timer_PERIOD_US;
 
     // Use Timer32 timers to avoid conflict with PWMs
-//    timerHandle = (Timer_Handle)(&Timer_config[Board_TIMER_T32_1]);
-//    timerHandle = timerHandle->fxnTablePtr->openFxn(timerHandle, &timerParams);
-    timerHandle = Timer_open(1, &timerParams);//Board_TIMER_T32_1
+    timerHandle = Timer_open(Board_TIMER_T32_1, &timerParams);
 
     if (NULL == timerHandle) {
-        timerHandle = Timer_open(0, &timerParams);//Board_TIMER_T32_0
+        timerHandle = Timer_open(Board_TIMER_T32_0, &timerParams);
 
         if (NULL == timerHandle) {
             return false;

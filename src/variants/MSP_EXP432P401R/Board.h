@@ -190,7 +190,7 @@ typedef enum Board_UARTName {
  *  @brief  Enum of Watchdog names on the MSP_EXP432P401R Launch Pad dev board
  */
 typedef enum Board_WatchdogName {
-    Board_WATCHDOG = 0,
+    Board_WATCHDOG0 = 0,
 
     Board_WATCHDOGCOUNT
 } Board_WatchdogName;
@@ -200,7 +200,7 @@ typedef enum Board_WatchdogName {
  *  @brief  Enum of WiFi names on the MSP_EXP432P401R Launch Pad dev board
  */
 typedef enum Board_WiFiName {
-    Board_WIFI = 0,
+    Board_WIFI0 = 0,
 
     Board_WIFICOUNT
 } Board_WiFiName;
