@@ -5,6 +5,13 @@
 - Udpate appropriate key values url, archiveFileName, checksum, and size in the package index file
 
 
+msp432-5.29.3-devel
+22fd6fd53ddfc9c2121b54e7de9629ee70a893fa8d5b5c192fc98c64c7571e12 *msp432-5.29.3.tar.bz2
+50906742 Jul 12 17:04 msp432-5.29.3.tar.bz2
+
+
 msp432-5.29.4
-22fd6fd53ddfc9c2121b54e7de9629ee70a893fa8d5b5c192fc98c64c7571e12 *msp432-5.29.4.tar.bz2
-50906742 Jul 12 17:04 msp432-5.29.4.tar.bz2
+1715f96e15a94eb5c26b17853bc17228c41e0619f77833313de557aa7b3970f4 *msp432-5.29.4.tar.bz2
+29829567 Jul 25 10:17 msp432-5.29.4.tar.bz2
+
+
