@@ -54,6 +54,14 @@ This MSP432 core includes the following libraries:
     - Hover the mouse over the board platform you want, and click "Install"
 7. Once the board package is installed, you can select the board you want with the `Tools->Board` menu.
 
+
+## Installing Launchpad USB Drivers 
+
+If you have not previously developed with the Energia IDE or Code Composer Studio, then you may need to install the LaunchPad drivers for Windows if developing on Windows. The zip file with the driver installer can be downloaded from [Energia Driver Package](http://s3.amazonaws.com/energiaUS/files/energia_drivers.zip). 
+
+More information can be found in the Energia guide [Installing the LaunchPad drivers](https://energia.nu/guide/install/windows/).
+
+
 <br>
 
 # Change Log
