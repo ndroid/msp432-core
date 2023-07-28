@@ -486,7 +486,7 @@ int_fast16_t GPIO_setConfig(uint_least8_t index, GPIO_PinConfig pinConfig)
              * High output drive strength is only available on pins 2.0 - 2.3;
              * Ignore this setting on anything but those pins.
              */
-            if ((port == 2) && (pin <= 0x04) &&
+            if ((port == 2) && (pin <= 0x08) &&
                 (pinConfig & GPIO_CFG_OUT_STRENGTH_MASK)) {
                 /* Map MED and HIGH to high */
                 MAP_GPIO_setDriveStrengthHigh(port, pin);
