@@ -12,17 +12,27 @@
 /**
  * @brief   Total number of sensors on QTR line sensor.
  */
-#define LS_NUM_SENSORS   8     // number of sensors used
+#define LS_NUM_SENSORS 8
+
+/**
+ * @brief   Total number of distance sensors.
+ */
+#define DST_NUM_SENSORS 3
+
+/**
+ * @brief   Total number of motors.
+ */
+#define NUM_MOTORS 2
 
 /**
  * @brief   Represent the left push button on the launchpad
  */
-#define LP_LEFT_BTN  PUSH2
+#define LP_LEFT_BTN PUSH2
 
 /**
  * @brief   Represent the right push button on the launchpad
  */
-#define LP_RIGHT_BTN  PUSH1
+#define LP_RIGHT_BTN PUSH1
 
 /**
  * @brief   Total number of bump switches.
@@ -149,7 +159,7 @@ void resumeMotor(uint8_t motorNum);
 /// - 1 for for backward
 ///
 /// Specifies the motor's direction. Can control an indivdual motor or both motors.
-void setMotorDirection(uint8_t motorNum,uint8_t direction);
+void setMotorDirection(uint8_t motorNum, uint8_t direction);
 
 /// \brief Set the motor speed
 ///
@@ -203,7 +213,7 @@ void setupLed(uint8_t ledPin);
 ///
 /// Prevent additional code from executing until use has pushed and released
 /// specified button.
-void waitBtnPressed(uint8_t btnPin,String msg = "",int8_t ledPin = 0);
+void waitBtnPressed(uint8_t btnPin, String msg = "", int8_t ledPin = 0);
 
 /// \brief Provide default values for the sensor's Min and Max arrays.
 ///
@@ -214,7 +224,7 @@ void waitBtnPressed(uint8_t btnPin,String msg = "",int8_t ledPin = 0);
 ///  All elements will by default be given a value of 0.
 ///
 ///  Initializes arrays to be used to store line sensor's min and max values.
-void clearMinMax(uint16_t *sensorMin,uint16_t *sensorMax);
+void clearMinMax(uint16_t *sensorMin, uint16_t *sensorMax);
 
 /// \brief Update line sensor's min and max values array based on current data.
 ///
@@ -226,8 +236,7 @@ void clearMinMax(uint16_t *sensorMin,uint16_t *sensorMax);
 ///
 ///  Take the current line sensor values and update min and max values. This function along with the
 ///  min and max arrays are useful when performing calibration.
-void setSensorMinMax(uint16_t *sensor,uint16_t *sensorMin,uint16_t *sensorMax);
-
+void setSensorMinMax(uint16_t *sensor, uint16_t *sensorMin, uint16_t *sensorMax);
 
 /// \brief Update sensor's min and max values array based on current data.
 ///
@@ -255,11 +264,11 @@ void setSensorMinMax(uint16_t *sensor,uint16_t *sensorMin,uint16_t *sensorMax);
 /// - When the line is dark then calibration subtracts sensorMax values from the sensor value read.
 /// - When the line is light then calibration subtracts sensorMin values from the sensor value read.
 /// Then the value is subtracted from 1000 to provide a consistent scale.
-void readCalLineSensor(uint16_t* sensor,
-					   uint16_t* calVal,
-					   uint16_t *sensorMin,
-					   uint16_t *sensorMax,
-					   uint8_t mode);
+void readCalLineSensor(uint16_t *sensor,
+                       uint16_t *calVal,
+                       uint16_t *sensorMin,
+                       uint16_t *sensorMax,
+                       uint8_t mode);
 
 /// \brief Get line position
 /// \param[in] calVal is an array that is filled with the line sensor calibrated values.
@@ -279,5 +288,5 @@ void readCalLineSensor(uint16_t* sensor,
 ///
 ///  Using calibrated line sensor value this function provides a numerical value indicating
 ///  where the robot is detecting the line. This function can be overridden.
-uint32_t getLinePosition(uint16_t* calVal, uint8_t mode);
+uint32_t getLinePosition(uint16_t *calVal, uint8_t mode);
 #endif

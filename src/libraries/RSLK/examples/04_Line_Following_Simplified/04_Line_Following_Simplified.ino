@@ -37,91 +37,93 @@ uint16_t sensorMinVal[LS_NUM_SENSORS];
 
 void setup()
 {
-	Serial.begin(115200);
+    Serial.begin(115200);
 
-	setupRSLK();
-	/* Left button on Launchpad */
-	setupWaitBtn(LP_LEFT_BTN);
-	/* Red led in rgb led */
-	setupLed(RED_LED);
-	clearMinMax(sensorMinVal,sensorMaxVal);
+    setupRSLK();
+    /* Left button on Launchpad */
+    setupWaitBtn(LP_LEFT_BTN);
+    /* Red led in rgb led */
+    setupLed(RED_LED);
+    clearMinMax(sensorMinVal, sensorMaxVal);
 }
 
-void floorCalibration() {
-	/* Place Robot On Floor (no line) */
-	delay(2000);
-	String btnMsg = "Push left button on Launchpad to begin calibration.\n";
-	btnMsg += "Make sure the robot is on the floor away from the line.\n";
-	/* Wait until button is pressed to start robot */
-	waitBtnPressed(LP_LEFT_BTN,btnMsg,RED_LED);
+void floorCalibration()
+{
+    /* Place Robot On Floor (no line) */
+    delay(2000);
+    String btnMsg = "Push left button on Launchpad to begin calibration.\n";
+    btnMsg += "Make sure the robot is on the floor away from the line.\n";
+    /* Wait until button is pressed to start robot */
+    waitBtnPressed(LP_LEFT_BTN, btnMsg, RED_LED);
 
-	delay(1000);
+    delay(1000);
 
-	Serial.println("Running calibration on floor");
-	simpleCalibrate();
-	Serial.println("Reading floor values complete");
+    Serial.println("Running calibration on floor");
+    simpleCalibrate();
+    Serial.println("Reading floor values complete");
 
-	btnMsg = "Push left button on Launchpad to begin line following.\n";
-	btnMsg += "Make sure the robot is on the line.\n";
-	/* Wait until button is pressed to start robot */
-	waitBtnPressed(LP_LEFT_BTN,btnMsg,RED_LED);
-	delay(1000);
+    btnMsg = "Push left button on Launchpad to begin line following.\n";
+    btnMsg += "Make sure the robot is on the line.\n";
+    /* Wait until button is pressed to start robot */
+    waitBtnPressed(LP_LEFT_BTN, btnMsg, RED_LED);
+    delay(1000);
 
-	enableMotor(BOTH_MOTORS);
+    enableMotor(BOTH_MOTORS);
 }
 
-void simpleCalibrate() {
-	/* Set both motors direction forward */
-	setMotorDirection(BOTH_MOTORS,MOTOR_DIR_FORWARD);
-	/* Enable both motors */
-	enableMotor(BOTH_MOTORS);
-	/* Set both motors speed 20 */
-	setMotorSpeed(BOTH_MOTORS,20);
+void simpleCalibrate()
+{
+    /* Set both motors direction forward */
+    setMotorDirection(BOTH_MOTORS, MOTOR_DIR_FORWARD);
+    /* Enable both motors */
+    enableMotor(BOTH_MOTORS);
+    /* Set both motors speed 20 */
+    setMotorSpeed(BOTH_MOTORS, 20);
 
-	for(int x = 0;x<100;x++){
-		readLineSensor(sensorVal);
-		setSensorMinMax(sensorVal,sensorMinVal,sensorMaxVal);
-	}
+    for (int x = 0; x < 100; x++) {
+        readLineSensor(sensorVal);
+        setSensorMinMax(sensorVal, sensorMinVal, sensorMaxVal);
+    }
 
-	/* Disable both motors */
-	disableMotor(BOTH_MOTORS);
+    /* Disable both motors */
+    disableMotor(BOTH_MOTORS);
 }
 
 bool isCalibrationComplete = false;
 void loop()
 {
-	uint16_t normalSpeed = 10;
-	uint16_t fastSpeed = 20;
+    uint16_t normalSpeed = 10;
+    uint16_t fastSpeed = 20;
 
-	/* Valid values are either:
-	 *  DARK_LINE  if your floor is lighter than your line
-	 *  LIGHT_LINE if your floor is darker than your line
-	 */
-	uint8_t lineColor = DARK_LINE;
+    /* Valid values are either:
+     *  DARK_LINE  if your floor is lighter than your line
+     *  LIGHT_LINE if your floor is darker than your line
+     */
+    uint8_t lineColor = DARK_LINE;
 
-	/* Run this setup only once */
-	if(isCalibrationComplete == false) {
-		floorCalibration();
-		isCalibrationComplete = true;
-	}
+    /* Run this setup only once */
+    if (isCalibrationComplete == false) {
+        floorCalibration();
+        isCalibrationComplete = true;
+    }
 
-	readLineSensor(sensorVal);
-	readCalLineSensor(sensorVal,
-					  sensorCalVal,
-					  sensorMinVal,
-					  sensorMaxVal,
-					  lineColor);
+    readLineSensor(sensorVal);
+    readCalLineSensor(sensorVal,
+                      sensorCalVal,
+                      sensorMinVal,
+                      sensorMaxVal,
+                      lineColor);
 
-	uint32_t linePos = getLinePosition(sensorCalVal,lineColor);
+    uint32_t linePos = getLinePosition(sensorCalVal, lineColor);
 
-	if(linePos > 0 && linePos < 3000) {
-		setMotorSpeed(LEFT_MOTOR,normalSpeed);
-		setMotorSpeed(RIGHT_MOTOR,fastSpeed);
-	} else if(linePos > 3500) {
-		setMotorSpeed(LEFT_MOTOR,fastSpeed);
-		setMotorSpeed(RIGHT_MOTOR,normalSpeed);
-	} else {
-		setMotorSpeed(LEFT_MOTOR,normalSpeed);
-		setMotorSpeed(RIGHT_MOTOR,normalSpeed);
-	}
+    if (linePos > 0 && linePos < 3000) {
+        setMotorSpeed(LEFT_MOTOR, normalSpeed);
+        setMotorSpeed(RIGHT_MOTOR, fastSpeed);
+    } else if (linePos > 3500) {
+        setMotorSpeed(LEFT_MOTOR, fastSpeed);
+        setMotorSpeed(RIGHT_MOTOR, normalSpeed);
+    } else {
+        setMotorSpeed(LEFT_MOTOR, normalSpeed);
+        setMotorSpeed(RIGHT_MOTOR, normalSpeed);
+    }
 }

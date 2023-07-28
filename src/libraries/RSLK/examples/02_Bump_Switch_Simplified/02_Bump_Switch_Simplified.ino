@@ -26,43 +26,44 @@
 
 int motorSpeed = 10;
 
-void setup() {
-	Serial.begin(115200);
-	setupRSLK();
-	/* Left button on Launchpad */
-	setupWaitBtn(LP_LEFT_BTN);
-	/* Red led in rgb led */
-	setupLed(RED_LED);
+void setup()
+{
+    Serial.begin(115200);
+    setupRSLK();
+    /* Left button on Launchpad */
+    setupWaitBtn(LP_LEFT_BTN);
+    /* Red led in rgb led */
+    setupLed(RED_LED);
 }
 
-void loop() {
-	bool hitObstacle = false;
+void loop()
+{
+    bool hitObstacle = false;
 
-	String btnMsg = "Push left button on Launchpad to start demo.\n";
-	/* Wait until button is pressed to start robot */
-	waitBtnPressed(LP_LEFT_BTN,btnMsg,RED_LED);
+    String btnMsg = "Push left button on Launchpad to start demo.\n";
+    /* Wait until button is pressed to start robot */
+    waitBtnPressed(LP_LEFT_BTN, btnMsg, RED_LED);
 
-	/* Wait two seconds before starting */
-	delay(2000);
+    /* Wait two seconds before starting */
+    delay(2000);
 
-	/* Enable both motors, set their direction and provide a default speed */
-	enableMotor(BOTH_MOTORS);
-	setMotorDirection(BOTH_MOTORS,MOTOR_DIR_FORWARD);
-	setMotorSpeed(BOTH_MOTORS,motorSpeed);
+    /* Enable both motors, set their direction and provide a default speed */
+    enableMotor(BOTH_MOTORS);
+    setMotorDirection(BOTH_MOTORS, MOTOR_DIR_FORWARD);
+    setMotorSpeed(BOTH_MOTORS, motorSpeed);
 
-	/* Keep checking if the robot has hit an object */
-	while(!hitObstacle) {
-		/* Loop through all bump switchees to see if it has been pressed */
-		for(int x = 0;x<TOTAL_BP_SW;x++)
-		{
-			/* Check if bump switch was pressed */
-			if(isBumpSwitchPressed(x) == true) {
-				hitObstacle = true;
-				break;
-			}
-		}
-	}
+    /* Keep checking if the robot has hit an object */
+    while (!hitObstacle) {
+        /* Loop through all bump switchees to see if it has been pressed */
+        for (int x = 0; x < TOTAL_BP_SW; x++) {
+            /* Check if bump switch was pressed */
+            if (isBumpSwitchPressed(x) == true) {
+                hitObstacle = true;
+                break;
+            }
+        }
+    }
 
-	Serial.println("Collision detected");
-	disableMotor(BOTH_MOTORS);
+    Serial.println("Collision detected");
+    disableMotor(BOTH_MOTORS);
 }

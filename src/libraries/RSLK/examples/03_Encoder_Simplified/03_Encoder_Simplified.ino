@@ -39,63 +39,65 @@ int wheelSpeed = 15; // Default raw pwm speed for motor.
  * The distance the wheel turns per encoder pulse is equal to the above divided
  * by the number of pulses per revolution.
  */
-float distanceTraveled(float wheel_diam, uint16_t cnt_per_rev, uint8_t current_cnt) {
-	float temp = (wheel_diam * PI * current_cnt) / cnt_per_rev;
-	return temp;
+float distanceTraveled(float wheel_diam, uint16_t cnt_per_rev, uint8_t current_cnt)
+{
+    float temp = (wheel_diam * PI * current_cnt) / cnt_per_rev;
+    return temp;
 }
 
-
-uint32_t countForDistance(float wheel_diam, uint16_t cnt_per_rev, uint32_t distance) {
-	float temp = (wheel_diam * PI) / cnt_per_rev;
-	temp = distance / temp;
-	return int(temp);
+uint32_t countForDistance(float wheel_diam, uint16_t cnt_per_rev, uint32_t distance)
+{
+    float temp = (wheel_diam * PI) / cnt_per_rev;
+    temp = distance / temp;
+    return int(temp);
 }
 
-void setup() {
-	Serial.begin(115200);
+void setup()
+{
+    Serial.begin(115200);
 
-	setupRSLK();
-	/* Left button on Launchpad */
-	setupWaitBtn(LP_LEFT_BTN);
-	/* Red led in rgb led */
-	setupLed(RED_LED);
+    setupRSLK();
+    /* Left button on Launchpad */
+    setupWaitBtn(LP_LEFT_BTN);
+    /* Red led in rgb led */
+    setupLed(RED_LED);
 }
 
-void loop() {
-	uint16_t totalCount = 0; // Total amount of encoder pulses received
+void loop()
+{
+    uint16_t totalCount = 0; // Total amount of encoder pulses received
 
-	/* Amount of encoder pulses needed to achieve distance */
-	uint16_t x = countForDistance(wheelDiameter, cntPerRevolution, inchesToTravel);
-	String btnMsg = "Expected count: ";
-	btnMsg += x;
+    /* Amount of encoder pulses needed to achieve distance */
+    uint16_t x = countForDistance(wheelDiameter, cntPerRevolution, inchesToTravel);
+    String btnMsg = "Expected count: ";
+    btnMsg += x;
 
-	/* Wait until button is pressed to start robot */
-	btnMsg += "\nPush left button on Launchpad to start demo.\n";
-	/* Wait until button is pressed to start robot */
-	waitBtnPressed(LP_LEFT_BTN,btnMsg,RED_LED);
+    /* Wait until button is pressed to start robot */
+    btnMsg += "\nPush left button on Launchpad to start demo.\n";
+    /* Wait until button is pressed to start robot */
+    waitBtnPressed(LP_LEFT_BTN, btnMsg, RED_LED);
 
-	delay(2000);
+    delay(2000);
 
-	/* Set the encoder pulses count back to zero */
-	resetLeftEncoderCnt();
-	resetRightEncoderCnt();
+    /* Set the encoder pulses count back to zero */
+    resetLeftEncoderCnt();
+    resetRightEncoderCnt();
 
-	/* Cause the robot to drive forward */
-	setMotorDirection(BOTH_MOTORS,MOTOR_DIR_FORWARD);
+    /* Cause the robot to drive forward */
+    setMotorDirection(BOTH_MOTORS, MOTOR_DIR_FORWARD);
 
-	/* "Turn on" the motor */
-	enableMotor(BOTH_MOTORS);
+    /* "Turn on" the motor */
+    enableMotor(BOTH_MOTORS);
 
-	/* Set motor speed */
-	setMotorSpeed(BOTH_MOTORS,wheelSpeed);
+    /* Set motor speed */
+    setMotorSpeed(BOTH_MOTORS, wheelSpeed);
 
-	/* Drive motor until it has received x pulses */
-	while(totalCount < x)
-	{
-		totalCount = getEncoderLeftCnt();
-		Serial.println(totalCount);
-	}
+    /* Drive motor until it has received x pulses */
+    while (totalCount < x) {
+        totalCount = getEncoderLeftCnt();
+        Serial.println(totalCount);
+    }
 
-	/* Halt motors */
-	disableMotor(BOTH_MOTORS);
+    /* Halt motors */
+    disableMotor(BOTH_MOTORS);
 }

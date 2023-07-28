@@ -34,15 +34,15 @@ void resetLeftEncoderCnt();
 ///
 void resetRightEncoderCnt();
 
- /**
-  * @brief Value used to reference wheel going forward.
-  */
-#define WHEEL_DIR_FORWARD	1
+/**
+ * @brief Value used to reference wheel going forward.
+ */
+#define WHEEL_DIR_FORWARD 1
 
 /**
  * @brief Value used to reference wheel going backwards.
  */
-#define WHEEL_DIR_BACKWARD	0
+#define WHEEL_DIR_BACKWARD 0
 
 /// \brief Determines if the left wheel is going forward or backwards
 ///
