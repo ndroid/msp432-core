@@ -40,7 +40,7 @@ void setupRSLK()
 
 uint16_t readSharpDist(uint8_t num)
 {
-    if (num < 0 || num > DST_NUM_SENSORS)
+    if (num < 0 || num >= DST_NUM_SENSORS)
         return 0;
 
     return dst_sensor[num].read();

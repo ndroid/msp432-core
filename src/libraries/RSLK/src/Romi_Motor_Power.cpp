@@ -20,6 +20,8 @@ bool Romi_Motor_Power::begin(uint8_t _slp_pin, uint8_t _dir_pin, uint8_t _pwm_pi
     pinMode(pwm_pin, OUTPUT);
 
     disableMotor();
+
+    return true;
 }
 
 void Romi_Motor_Power::disableMotor()
