@@ -3,7 +3,12 @@
 GP2Y0A21_Sensor dst_sensor[DST_NUM_SENSORS];
 Romi_Motor_Power motor[NUM_MOTORS];
 Bump_Switch bump_sw[TOTAL_BP_SW];
-uint16_t calMin[LS_NUM_SENSORS], calMax[LS_NUM_SENSORS];
+
+uint16_t sensorRawValues[LS_NUM_SENSORS];
+uint16_t calibrationValues[LS_NUM_SENSORS];
+uint16_t sensorMinValues[LS_NUM_SENSORS];
+uint16_t sensorMaxValues[LS_NUM_SENSORS];
+uint8_t lineMode;
 
 QTRSensors qtr;
 
@@ -32,10 +37,8 @@ void setupRSLK()
     qtr.setEmitterPins(QTR_EMITTER_PIN_ODD, QTR_EMITTER_PIN_EVEN);
     disableMotor(BOTH_MOTORS);
 
-    for (uint8_t x = 0; x < LS_NUM_SENSORS; x++) {
-        calMin[x] = 5000;
-        calMax[x] = 0;
-    }
+    clearMinMax(sensorMinValues, sensorMaxValues);
+    lineMode = DARK_LINE;
 }
 
 uint16_t readSharpDist(uint8_t num)
@@ -155,6 +158,25 @@ void clearMinMax(uint16_t *sensorMin, uint16_t *sensorMax)
     }
 }
 
+void calibrateLineSensor(uint8_t mode = DARK_LINE, uint32_t duration = 100)
+{
+    uint32_t scanTime = millis() + duration;
+
+    lineMode = mode;
+    clearMinMax(sensorMinValues, sensorMaxValues);
+    do {
+        readLineSensor(sensorRawValues);
+        setSensorMinMax(sensorRawValues, sensorMinValues, sensorMaxValues);
+    } while (millis() < scanTime);
+}
+
+void readCalLineSensor(uint16_t *calVal)
+{
+    readLineSensor(sensorRawValues);
+    readCalLineSensor(sensorRawValues, calVal, sensorMinValues, 
+                                        sensorMaxValues, lineMode);
+}
+
 void readCalLineSensor(uint16_t *sensorValues,
                        uint16_t *calVal,
                        uint16_t *sensorMinVal,
@@ -172,6 +194,12 @@ void readCalLineSensor(uint16_t *sensorValues,
                 calVal[x] = map(sensorValues[x], sensorMaxVal[x], 2500, 0, 1000);
         }
     }
+}
+
+uint32_t getLinePosition()
+{
+    readCalLineSensor(calibrationValues);
+    return getLinePosition(calibrationValues, lineMode);
 }
 
 uint32_t getLinePosition(uint16_t *calVal, uint8_t mode)

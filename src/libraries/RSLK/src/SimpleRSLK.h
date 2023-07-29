@@ -177,19 +177,6 @@ void setMotorDirection(uint8_t motorNum, uint8_t direction);
 /// speed.
 void setMotorSpeed(uint8_t motorNum, uint8_t speed);
 
-/// \brief Read line sensor values
-///
-/// \param[out] sensor array that stores values read from line sensor. Must pass an array with 8 elements.
-/// Array index 0 represents the left most sensor. Array index 7 represents the right most sensor. @n
-/// Each index will contain a value from 0 - 2500.
-/// - 0 max reflection (light line)
-/// - ....
-/// - 2500 no reflection (dark line)
-///
-///
-/// Read and store sensor values in the passed in array.
-void readLineSensor(uint16_t *sensor);
-
 /// \brief Configure pin as a wait to release button
 ///
 /// \param[in] btn the Launchpad pin number you want to use.
@@ -215,6 +202,94 @@ void setupLed(uint8_t ledPin);
 /// specified button.
 void waitBtnPressed(uint8_t btnPin, String msg = "", int8_t ledPin = 0);
 
+/// \brief Read calibrated line sensor values. Assumes calibration completed.
+///
+/// Takes the current line sensor values and sets calVal to the calibrated values. Uses
+/// sensorMin and sensorMax array along with mode to calibrate value.
+///
+/// \param[in] mode determines if the line is dark or light (default is DARK_LINE)
+/// \par
+/// - 0 (DARK_LINE) is used when the line is darker than the floor
+/// \par
+/// - 1 (LIGHT_LINE) is used when the line is lighter than the floor.
+/// \param[in] duration duration for calibration in milliseconds (default is 100)
+///
+/// \note Calibration:
+/// - When the line is dark then calibration subtracts sensorMax values from the sensor value read.
+/// - When the line is light then calibration subtracts sensorMin values from the sensor value read.
+/// Then the value is subtracted from 1000 to provide a consistent scale.
+void calibrateLineSensor(uint8_t mode = DARK_LINE, uint32_t duration = 100);
+
+/// \brief Read calibrated line sensor values. Assumes calibration completed.
+///
+/// Takes the current line sensor values and sets calVal to the calibrated values. Uses
+/// sensorMin and sensorMax array along with mode to calibrate value.
+///
+/// \param[out] calVal  is an array that will be filled with the calibrated values based on the sensor.
+/// \par Elements will be filled with values of 0 - 1000
+/// - 0 means no line detected
+/// \par
+/// - ...
+/// \par
+/// - 1000 means line is detected right under sensor.
+///
+/// \note Calibration:
+/// - When the line is dark then calibration subtracts sensorMax values from the sensor value read.
+/// - When the line is light then calibration subtracts sensorMin values from the sensor value read.
+/// Then the value is subtracted from 1000 to provide a consistent scale.
+void readCalLineSensor(uint16_t *calVal);
+
+/// \brief Get line position
+///
+///  Using calibrated line sensor value this function provides a numerical value indicating
+///  where the robot is detecting the line. This function can be overridden.
+///
+/// \return value between 0 - 7000.
+///  - 0 no line detected
+///  - ...
+///  - 1000 line is directly on the left most sensor
+///  - ...
+///  - 3500 line directly over two middle sensors.
+///  - ...
+///  - 7000 is under right most line sensor
+uint32_t getLinePosition();
+
+/// \brief Read raw line sensor values
+///
+/// Read and store raw line sensor values in the passed in array.
+///
+/// \param[out] sensor array that stores values read from line sensor. Must pass an array with 8 elements.
+/// Array index 0 represents the left most sensor. Array index 7 represents the right most sensor. 
+/// \par Each index will contain a value from 0 - 2500.
+/// - 0 max reflection (light line)
+/// - ....
+/// - 2500 no reflection (dark line)
+///
+#define readRawLineSensor     readLineSensor
+
+/*************************************************************************
+ * deprecated methods
+ *************************************************************************/
+
+/// \deprecated Method deprecated. Use \c readRawLineSensor instead.
+/// Method still used internally and retained for compatibility.
+///
+/// \brief Read line sensor values
+///
+/// \param[out] sensor array that stores values read from line sensor. Must pass an array with 8 elements.
+/// Array index 0 represents the left most sensor. Array index 7 represents the right most sensor. @n
+/// Each index will contain a value from 0 - 2500.
+/// - 0 max reflection (light line)
+/// - ....
+/// - 2500 no reflection (dark line)
+///
+///
+/// Read and store sensor values in the passed in array.
+void readLineSensor(uint16_t *sensor);
+
+/// \deprecated Method deprecated. 
+/// Method still used internally and retained for compatibility.
+///
 /// \brief Provide default values for the sensor's Min and Max arrays.
 ///
 /// \param[out] sensorMin stores sensor's min values. Must pass an array with 8 elements.
@@ -226,6 +301,9 @@ void waitBtnPressed(uint8_t btnPin, String msg = "", int8_t ledPin = 0);
 ///  Initializes arrays to be used to store line sensor's min and max values.
 void clearMinMax(uint16_t *sensorMin, uint16_t *sensorMax);
 
+/// \deprecated Method deprecated. 
+/// Method still used internally and retained for compatibility.
+///
 /// \brief Update line sensor's min and max values array based on current data.
 ///
 /// \param[in] sensor is an array filled with line sensor values previously filled by readLineSensor.
@@ -238,6 +316,9 @@ void clearMinMax(uint16_t *sensorMin, uint16_t *sensorMax);
 ///  min and max arrays are useful when performing calibration.
 void setSensorMinMax(uint16_t *sensor, uint16_t *sensorMin, uint16_t *sensorMax);
 
+/// \deprecated Method deprecated. Use \c readCalLineSensor(uint16_t*) instead.
+/// Method still used internally and retained for compatibility.
+///
 /// \brief Update sensor's min and max values array based on current data.
 ///
 /// \param[out] sensor is an array to be filled with line sensor values.
@@ -270,6 +351,9 @@ void readCalLineSensor(uint16_t *sensor,
                        uint16_t *sensorMax,
                        uint8_t mode);
 
+/// \deprecated Method deprecated. Use \c getLinePosition() instead.
+/// Method still used internally and retained for compatibility.
+///
 /// \brief Get line position
 /// \param[in] calVal is an array that is filled with the line sensor calibrated values.
 ///
@@ -289,4 +373,5 @@ void readCalLineSensor(uint16_t *sensor,
 ///  Using calibrated line sensor value this function provides a numerical value indicating
 ///  where the robot is detecting the line. This function can be overridden.
 uint32_t getLinePosition(uint16_t *calVal, uint8_t mode);
+
 #endif
