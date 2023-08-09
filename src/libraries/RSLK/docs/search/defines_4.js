@@ -1,11 +1,14 @@
 var searchData=
 [
-  ['motor_5fdir_5fbackward_236',['MOTOR_DIR_BACKWARD',['../_simple_r_s_l_k_8h.html#af563100d732df64e244d0901c5e6e9fa',1,'SimpleRSLK.h']]],
-  ['motor_5fdir_5fforward_237',['MOTOR_DIR_FORWARD',['../_simple_r_s_l_k_8h.html#a0740818ff5586a16597ba38a5e4b14c4',1,'SimpleRSLK.h']]],
-  ['motor_5fl_5fdir_5fpin_238',['MOTOR_L_DIR_PIN',['../_r_s_l_k___pins_8h.html#a6fdb6948048aea547c3a536f5a0f7b51',1,'RSLK_Pins.h']]],
-  ['motor_5fl_5fpwm_5fpin_239',['MOTOR_L_PWM_PIN',['../_r_s_l_k___pins_8h.html#a1478e2c77c54b276a7bc900ffe924317',1,'RSLK_Pins.h']]],
-  ['motor_5fl_5fslp_5fpin_240',['MOTOR_L_SLP_PIN',['../_r_s_l_k___pins_8h.html#affc31a615d991f173b0dbec738320ad0',1,'RSLK_Pins.h']]],
-  ['motor_5fr_5fdir_5fpin_241',['MOTOR_R_DIR_PIN',['../_r_s_l_k___pins_8h.html#ad77f696a2b1f8510025a1b98982f8f99',1,'RSLK_Pins.h']]],
-  ['motor_5fr_5fpwm_5fpin_242',['MOTOR_R_PWM_PIN',['../_r_s_l_k___pins_8h.html#aad0f9183b31b4741151abb8e3a99cdda',1,'RSLK_Pins.h']]],
-  ['motor_5fr_5fslp_5fpin_243',['MOTOR_R_SLP_PIN',['../_r_s_l_k___pins_8h.html#ac5aaad738cf69f7a18bc8ce05a5a2fc7',1,'RSLK_Pins.h']]]
+  ['lcd_5fcs_0',['LCD_CS',['../_r_s_l_k___pins_8h.html#a71d24cab0e16b054de228f29139f1b79',1,'RSLK_Pins.h']]],
+  ['lcd_5fdc_1',['LCD_DC',['../_r_s_l_k___pins_8h.html#a1dc6c4886242abf4447d0da651125d5d',1,'RSLK_Pins.h']]],
+  ['lcd_5fmosi_2',['LCD_MOSI',['../_r_s_l_k___pins_8h.html#a7c52f1795c0919f36b0cfbe3d6645cc7',1,'RSLK_Pins.h']]],
+  ['lcd_5frst_3',['LCD_RST',['../_r_s_l_k___pins_8h.html#aec0f0ab242f1b58b1d017bc9ab4b898b',1,'RSLK_Pins.h']]],
+  ['lcd_5fsclk_4',['LCD_SCLK',['../_r_s_l_k___pins_8h.html#a2ccdacd2e0a641cbd65d14c71dbb2a8c',1,'RSLK_Pins.h']]],
+  ['left_5fmotor_5',['LEFT_MOTOR',['../_simple_r_s_l_k_8h.html#a7f5f447d33b09e7475dad88f0e42ad0b',1,'SimpleRSLK.h']]],
+  ['left_5fshrp_5fdist_6',['LEFT_SHRP_DIST',['../_simple_r_s_l_k_8h.html#afde76baf9ae403fc7d522bd4c4dcf148',1,'SimpleRSLK.h']]],
+  ['light_5fline_7',['LIGHT_LINE',['../_simple_r_s_l_k_8h.html#ae3a567cf6066d8df2ec2254571d09df5',1,'SimpleRSLK.h']]],
+  ['lp_5fleft_5fbtn_8',['LP_LEFT_BTN',['../_simple_r_s_l_k_8h.html#a2c258d1650352c31aa46c08759990872',1,'SimpleRSLK.h']]],
+  ['lp_5fright_5fbtn_9',['LP_RIGHT_BTN',['../_simple_r_s_l_k_8h.html#a817fadb3a0806d631664a6963a2375d7',1,'SimpleRSLK.h']]],
+  ['ls_5fnum_5fsensors_10',['LS_NUM_SENSORS',['../_simple_r_s_l_k_8h.html#ac3467e86d0d91872c68c705c6e8f3662',1,'SimpleRSLK.h']]]
 ];

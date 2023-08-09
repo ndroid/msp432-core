@@ -1,13 +1,11 @@
 var searchData=
 [
-  ['qtr_5f0_244',['QTR_0',['../_r_s_l_k___pins_8h.html#afc5462b35886eb6f2c40d21a55d08cae',1,'RSLK_Pins.h']]],
-  ['qtr_5f1_245',['QTR_1',['../_r_s_l_k___pins_8h.html#a78fa539ebb20148cbfcad00742561cf6',1,'RSLK_Pins.h']]],
-  ['qtr_5f2_246',['QTR_2',['../_r_s_l_k___pins_8h.html#a49fbc5f0ba729444355eb9ce3588aa40',1,'RSLK_Pins.h']]],
-  ['qtr_5f3_247',['QTR_3',['../_r_s_l_k___pins_8h.html#ae5dcb2e48b67f90a48eddc8d7f1b44ea',1,'RSLK_Pins.h']]],
-  ['qtr_5f4_248',['QTR_4',['../_r_s_l_k___pins_8h.html#a1e52ef437d8700013af2088d388a1cf3',1,'RSLK_Pins.h']]],
-  ['qtr_5f5_249',['QTR_5',['../_r_s_l_k___pins_8h.html#ad90df5df0b2368d826186652cfbe236a',1,'RSLK_Pins.h']]],
-  ['qtr_5f6_250',['QTR_6',['../_r_s_l_k___pins_8h.html#ab683ec86911bbd120c0623b121046420',1,'RSLK_Pins.h']]],
-  ['qtr_5f7_251',['QTR_7',['../_r_s_l_k___pins_8h.html#a5b8ce3aa53de77253e04c5d0eecf97db',1,'RSLK_Pins.h']]],
-  ['qtr_5femitter_5fpin_5feven_252',['QTR_EMITTER_PIN_EVEN',['../_r_s_l_k___pins_8h.html#af3f8515e99a1050bf49de2ab1902e18d',1,'RSLK_Pins.h']]],
-  ['qtr_5femitter_5fpin_5fodd_253',['QTR_EMITTER_PIN_ODD',['../_r_s_l_k___pins_8h.html#aa810292bda459202367695a97fbb59df',1,'RSLK_Pins.h']]]
+  ['motor_5fdir_5fbackward_0',['MOTOR_DIR_BACKWARD',['../_simple_r_s_l_k_8h.html#af563100d732df64e244d0901c5e6e9fa',1,'SimpleRSLK.h']]],
+  ['motor_5fdir_5fforward_1',['MOTOR_DIR_FORWARD',['../_simple_r_s_l_k_8h.html#a0740818ff5586a16597ba38a5e4b14c4',1,'SimpleRSLK.h']]],
+  ['motor_5fl_5fdir_5fpin_2',['MOTOR_L_DIR_PIN',['../_r_s_l_k___pins_8h.html#a6fdb6948048aea547c3a536f5a0f7b51',1,'RSLK_Pins.h']]],
+  ['motor_5fl_5fpwm_5fpin_3',['MOTOR_L_PWM_PIN',['../_r_s_l_k___pins_8h.html#a1478e2c77c54b276a7bc900ffe924317',1,'RSLK_Pins.h']]],
+  ['motor_5fl_5fslp_5fpin_4',['MOTOR_L_SLP_PIN',['../_r_s_l_k___pins_8h.html#affc31a615d991f173b0dbec738320ad0',1,'RSLK_Pins.h']]],
+  ['motor_5fr_5fdir_5fpin_5',['MOTOR_R_DIR_PIN',['../_r_s_l_k___pins_8h.html#ad77f696a2b1f8510025a1b98982f8f99',1,'RSLK_Pins.h']]],
+  ['motor_5fr_5fpwm_5fpin_6',['MOTOR_R_PWM_PIN',['../_r_s_l_k___pins_8h.html#aad0f9183b31b4741151abb8e3a99cdda',1,'RSLK_Pins.h']]],
+  ['motor_5fr_5fslp_5fpin_7',['MOTOR_R_SLP_PIN',['../_r_s_l_k___pins_8h.html#ac5aaad738cf69f7a18bc8ce05a5a2fc7',1,'RSLK_Pins.h']]]
 ];

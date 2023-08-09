@@ -19,20 +19,38 @@ public:
 
     /// \brief Initialize the distance sensor class.
     ///
-    /// \param[in] pin_num on Launchpad connected to distance sensor's analog output.
-    /// \param[in] mode for input pin. Options are the same as standard [Energia](https://energia.nu/reference/en/language/functions/digital-io/pinmode/)/Arduino pin mode.
-    ///
     /// This function needs to be called before any other function is used.
+    ///
+    /// \param[in] pin_num on Launchpad connected to distance sensor's analog output.
+    /// \param[in] mode for input pin. Options are the same as standard 
+    /// [Energia](https://energia.nu/reference/en/language/functions/digital-io/pinmode/)
+    ///     /Arduino pin mode.
     bool begin(uint8_t pin_num, uint8_t mode = INPUT_PULLDOWN);
 
     /// \brief Read the value from distance sensor.
     ///
-    /// \return Return a value of 0 - 4095. The lower the value the closer
-    /// an object is.
-    ///
     /// This function returns a value representing the distance an object is
     /// from the sensor.
+    ///
+    /// \return Return a value of 0 - 4095. The lower the value the closer
+    /// an object is.
     uint16_t read();
+
+    /// \brief Read the distance from the Sharp distance sensor in millimeters.
+    ///
+    /// This function returns a value representing the distance an object is
+    /// from the sensor in millimeters. Range is 100 to 800 mm.
+    ///
+    /// \return the distance in millimeters (-1 if no object detected)
+    int16_t readMM();
+
+    /// \brief Read the distance from the Sharp distance sensor in inches.
+    ///
+    /// This function returns a value representing the distance an object is
+    /// from the sensor in inches. Range is ~4 to 31 inches.
+    ///
+    /// \return the distance in inches (-1 if no object detected)
+    float readIN();
 };
 
 #endif

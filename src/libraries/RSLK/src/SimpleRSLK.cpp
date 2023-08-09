@@ -37,6 +37,7 @@ void setupRSLK()
     qtr.setEmitterPins(QTR_EMITTER_PIN_ODD, QTR_EMITTER_PIN_EVEN);
     disableMotor(BOTH_MOTORS);
 
+    analogReadResolution(14);  // ADC defaults to 14-bit resolution
     clearMinMax(sensorMinValues, sensorMaxValues);
     lineMode = DARK_LINE;
 }
@@ -49,6 +50,22 @@ uint16_t readSharpDist(uint8_t num)
     return dst_sensor[num].read();
 }
 
+int16_t readSharpDistMM(uint8_t num)
+{
+    if (num < 0 || num >= DST_NUM_SENSORS)
+        return -1;
+
+    return dst_sensor[num].readMM();
+}
+
+float readSharpDistIN(uint8_t num)
+{
+    if (num < 0 || num >= DST_NUM_SENSORS)
+        return -1;
+
+    return dst_sensor[num].readIN();
+}
+
 bool isBumpSwitchPressed(uint8_t num)
 {
     if (num < 0 || num >= TOTAL_BP_SW)
@@ -58,6 +75,17 @@ bool isBumpSwitchPressed(uint8_t num)
         return true;
     } 
     return false;
+}
+
+uint8_t getBumpSwitchPressed()
+{
+    uint8_t mask = 0;
+    for (int x = 0; x < TOTAL_BP_SW; x++) {
+        if (bump_sw[x].read() == 0) {
+            mask |= (1 << x);
+        } 
+    }
+    return mask;
 }
 
 void enableMotor(uint8_t motorNum)
@@ -145,7 +173,7 @@ void setRawMotorSpeed(uint8_t motorNum, uint8_t speed)
     }
 }
 
-void readLineSensor(uint16_t *sensorValues)
+void readRawLineSensor(uint16_t *sensorValues)
 {
     qtr.read(sensorValues, QTRReadMode::OddEven);
 }
