@@ -47,7 +47,9 @@ void Romi_Motor_Power::directionBackward()
 
 void Romi_Motor_Power::pauseMotor()
 {
-    disableMotor();
+    // disable motor without affecting preserve_speed
+    analogWrite(pwm_pin, 0);
+    digitalWrite(slp_pin, LOW);
 }
 
 void Romi_Motor_Power::resumeMotor()

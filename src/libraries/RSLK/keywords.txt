@@ -1,0 +1,60 @@
+#######################################
+# Syntax Coloring Map for RSLK
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+getLeftWheelDir         KEYWORD2
+getRightWheelDir        KEYWORD2
+resetLeftEncoderCnt     KEYWORD2
+resetRightEncoderCnt    KEYWORD2
+getEncoderLeftCnt       KEYWORD2
+getEncoderRightCnt      KEYWORD2
+setupRSLK               KEYWORD2
+readSharpDist           KEYWORD2
+readSharpDistMM         KEYWORD2
+readSharpDistIN         KEYWORD2
+isBumpSwitchPressed     KEYWORD2
+getBumpSwitchPressed    KEYWORD2
+enableMotor             KEYWORD2
+disableMotor            KEYWORD2
+pauseMotor              KEYWORD2
+resumeMotor             KEYWORD2
+setMotorDirection       KEYWORD2
+setMotorSpeed           KEYWORD2
+setupWaitBtn            KEYWORD2
+setupLed                KEYWORD2
+waitBtnPressed          KEYWORD2
+calibrateLineSensor     KEYWORD2
+readCalLineSensor       KEYWORD2
+getLinePosition         KEYWORD2
+readRawLineSensor       KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+WHEEL_DIR_FORWARD       LITERAL1
+WHEEL_DIR_BACKWARD      LITERAL1
+LS_NUM_SENSORS          LITERAL1
+DST_NUM_SENSORS         LITERAL1
+NUM_MOTORS              LITERAL1
+LP_LEFT_BTN             LITERAL1
+LP_RIGHT_BTN            LITERAL1
+TOTAL_BP_SW             LITERAL1
+LEFT_MOTOR              LITERAL1
+RIGHT_MOTOR             LITERAL1
+BOTH_MOTORS             LITERAL1
+LEFT_SHRP_DIST          LITERAL1
+CENTER_SHRP_DIST        LITERAL1
+RIGHT_SHRP_DIST         LITERAL1
+MOTOR_DIR_FORWARD       LITERAL1
+MOTOR_DIR_BACKWARD      LITERAL1
+DARK_LINE               LITERAL1
+LIGHT_LINE              LITERAL1
