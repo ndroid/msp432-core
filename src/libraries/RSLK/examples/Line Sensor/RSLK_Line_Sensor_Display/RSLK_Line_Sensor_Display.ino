@@ -3,17 +3,17 @@
  * Line Following Example
  *
  * Summary:
- * This example has the TI Robotic System Learning Kit (TI RSLK) follow a line
- * using a basic line following algorithm. This example works on a dark floor with
- * a white line, but may be changed by modifying the _lineColor_ value. The robot 
+ * This example has the TI Robotic System Learning Kit (TI RSLK) display values
+ * from the line following sensors. This example works on a dark floor with a 
+ * white line, but may be changed by modifying the _lineColor_ value. The robot 
  * first needs to be calibrated (on floor without line). Then place the robot
- * on the line and hit the left button again to begin the line following.
+ * over the line to display sensor values. Does not require powering motors.
  *
  * How to run:
  * 1) Place the robot on floor away from line to calibrate to background surface.
  * 2) Push left button on Launchpad to have the robot perform calibration.
- * 3) Place the robot center on the line you want it to follow.
- * 4) Push left button again to have the robot begin to follow the line.
+ * 3) Place the robot over the line you want it to follow.
+ * 4) Observe line sensor values through Serial.
  *
  * Parts Info:
  * o Black eletrical tape or white electrical tape. Masking tape does not work well
@@ -24,8 +24,8 @@
  *
  * Learn more about the TI RSLK by going to http://www.ti.com/rslk
  *
- * created by Franklin Cooper Jr.
- * modified by chris miller 
+ * created by chris miller 
+ * adapted from example by Franklin Cooper Jr.
  *
  * This example code is in the public domain.
  */
@@ -38,8 +38,9 @@
  *  LIGHT_LINE if your floor is darker than your line
  */
 const uint8_t lineColor = LIGHT_LINE;
-const uint16_t normalSpeed = 10;
-const uint16_t fastSpeed = 20;
+
+uint16_t sensorVal[LS_NUM_SENSORS];
+uint16_t sensorCalVal[LS_NUM_SENSORS];
 
 void setup()
 {
@@ -64,28 +65,11 @@ void floorCalibration()
     delay(500);
     Serial.println("Running calibration on floor");
 
-    /* Set both motors direction forward */
-    setMotorDirection(BOTH_MOTORS, MOTOR_DIR_FORWARD);
-    /* Enable both motors */
-    enableMotor(BOTH_MOTORS);
-    /* Set both motors speed 20 */
-    setMotorSpeed(BOTH_MOTORS, 20);
-
     /* Must be called prior to using getLinePosition() or readCalLineSensor() */
     calibrateLineSensor(lineColor);
 
-    /* Disable both motors */
-    disableMotor(BOTH_MOTORS);
-
     Serial.println("Reading floor values complete");
-
-    btnMsg = "Push left button on Launchpad to begin line following.\n";
-    btnMsg += "Make sure the robot is on the line.\n";
-    /* Wait until button is pressed to start robot */
-    waitBtnPressed(LP_LEFT_BTN, btnMsg, RED_LED);
-    delay(1000);
-
-    enableMotor(BOTH_MOTORS);
+    delay(500);
 }
 
 bool isCalibrationComplete = false;
@@ -97,16 +81,24 @@ void loop()
         isCalibrationComplete = true;
     }
 
+    /* Get line sensor values */
+    readRawLineSensor(sensorVal);
+    readCalLineSensor(sensorCalVal);
     uint32_t linePos = getLinePosition();
 
-    if ((linePos > 0) && (linePos < 4000)) {    // turn left
-        setMotorSpeed(LEFT_MOTOR, normalSpeed);
-        setMotorSpeed(RIGHT_MOTOR, fastSpeed);
-    } else if (linePos > 5000) {                // turn right
-        setMotorSpeed(LEFT_MOTOR, fastSpeed);
-        setMotorSpeed(RIGHT_MOTOR, normalSpeed);
-    } else {                                    // go straight
-        setMotorSpeed(LEFT_MOTOR, normalSpeed);
-        setMotorSpeed(RIGHT_MOTOR, normalSpeed);
+    Serial.println("Raw sensor values:");
+    for (int i = 0; i < LS_NUM_SENSORS; i++) {
+        Serial.print("\t"); Serial.print(sensorVal[i]);
     }
+    Serial.println();
+
+    Serial.println("Calibrated sensor values:");
+    for (int i = 0; i < LS_NUM_SENSORS; i++) {
+        Serial.print("\t"); Serial.print(sensorCalVal[i]);
+    }
+    Serial.println();
+
+    Serial.print("Line position: "); Serial.println(linePos);
+    Serial.println();
+    delay(1000);
 }

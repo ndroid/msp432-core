@@ -13,18 +13,20 @@
  * 4) Push left button again to start demo
  *
  * Learn more about the classes, variables and functions used in this library by going to:
- * https://fcooper.github.io/Robot-Library/
+ * https://ndroid.github.io/msp432-core/RSLK/
  *
  * Learn more about the TI RSLK by going to http://www.ti.com/rslk
  *
  * created by Franklin Cooper Jr.
+ * modified by chris miller 
  *
  * This example code is in the public domain.
  */
 
+/* Include RSLK library */
 #include "SimpleRSLK.h"
 
-int motorSpeed = 10;
+const int motorSpeed = 10;
 
 void setup()
 {
@@ -54,16 +56,13 @@ void loop()
 
     /* Keep checking if the robot has hit an object */
     while (!hitObstacle) {
-        /* Loop through all bump switchees to see if it has been pressed */
-        for (int x = 0; x < TOTAL_BP_SW; x++) {
-            /* Check if bump switch was pressed */
-            if (isBumpSwitchPressed(x) == true) {
-                hitObstacle = true;
-                break;
-            }
+        /* Check if any bump switch was pressed */
+        if (getBumpSwitchPressed() > 0) {
+            hitObstacle = true;
+            break;
         }
     }
 
-    Serial.println("Collision detected");
+    Serial.println("Collision detected\n");
     disableMotor(BOTH_MOTORS);
 }

@@ -13,27 +13,31 @@
  * 4) Push left button again to start demo again
  *
  * Learn more about the classes, variables and functions used in this library by going to:
- * https://fcooper.github.io/Robot-Library/
+ * https://ndroid.github.io/msp432-core/RSLK/
  *
  * Learn more about the TI RSLK by going to http://www.ti.com/rslk
  *
  * created by Franklin Cooper Jr.
+ * modified by chris miller 
  *
  * This example code is in the public domain.
  */
 
+/* Include RSLK library */
 #include "SimpleRSLK.h"
 
-/* Diameter of Romi wheels in inches */
-float wheelDiameter = 2.7559055; // 2.7559055" = 7.0 cm (International System of Units)
+/* Diameter of Romi wheels in inches 
+ *  2.7559055" = 7.0 cm (International System of Units) 
+ */
+const float wheelDiameter = 2.7559055; 
 
 /* Number of encoder (rising) pulses every time the wheel turns completely */
-int cntPerRevolution = 360;
+const int cntPerRevolution = 360;
 
 /* How far in inches for the robot to travel */
-int inchesToTravel = 6;
+const int inchesToTravel = 6;
 
-int wheelSpeed = 15; // Default raw pwm speed for motor.
+const int wheelSpeed = 15; // Default raw pwm speed for motor.
 
 /* The distance the wheel turns per revolution is equal to the diameter * PI.
  * The distance the wheel turns per encoder pulse is equal to the above divided
@@ -65,16 +69,19 @@ void setup()
 
 void loop()
 {
-    uint16_t totalCount = 0; // Total amount of encoder pulses received
+    uint16_t totalCount = 0;        // Total amount of encoder pulses received
+    uint16_t leftCount, rightCount;
+
+    Serial.print("Driving forward distance (inches): ");
+    Serial.println(inchesToTravel);
 
     /* Amount of encoder pulses needed to achieve distance */
-    uint16_t x = countForDistance(wheelDiameter, cntPerRevolution, inchesToTravel);
+    uint16_t target = countForDistance(wheelDiameter, cntPerRevolution, inchesToTravel);
     String btnMsg = "Expected count: ";
-    btnMsg += x;
+    btnMsg += target;
 
     /* Wait until button is pressed to start robot */
     btnMsg += "\nPush left button on Launchpad to start demo.\n";
-    /* Wait until button is pressed to start robot */
     waitBtnPressed(LP_LEFT_BTN, btnMsg, RED_LED);
 
     delay(2000);
@@ -93,11 +100,20 @@ void loop()
     setMotorSpeed(BOTH_MOTORS, wheelSpeed);
 
     /* Drive motor until it has received x pulses */
-    while (totalCount < x) {
-        totalCount = getEncoderLeftCnt();
-        Serial.println(totalCount);
+    while (totalCount < target) {
+        leftCount = getEncoderLeftCnt();
+        rightCount = getEncoderRightCnt();
+        totalCount = (leftCount + rightCount) / 2;
+        Serial.print("\t"); Serial.print(leftCount);
+        Serial.print("\t"); Serial.println(rightCount);
     }
 
     /* Halt motors */
     disableMotor(BOTH_MOTORS);
+
+    /* Calculate traveled distance from encoder ticks */
+    float traveled = distanceTraveled(wheelDiameter, cntPerRevolution, totalCount);
+    Serial.print("Distance traveled (inches): ");
+    Serial.println(traveled);
+    Serial.println();
 }

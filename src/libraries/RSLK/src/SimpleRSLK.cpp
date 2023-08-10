@@ -186,7 +186,7 @@ void clearMinMax(uint16_t *sensorMin, uint16_t *sensorMax)
     }
 }
 
-void calibrateLineSensor(uint8_t mode = DARK_LINE, uint32_t duration = 100)
+void calibrateLineSensor(uint8_t mode, uint32_t duration)
 {
     uint32_t scanTime = millis() + duration;
 
@@ -235,9 +235,9 @@ uint32_t getLinePosition(uint16_t *calVal, uint8_t mode)
     uint32_t avg = 0; // this is for the weighted total
     uint32_t sum = 0; // this is for the denominator, which is <= 64000
 
-    uint32_t _lastPosition;
-    for (uint8_t i = 0; i < LS_NUM_SENSORS; i++) {
-        uint16_t value = calVal[i];
+    uint32_t _lastPosition = 0;
+    for (uint8_t i = 1; i <= LS_NUM_SENSORS; i++) {
+        uint16_t value = calVal[i-1];
 
         // only average in values that are above a noise threshold
         if (value > 50) {
@@ -246,7 +246,8 @@ uint32_t getLinePosition(uint16_t *calVal, uint8_t mode)
         }
     }
 
-    _lastPosition = avg / sum;
+    if (sum > 0)
+        _lastPosition = avg / sum;
     return _lastPosition;
 }
 
@@ -277,6 +278,10 @@ void waitBtnPressed(uint8_t btnPin, String msg, int8_t ledPin)
     uint8_t btnCnt = 0;
     uint8_t pinVal = HIGH;
 
+    if (ledPin > MAX_PIN_NUMBER) 
+        ledPin = 0;
+    if (msg != "")
+        Serial.println(msg);
     /* Turn on led */
     if (ledPin > 0)
         digitalWrite(ledPin, pinVal);
@@ -284,12 +289,11 @@ void waitBtnPressed(uint8_t btnPin, String msg, int8_t ledPin)
         delay(25);
         btnCnt++;
         if (btnCnt == 40) {
-            digitalWrite(ledPin, pinVal);
             btnCnt = 0;
-            pinVal = !pinVal;
-
-            if (msg != "")
-                Serial.println(msg);
+            if (ledPin > 0) {
+                pinVal = !pinVal;
+                digitalWrite(ledPin, pinVal);
+            }
         }
     }
 

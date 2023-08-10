@@ -262,8 +262,8 @@ void waitBtnPressed(uint8_t btnPin, String msg = "", int8_t ledPin = 0);
 /// \param[in] mode determines if the line is dark or light (default is DARK_LINE)
 /// - 0 (DARK_LINE) is used when the line is darker than the floor
 /// - 1 (LIGHT_LINE) is used when the line is lighter than the floor.
-/// \param[in] duration duration for calibration in milliseconds (default is 100)
-void calibrateLineSensor(uint8_t mode = DARK_LINE, uint32_t duration = 100);
+/// \param[in] duration duration for calibration in milliseconds (default is 200)
+void calibrateLineSensor(uint8_t mode = DARK_LINE, uint32_t duration = 200);
 
 /// \brief Read calibrated line sensor values. Assumes calibration completed.
 ///
@@ -288,14 +288,14 @@ void readCalLineSensor(uint16_t *calVal);
 /// calibrateLineSensor() has already been called (only necessary to calibrate once).
 ///   
 ///
-/// \return value between 0 - 7000.
+/// \return value between 0 - 8000.
 ///  - 0 no line detected
 /// \n   ...
-///  - 1000 line is directly on the left most sensor
+///  - 1000     line is directly on the left most sensor
 /// \n   ...
-///  - 3500 line directly over two middle sensors.
+///  - 4500     line directly over two middle sensors.
 /// \n   ...
-///  - 7000 is under right most line sensor
+///  - 8000     line is under right most line sensor
 uint32_t getLinePosition();
 
 /// \brief Read raw line sensor values
@@ -405,14 +405,14 @@ void readCalLineSensor(uint16_t *sensor,
 /// - 0 is used when the line is darker than the floor
 /// - 1 is used when the line is lighter than the floor.
 ///
-/// \return value between 0 - 7000.
+/// \return value between 0 - 8000.
 ///  - 0 no line detected
 /// \n   ...
-///  - 1000 line is directly on the left most sensor
+///  - 1000     line is directly on the left most sensor
 /// \n   ...
-///  - 3500 line directly over two middle sensors.
+///  - 4500     line directly over two middle sensors.
 /// \n   ...
-///  - 7000 is under right most line sensor
+///  - 8000     line is under right most line sensor
 ///
 ///  Using calibrated line sensor value this function provides a numerical value indicating
 ///  where the robot is detecting the line. This function can be overridden.

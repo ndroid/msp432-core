@@ -37,6 +37,11 @@
 #include <stdint.h>
 #include "pin_names_energia.h"
 
+/* Maximum pin # defined for device (including on board virtual pin assignments) */
+static const uint8_t MAX_PIN_NUMBER = 78;
+/* Maximum pin # defined for device, only including pins exposed through header */
+static const uint8_t MAX_HEADER_PIN_NUMBER = 78;
+
 static const uint8_t RED_LED = 75;
 static const uint8_t GREEN_LED = 76;
 static const uint8_t BLUE_LED = 77;
