@@ -73,7 +73,7 @@ __`version 5.29.4`__
 * features
     * added MSP432P4111 LaunchPad board
     * added support for Serial2 and Serial3
-    * modified Servo library to use Timer32 to avoid using Timer_A which may conflict with PWM output requests(e.g. analogWrite and IRremote)
+    * modified Servo library to use Timer32 to avoid using Timer_A which may conflict with PWM output requests (e.g. analogWrite and IRremote)
         * attempts to allocate Timer32_2 first (will attempt Timer32_1 if T32_2 is unavailable) 
     * added MultipleServos example in Servo library
     * added TinyIRremote library to support IR NEC encoding receive and transmit applications
