@@ -67,8 +67,9 @@ PROJECT_LOGO           =
 # into which the generated documentation will be written. If a relative path is
 # entered, it will be relative to the location where doxygen was started. If
 # left blank the current directory will be used.
+# msp432-core/src/libraries/LIBRARY_DIR/Doxyfile to docs/LIBRARY_DIR/
 
-OUTPUT_DIRECTORY       = docs/
+OUTPUT_DIRECTORY       = ../../../docs/RSLK/
 
 # If the CREATE_SUBDIRS tag is set to YES then doxygen will create up to 4096
 # sub-directories (in 2 levels) under the output directory of each output format

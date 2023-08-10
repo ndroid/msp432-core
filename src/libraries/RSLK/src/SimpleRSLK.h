@@ -253,26 +253,22 @@ void setupLed(uint8_t ledPin);
 /// \param[in] ledPin represents the pin to toggle high and low while waiting for btn to be pressed.
 void waitBtnPressed(uint8_t btnPin, String msg = "", int8_t ledPin = 0);
 
-/// \brief Read calibrated line sensor values. Assumes calibration completed.
+/// \brief Calibrates line sensor
 ///
-/// Takes the current line sensor values and sets calVal to the calibrated values. Uses
-/// sensorMin and sensorMax array along with mode to calibrate value.
+/// Calibrates line sensor by identifying min/max sensor range of non-line surface.
+/// Sensors _SHOULD NOT_ be positioned over line while calibrating (i.e. calibrate 
+/// to background surface color).
 ///
 /// \param[in] mode determines if the line is dark or light (default is DARK_LINE)
 /// - 0 (DARK_LINE) is used when the line is darker than the floor
 /// - 1 (LIGHT_LINE) is used when the line is lighter than the floor.
 /// \param[in] duration duration for calibration in milliseconds (default is 100)
-///
-/// \note Calibration:
-/// - When the line is dark then calibration subtracts sensorMax values from the sensor value read.
-/// - When the line is light then calibration subtracts sensorMin values from the sensor value read.
-/// Then the value is subtracted from 1000 to provide a consistent scale.
 void calibrateLineSensor(uint8_t mode = DARK_LINE, uint32_t duration = 100);
 
 /// \brief Read calibrated line sensor values. Assumes calibration completed.
 ///
-/// Takes the current line sensor values and sets calVal to the calibrated values. Uses
-/// sensorMin and sensorMax array along with mode to calibrate value.
+/// Takes the current line sensor values and sets calVal to the calibrated values. Assumes
+/// calibrateLineSensor() has already been called (only necessary to calibrate once).
 ///
 /// \param[out] calVal  is an array that will be filled with the calibrated values based on the sensor.
 /// \n Elements will be filled with values of 0 - 1000
@@ -288,8 +284,9 @@ void readCalLineSensor(uint16_t *calVal);
 
 /// \brief Get line position
 ///
-///  Using calibrated line sensor value this function provides a numerical value indicating
-///  where the robot is detecting the line. This function can be overridden.
+/// Provides a numerical value indicating where the robot is detecting the line. Assumes
+/// calibrateLineSensor() has already been called (only necessary to calibrate once).
+///   
 ///
 /// \return value between 0 - 7000.
 ///  - 0 no line detected
