@@ -1,6 +1,6 @@
 /*
  * Energia Robot Library for Texas Instruments' Robot System Learning Kit (RSLK)
- * Simplified Bump Switch Example
+ * Bump Switch w/ Motors Example
  *
  * Summary:
  * This example has the TI Robotic System Learning Kit (TI RSLK) driving forward
@@ -9,7 +9,7 @@
  * How to run:
  * 1) Push left button on Launchpad to start the demo
  * 2) Robot will drive forward until the bump switches are triggered
- * 3) Once switches are triggered the robot will halt.
+ * 3) Once switches are triggered the robot will halt
  * 4) Push left button again to start demo
  *
  * Learn more about the classes, variables and functions used in this library by going to:

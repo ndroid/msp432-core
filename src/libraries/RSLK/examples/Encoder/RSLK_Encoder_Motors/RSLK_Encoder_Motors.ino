@@ -1,6 +1,6 @@
 /*
  * Energia Robot Library for Texas Instruments' Robot System Learning Kit (RSLK)
- * Simplified Encoder Example
+ * Encoder Example
  *
  * Summary:
  * This example has the TI Robotic System Learning Kit (TI RSLK) driving forward

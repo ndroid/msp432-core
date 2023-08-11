@@ -1,6 +1,6 @@
 /*
  * Energia Robot Library for Texas Instruments' Robot System Learning Kit (RSLK)
- * Line Following Example
+ * Line Sensor Display Example
  *
  * Summary:
  * This example has the TI Robotic System Learning Kit (TI RSLK) display values

@@ -1,8 +1,37 @@
-#include "Energia.h"
+/*
+ * Energia Robot Library for Texas Instruments' Robot System Learning Kit (RSLK)
+ * State Machine Example
+ *
+ * Summary:
+ * This example has the TI Robotic System Learning Kit (TI RSLK) drive until an
+ * obstacle is hit (ie a bump switch is triggered), then it backs up, turns, and 
+ * repeats until a specified distance is traveled. It uses a state machine to 
+ * accomplish this task.
+ *
+ * How to run:
+ * 1) Push right button on Launchpad to proceed from WAIT state to GO state
+ * 2) Robot will drive forward until the bump switches are triggered
+ * 3) Once switches are triggered the robot will back up, turn, and drive forward
+ * 4) Robot will repeat (2)(3) until a specified distance is traveled, then stop
+ *
+ * Learn more about the classes, variables and functions used in this library by going to:
+ * https://ndroid.github.io/msp432-core/RSLK/
+ *
+ * Learn more about the TI RSLK by going to http://www.ti.com/rslk
+ *
+ * created by Franklin Cooper Jr.
+ * modified by chris miller 
+ *
+ * This example code is in the public domain.
+ */
 
+/* Include RSLK library */
 #include "SimpleRSLK.h"
 
-/* Defines struct for state machine states */
+const uint16_t motorSpeed = 25;
+const uint32_t targetTicks = 50000;
+
+/* Defines constants for state machine states */
 typedef enum
 {
     START = 0,
@@ -18,124 +47,104 @@ typedef enum
 /* Initialize state machine in START state */
 my_state_t state = START;
 
-/* Variable that will take the state machine to the STOP state */
-bool done;
-
-/* Initialize objects */ 
-
-
 void setup() {
-
     /* Set serial communication to 115200 baud rate for MSP432 */
     Serial.begin(115200);
     delay(500);
     Serial.println("Initializing.....");
 
+    /* Run setup code */
     setupRSLK();
 
-
     /* Initialize LED pins as outputs */
-    pinMode(LED_FR_PIN, OUTPUT); 
-    pinMode(LED_FL_PIN, OUTPUT); 
-    pinMode(LED_BR_PIN, OUTPUT); 
-    pinMode(LED_BL_PIN, OUTPUT);
-    pinMode(LP_RED_LED_PIN, OUTPUT);
-    pinMode(LP_RGB_LED_RED_PIN, OUTPUT);
-    pinMode(LP_RGB_LED_BLUE_PIN, OUTPUT); 
-    pinMode(LP_RGB_LED_GREEN_PIN, OUTPUT);
+    setupLed(GREEN_LED);
   
     /* Initialize LaunchPad buttons as inputs */
     pinMode(LP_S1_PIN, INPUT_PULLUP);
-    pinMode(LP_S2_PIN, INPUT_PULLUP);
 
     Serial.println("Initializing System Complete.");
 }
 
 void loop() {
-
-  // Emergency stop switch S2
-  // Switch to state "STOP" if pressed
-  if (digitalRead(LP_S2_PIN) == 0) state = STOP;
-
   //-----------------------------------
   //        Main State Machine
   //-----------------------------------
   switch (state) {
 
     case START:
-            Serial.println("Enter START state");
-            state = WAIT;
-    break;
+        Serial.println("Enter START state");
+        toggleCount = 0;
+        state = WAIT;
+        break;
 
     case WAIT:
         Serial.println("Enter WAIT state");
-        digitalWrite(LP_RGB_LED_GREEN_PIN, HIGH);
-        delay(200);
-        digitalWrite(LP_RGB_LED_GREEN_PIN, LOW);
+        digitalWrite(GREEN_LED, HIGH);
         delay(200);
         if (digitalRead(LP_S1_PIN) == 0) {
             state = GO;
         }
-    break;
+        digitalWrite(GREEN_LED, LOW);
+        delay(200);
+        if (digitalRead(LP_S1_PIN) == 0) {
+            state = GO;
+        }
+        break;
 
     case GO:
         Serial.println("Enter GO state");
         /* Start running the motors */
         /* Enables specified motor.
          *  Parameter:
-         *   Motor your referencing -> LEFT_MOTOR  RIGHT_MOTOR  BOTH_MOTORS
+         *   Motor your referencing -> LEFT_MOTOR,  RIGHT_MOTOR,  BOTH_MOTORS
          */
         enableMotor(BOTH_MOTORS);
         setMotorDirection(BOTH_MOTORS, MOTOR_DIR_FORWARD);
-        setMotorSpeed(BOTH_MOTORS, 25);
+        setMotorSpeed(BOTH_MOTORS, motorSpeed);
         
         state = GO2;
-    break;
+        break;
 
     case GO2:
         Serial.println("Enter GO2 state");
         /* Detect a bump and then switch to bump correction state */
-        for(int x = 0;x<6;x++)
-        {
-            if(isBumpSwitchPressed(x) == true) state = BUMPED1a;
+        if(getBumpSwitchPressed() > 0) {
+            state = BUMPED1a;
         }
 
         /* Continue to rotate until done condition is met */
         /* Certain distance traveled or other conditions can be set */
-        if (getEncoderLeftCnt() > 50000) {
-          done = 1; 
+        if (getEncoderLeftCnt() > targetTicks) {
+            state = STOP;
         }
-
-        if (done) state = STOP;
-    break;
+        break;
 
     case BUMPED1a:
         Serial.println("Enter BUMPED1a state");
         /* Stop the motors */
-        setMotorSpeed(BOTH_MOTORS,0);
+        pauseMotor(BOTH_MOTORS);
         /* Reverse the robot */
         setMotorDirection(BOTH_MOTORS, MOTOR_DIR_BACKWARD);
-        setMotorSpeed(BOTH_MOTORS,25);
+        resumeMotor(BOTH_MOTORS);
         delay(500);
         state = BUMPED1b;
-    break;
+        break;
 
     case BUMPED1b:
         Serial.println("Enter BUMPED1b state");
         /* Turn robot to avoid obstacle */
-
-        setMotorSpeed(LEFT_MOTOR,0);
-        setMotorSpeed(RIGHT_MOTOR,25);
+        setMotorSpeed(LEFT_MOTOR, 0);
+        setMotorSpeed(RIGHT_MOTOR, motorSpeed);
         delay(100);
 
         state = DRIVE;
-    break;
+        break;
 
     case DRIVE:
         Serial.println("Enter DRIVE state");
         /* Put motors back to forward direction */
         setMotorDirection(BOTH_MOTORS, MOTOR_DIR_FORWARD);
-        setMotorSpeed(BOTH_MOTORS, 25);
+        setMotorSpeed(BOTH_MOTORS, motorSpeed);
 
         state = GO2;
     break;
@@ -148,5 +157,5 @@ void loop() {
     break;
   }
 
-  delay(10);
+  delay(20);
 }

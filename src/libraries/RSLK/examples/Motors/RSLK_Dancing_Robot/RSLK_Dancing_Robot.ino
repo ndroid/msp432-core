@@ -1,35 +1,60 @@
-#include "Energia.h"
+/*
+ * Energia Robot Library for Texas Instruments' Robot System Learning Kit (RSLK)
+ * Dancing Robot Example
+ *
+ * Summary:
+ * This example has the TI Robotic System Learning Kit (TI RSLK) driving in a 
+ * sequence of patterns until it hits an object (ie a bump switch is triggered) 
+ * then it stops.
+ *
+ * How to run:
+ * 1) Push left button on Launchpad to start the demo
+ * 2) Robot will drive in sequence of patterns until the bump switches are triggered
+ * 3) Once switches are triggered the robot will halt
+ * 4) Push left button again to start demo
+ *
+ * Learn more about the classes, variables and functions used in this library by going to:
+ * https://ndroid.github.io/msp432-core/RSLK/
+ *
+ * Learn more about the TI RSLK by going to http://www.ti.com/rslk
+ *
+ * created by Franklin Cooper Jr.
+ * modified by chris miller 
+ *
+ * This example code is in the public domain.
+ */
 
+/* Include RSLK library */
 #include "SimpleRSLK.h"
+
+const uint16_t lowSpeed = 10;
+const uint16_t fastSpeed = 50;
 
 bool hit_obstacle = false;
 
-void waitBtnPressed() {
-  while(digitalRead(LP_S2_PIN) == 1){
-    digitalWrite(LP_RGB_LED_GREEN_PIN, HIGH);
-    delay(500);
-    digitalWrite(LP_RGB_LED_GREEN_PIN, LOW);
-    delay(500);
-  }
-}
+/** 
+ * Check for collision with bump switches
+ * @param delayMS   delay time in milliseconds 
+ * @return  true if collision detected within _delayMS_ time
+ */
+bool checkCollision(uint32_t delayMS) {
+  uint32_t endTime = millis() +  delayMS;
 
-void checkCollision() {
-  for(int x = 0;x<6;x++)
-  {
-    /* Check if bump switch was pressed
-     *  Parameter:
-     *    bump switch number -> 0-5
-     *    Returns:
-     *      true -> if specific switch was pressed
-     *      false -> if specific switch was not pressed
-     */
-    if(isBumpSwitchPressed(x) == true) {
-      hit_obstacle = true;
+  while (millis() < endTime) {
+    /* Check if any bump switch was pressed
+    *    Returns: mask of bump switch states (bits 0 to 5)
+    *      0 -> if bump switch is not pressed
+    *      1 -> if bump switch is pressed
+    */
+    if (getBumpSwitchPressed() > 0) {
       Serial.println("Collision detected");
       disableMotor(BOTH_MOTORS);
-      break;
+      hit_obstacle = true;
+      return true;
     }
   }
+  
+  return false;
 }
 
 void setup() {
@@ -40,107 +65,107 @@ void setup() {
   /* Run setup code */
   setupRSLK();
 
+  /* Left button on Launchpad */
+  setupWaitBtn(LP_LEFT_BTN);
   /* Initialize LED pins as outputs */
-  pinMode(LED_FR_PIN, OUTPUT); 
-  pinMode(LED_FL_PIN, OUTPUT); 
-  pinMode(LED_BR_PIN, OUTPUT); 
-  pinMode(LED_BL_PIN, OUTPUT);
-  pinMode(LP_RED_LED_PIN, OUTPUT);
-  pinMode(LP_RGB_LED_RED_PIN, OUTPUT);
-  pinMode(LP_RGB_LED_BLUE_PIN, OUTPUT); 
-  pinMode(LP_RGB_LED_GREEN_PIN, OUTPUT);
-
-  /* Initialize LaunchPad buttons as inputs */
-  pinMode(LP_S1_PIN, INPUT_PULLUP);
-  pinMode(LP_S2_PIN, INPUT_PULLUP);
+  setupLed(BLUE_LED);
+  setupLed(GREEN_LED);
 }
 
 void loop() {
-  
-  Serial.println("Waiting until left button is pushed");
+  String btnMsg = "Push left button on Launchpad to start demo.\n";
   /* Wait until button is pressed to start robot */
-  waitBtnPressed();
+  waitBtnPressed(LP_LEFT_BTN, btnMsg, GREEN_LED);
 
-  /* Wait two seconds before starting */
-  delay(2000);
-  digitalWrite(LP_RGB_LED_BLUE_PIN, HIGH);
- /* Enables specified motor.
-  *  Parameter:
-  *   Motor your referencing -> LEFT_MOTOR  RIGHT_MOTOR  BOTH_MOTORS
-  */
+  /* Wait one second before starting */
+  delay(1000);
+  digitalWrite(BLUE_LED, HIGH);
+  /* Enables specified motor.
+   *  Parameter:
+   *   Motor your referencing -> LEFT_MOTOR,  RIGHT_MOTOR,  BOTH_MOTORS
+   */
   enableMotor(BOTH_MOTORS);
 
- /* Set direction of motor rotation.
-  *  Parameter:
-  *   Motor your referencing -> LEFT_MOTOR  RIGHT_MOTOR  BOTH_MOTORS
-  *   Direction -> MOTOR_DIR_FORWARD  MOTOR_DIR_BACKWARD
-  */
-  setMotorDirection(LEFT_MOTOR,MOTOR_DIR_FORWARD);
-  setMotorDirection(RIGHT_MOTOR,MOTOR_DIR_FORWARD);
+  /* Set direction of motor rotation.
+   *  Parameter:
+   *   Motor your referencing -> LEFT_MOTOR,  RIGHT_MOTOR,  BOTH_MOTORS
+   *   Direction -> MOTOR_DIR_FORWARD,  MOTOR_DIR_BACKWARD
+   */
+  setMotorDirection(LEFT_MOTOR, MOTOR_DIR_FORWARD);
+  setMotorDirection(RIGHT_MOTOR, MOTOR_DIR_FORWARD);
   
- /* Set speed of motor.
-  *  Parameter:
-  *   Motor your referencing -> LEFT_MOTOR  RIGHT_MOTOR  BOTH_MOTORS
-  *   Speed -> 0 - 100
-  */
-  setMotorSpeed(BOTH_MOTORS,10);
+  /* Set speed of motor.
+   *  Parameter:
+   *   Motor your referencing -> LEFT_MOTOR,  RIGHT_MOTOR,  BOTH_MOTORS
+   *   Speed -> 0 - 100
+   */
+  setMotorSpeed(BOTH_MOTORS, lowSpeed);
 
+  hit_obstacle = false;
   while(!hit_obstacle) {
-    /* Move robot in place */
-    
-    /* Right turn in place */
-    setMotorDirection(LEFT_MOTOR, MOTOR_DIR_BACKWARD);
+    /* Left turn */
+    setMotorSpeed(LEFT_MOTOR, 0);
     setMotorDirection(RIGHT_MOTOR, MOTOR_DIR_FORWARD);
-    delay(1000);
+    if (checkCollision(1000))
+      break;
+
+    /* 360 spin left */
+    setMotorDirection(LEFT_MOTOR, MOTOR_DIR_BACKWARD);
+    setMotorSpeed(BOTH_MOTORS, fastSpeed);
+    if (checkCollision(800))
+      break;
+    setMotorSpeed(BOTH_MOTORS, lowSpeed);
+
+    /* Right turn */
+    setMotorDirection(LEFT_MOTOR, MOTOR_DIR_FORWARD);
+    setMotorSpeed(RIGHT_MOTOR, 0);
+    if (checkCollision(1000))
+      break;
+    
+    /* 360 spin right */
+    setMotorDirection(RIGHT_MOTOR, MOTOR_DIR_BACKWARD);
+    setMotorSpeed(BOTH_MOTORS, fastSpeed);
+    if (checkCollision(800))
+      break;
+    setMotorSpeed(BOTH_MOTORS, lowSpeed);
 
     /* Left turn in place */
+    setMotorDirection(LEFT_MOTOR, MOTOR_DIR_BACKWARD);
+    setMotorDirection(RIGHT_MOTOR, MOTOR_DIR_FORWARD);
+    if (checkCollision(1000))
+      break;
+
+    /* Drive forward */
+    setMotorDirection(BOTH_MOTORS, MOTOR_DIR_FORWARD);
+    if (checkCollision(500))
+      break;
+
+    /* Right turn in place */
     setMotorDirection(LEFT_MOTOR, MOTOR_DIR_FORWARD);
     setMotorDirection(RIGHT_MOTOR, MOTOR_DIR_BACKWARD);
-    delay(1000);
+    if (checkCollision(1000))
+      break;
 
-    
+    /* Drive backward */
+    setMotorDirection(BOTH_MOTORS, MOTOR_DIR_BACKWARD);
+    if (checkCollision(500))
+      break;
+
     /* 360 spin right */
     setMotorDirection(LEFT_MOTOR, MOTOR_DIR_FORWARD);
     setMotorDirection(RIGHT_MOTOR, MOTOR_DIR_BACKWARD);
-    setMotorSpeed(BOTH_MOTORS,50);
-    delay(800);
-    setMotorSpeed(BOTH_MOTORS,10);
+    setMotorSpeed(BOTH_MOTORS, fastSpeed);
+    if (checkCollision(800))
+      break;
+    setMotorSpeed(BOTH_MOTORS, lowSpeed);
 
     /* 360 spin left */
     setMotorDirection(LEFT_MOTOR, MOTOR_DIR_BACKWARD);
     setMotorDirection(RIGHT_MOTOR, MOTOR_DIR_FORWARD);
-    setMotorSpeed(BOTH_MOTORS,50);
-    delay(800);
-    setMotorSpeed(BOTH_MOTORS,10);
-
-    /* Left turn in place */
-    setMotorDirection(LEFT_MOTOR, MOTOR_DIR_BACKWARD);
-    setMotorDirection(RIGHT_MOTOR, MOTOR_DIR_FORWARD);
-    delay(500);
-
-    /* Right turn in place */
-    setMotorDirection(LEFT_MOTOR, MOTOR_DIR_FORWARD);
-    setMotorDirection(RIGHT_MOTOR, MOTOR_DIR_BACKWARD);
-    delay(1000);
-
-    /* Left turn in place */
-    setMotorDirection(LEFT_MOTOR, MOTOR_DIR_BACKWARD);
-    setMotorDirection(RIGHT_MOTOR, MOTOR_DIR_FORWARD);
-    delay(1000);
-
-    /* 360 spin right */
-    setMotorDirection(LEFT_MOTOR, MOTOR_DIR_FORWARD);
-    setMotorDirection(RIGHT_MOTOR, MOTOR_DIR_BACKWARD);
-    setMotorSpeed(BOTH_MOTORS,50);
-    delay(800);
-    setMotorSpeed(BOTH_MOTORS,10);
-
-    /* 360 spin left */
-    setMotorDirection(LEFT_MOTOR, MOTOR_DIR_BACKWARD);
-    setMotorDirection(RIGHT_MOTOR, MOTOR_DIR_FORWARD);
-    setMotorSpeed(BOTH_MOTORS,50);
-    delay(800);
-    setMotorSpeed(BOTH_MOTORS,10);
+    setMotorSpeed(BOTH_MOTORS, fastSpeed);
+    if (checkCollision(800))
+      break;
+    setMotorSpeed(BOTH_MOTORS, lowSpeed);
 
   } 
 }
