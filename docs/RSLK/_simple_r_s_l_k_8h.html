@@ -186,12 +186,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ab8cd22c906c04fa5fd8631e30cd109cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_simple_r_s_l_k_8h.html#ab8cd22c906c04fa5fd8631e30cd109cd">setupLed</a> (uint8_t ledPin)</td></tr>
 <tr class="memdesc:ab8cd22c906c04fa5fd8631e30cd109cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure pin that is connected to an led.  <br /></td></tr>
 <tr class="separator:ab8cd22c906c04fa5fd8631e30cd109cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38dca8d3b273454afac0abdc56397582"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_simple_r_s_l_k_8h.html#a38dca8d3b273454afac0abdc56397582">waitBtnPressed</a> (uint8_t btnPin, String msg=&quot;&quot;, int8_t ledPin=0)</td></tr>
-<tr class="memdesc:a38dca8d3b273454afac0abdc56397582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busy wait until user pushes and releases button.  <br /></td></tr>
-<tr class="separator:a38dca8d3b273454afac0abdc56397582"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a364895341e7748fb3d3c7d38589437ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_simple_r_s_l_k_8h.html#a364895341e7748fb3d3c7d38589437ab">calibrateLineSensor</a> (uint8_t mode=<a class="el" href="_simple_r_s_l_k_8h.html#a05cf18a2c53cec9c9122be2271c3e791">DARK_LINE</a>, uint32_t duration=100)</td></tr>
-<tr class="memdesc:a364895341e7748fb3d3c7d38589437ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calibrates line sensor.  <br /></td></tr>
-<tr class="separator:a364895341e7748fb3d3c7d38589437ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a872f07ea95ec3caeeb0a237881f9bc94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_simple_r_s_l_k_8h.html#a872f07ea95ec3caeeb0a237881f9bc94">waitBtnPressed</a> (uint8_t btnPin, int8_t ledPin=0)</td></tr>
+<tr class="memdesc:a872f07ea95ec3caeeb0a237881f9bc94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busy wait until user pushes and releases button.  <br /></td></tr>
+<tr class="separator:a872f07ea95ec3caeeb0a237881f9bc94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad99b34785db6e0b0982917217e7b85f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_simple_r_s_l_k_8h.html#ad99b34785db6e0b0982917217e7b85f3">calibrateLineSensor</a> (uint8_t mode=<a class="el" href="_simple_r_s_l_k_8h.html#a05cf18a2c53cec9c9122be2271c3e791">DARK_LINE</a>, uint32_t duration=200)</td></tr>
+<tr class="memdesc:ad99b34785db6e0b0982917217e7b85f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calibrates line sensor.  <br /></td></tr>
+<tr class="separator:ad99b34785db6e0b0982917217e7b85f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad3e4e47d504102b253067592b5e2af1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_simple_r_s_l_k_8h.html#aad3e4e47d504102b253067592b5e2af1">readCalLineSensor</a> (uint16_t *calVal)</td></tr>
 <tr class="memdesc:aad3e4e47d504102b253067592b5e2af1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read calibrated line sensor values. Assumes calibration completed.  <br /></td></tr>
 <tr class="separator:aad3e4e47d504102b253067592b5e2af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -477,7 +477,7 @@ Each index will contain a value from 0 - 2500.<ul>
 </dl>
 <p>Read and store sensor values in the passed in array. </p>
 
-<p class="definition">Definition at line <a class="el" href="_simple_r_s_l_k_8h_source.html#l00332">332</a> of file <a class="el" href="_simple_r_s_l_k_8h_source.html">SimpleRSLK.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_simple_r_s_l_k_8h_source.html#l00331">331</a> of file <a class="el" href="_simple_r_s_l_k_8h_source.html">SimpleRSLK.h</a>.</p>
 
 </div>
 </div>
@@ -536,8 +536,8 @@ Each index will contain a value from 0 - 2500.<ul>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a364895341e7748fb3d3c7d38589437ab" name="a364895341e7748fb3d3c7d38589437ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a364895341e7748fb3d3c7d38589437ab">&#9670;&#160;</a></span>calibrateLineSensor()</h2>
+<a id="ad99b34785db6e0b0982917217e7b85f3" name="ad99b34785db6e0b0982917217e7b85f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad99b34785db6e0b0982917217e7b85f3">&#9670;&#160;</a></span>calibrateLineSensor()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -552,7 +552,7 @@ Each index will contain a value from 0 - 2500.<ul>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>duration</em> = <code>100</code>&#160;</td>
+          <td class="paramname"><em>duration</em> = <code>200</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -571,7 +571,7 @@ Each index will contain a value from 0 - 2500.<ul>
 <li>1 (LIGHT_LINE) is used when the line is lighter than the floor. </li>
 </ul>
 </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">duration</td><td>duration for calibration in milliseconds (default is 100) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">duration</td><td>duration for calibration in milliseconds (default is 200) </td></tr>
   </table>
   </dd>
 </dl>
@@ -733,15 +733,15 @@ Each index will contain a value from 0 - 2500.<ul>
 </div><div class="memdoc">
 
 <p>Get line position. </p>
-<p>Provides a numerical value indicating where the robot is detecting the line. Assumes <a class="el" href="_simple_r_s_l_k_8h.html#a364895341e7748fb3d3c7d38589437ab" title="Calibrates line sensor.">calibrateLineSensor()</a> has already been called (only necessary to calibrate once).</p>
-<dl class="section return"><dt>Returns</dt><dd>value between 0 - 7000.<ul>
+<p>Provides a numerical value indicating where the robot is detecting the line. Assumes <a class="el" href="_simple_r_s_l_k_8h.html#ad99b34785db6e0b0982917217e7b85f3" title="Calibrates line sensor.">calibrateLineSensor()</a> has already been called (only necessary to calibrate once).</p>
+<dl class="section return"><dt>Returns</dt><dd>value between 0 - 8000.<ul>
 <li>0 no line detected <br  />
  ...</li>
 <li>1000 line is directly on the left most sensor <br  />
  ...</li>
-<li>3500 line directly over two middle sensors. <br  />
+<li>4500 line directly over two middle sensors. <br  />
  ...</li>
-<li>7000 is under right most line sensor </li>
+<li>8000 line is under right most line sensor </li>
 </ul>
 </dd></dl>
 
@@ -788,14 +788,14 @@ Each index will contain a value from 0 - 2500.<ul>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>value between 0 - 7000.<ul>
+<dl class="section return"><dt>Returns</dt><dd>value between 0 - 8000.<ul>
 <li>0 no line detected <br  />
  ...</li>
 <li>1000 line is directly on the left most sensor <br  />
  ...</li>
-<li>3500 line directly over two middle sensors. <br  />
+<li>4500 line directly over two middle sensors. <br  />
  ...</li>
-<li>7000 is under right most line sensor</li>
+<li>8000 line is under right most line sensor</li>
 </ul>
 </dd></dl>
 <p>Using calibrated line sensor value this function provides a numerical value indicating where the robot is detecting the line. This function can be overridden. </p>
@@ -893,7 +893,7 @@ Each index will contain a value from 0 - 2500.<ul>
 </div><div class="memdoc">
 
 <p>Read calibrated line sensor values. Assumes calibration completed. </p>
-<p>Takes the current line sensor values and sets calVal to the calibrated values. Assumes <a class="el" href="_simple_r_s_l_k_8h.html#a364895341e7748fb3d3c7d38589437ab" title="Calibrates line sensor.">calibrateLineSensor()</a> has already been called (only necessary to calibrate once).</p>
+<p>Takes the current line sensor values and sets calVal to the calibrated values. Assumes <a class="el" href="_simple_r_s_l_k_8h.html#ad99b34785db6e0b0982917217e7b85f3" title="Calibrates line sensor.">calibrateLineSensor()</a> has already been called (only necessary to calibrate once).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">calVal</td><td>is an array that will be filled with the calibrated values based on the sensor. <br  />
@@ -1315,7 +1315,7 @@ Elements will be filled with values of 0 - 1000<ul>
 </dl>
 <p>Take the current line sensor values and update min and max values. This function along with the min and max arrays are useful when performing calibration. </p>
 
-<p class="definition">Definition at line <a class="el" href="_simple_r_s_l_k_8cpp_source.html#l00253">253</a> of file <a class="el" href="_simple_r_s_l_k_8cpp_source.html">SimpleRSLK.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_simple_r_s_l_k_8cpp_source.html#l00254">254</a> of file <a class="el" href="_simple_r_s_l_k_8cpp_source.html">SimpleRSLK.cpp</a>.</p>
 
 </div>
 </div>
@@ -1344,7 +1344,7 @@ Elements will be filled with values of 0 - 1000<ul>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_simple_r_s_l_k_8cpp_source.html#l00270">270</a> of file <a class="el" href="_simple_r_s_l_k_8cpp_source.html">SimpleRSLK.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_simple_r_s_l_k_8cpp_source.html#l00271">271</a> of file <a class="el" href="_simple_r_s_l_k_8cpp_source.html">SimpleRSLK.cpp</a>.</p>
 
 </div>
 </div>
@@ -1395,12 +1395,12 @@ Elements will be filled with values of 0 - 1000<ul>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_simple_r_s_l_k_8cpp_source.html#l00265">265</a> of file <a class="el" href="_simple_r_s_l_k_8cpp_source.html">SimpleRSLK.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_simple_r_s_l_k_8cpp_source.html#l00266">266</a> of file <a class="el" href="_simple_r_s_l_k_8cpp_source.html">SimpleRSLK.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a38dca8d3b273454afac0abdc56397582" name="a38dca8d3b273454afac0abdc56397582"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38dca8d3b273454afac0abdc56397582">&#9670;&#160;</a></span>waitBtnPressed()</h2>
+<a id="a872f07ea95ec3caeeb0a237881f9bc94" name="a872f07ea95ec3caeeb0a237881f9bc94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a872f07ea95ec3caeeb0a237881f9bc94">&#9670;&#160;</a></span>waitBtnPressed()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1410,12 +1410,6 @@ Elements will be filled with values of 0 - 1000<ul>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>btnPin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>msg</em> = <code>&quot;&quot;</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1436,20 +1430,19 @@ Elements will be filled with values of 0 - 1000<ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">btnPin</td><td>the Launchpad pin number you want to use. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>contains the string to output while waiting for btn to be pressed. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ledPin</td><td>represents the pin to toggle high and low while waiting for btn to be pressed. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_simple_r_s_l_k_8cpp_source.html#l00275">275</a> of file <a class="el" href="_simple_r_s_l_k_8cpp_source.html">SimpleRSLK.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_simple_r_s_l_k_8cpp_source.html#l00276">276</a> of file <a class="el" href="_simple_r_s_l_k_8cpp_source.html">SimpleRSLK.cpp</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 10 2023 01:37:22 for TI RSLK Library by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7
+Generated on Sat Aug 12 2023 21:37:30 for TI RSLK Library by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7
 </small></address>
 </body>
 </html>

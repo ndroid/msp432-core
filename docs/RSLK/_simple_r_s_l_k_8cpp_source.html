@@ -264,7 +264,7 @@ $(function() {
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    }</div>
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>}</div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno"><a class="line" href="_simple_r_s_l_k_8h.html#a364895341e7748fb3d3c7d38589437ab">  189</a></span><span class="keywordtype">void</span> calibrateLineSensor(uint8_t mode = <a class="code hl_define" href="_simple_r_s_l_k_8h.html#a05cf18a2c53cec9c9122be2271c3e791">DARK_LINE</a>, uint32_t duration = 100)</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno"><a class="line" href="_simple_r_s_l_k_8h.html#ad99b34785db6e0b0982917217e7b85f3">  189</a></span><span class="keywordtype">void</span> calibrateLineSensor(uint8_t mode, uint32_t duration)</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>{</div>
 <div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    uint32_t scanTime = millis() + duration;</div>
 <div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
@@ -313,9 +313,9 @@ $(function() {
 <div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    uint32_t avg = 0; <span class="comment">// this is for the weighted total</span></div>
 <div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    uint32_t sum = 0; <span class="comment">// this is for the denominator, which is &lt;= 64000</span></div>
 <div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    uint32_t _lastPosition;</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; <a class="code hl_define" href="_simple_r_s_l_k_8h.html#ac3467e86d0d91872c68c705c6e8f3662">LS_NUM_SENSORS</a>; i++) {</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        uint16_t value = calVal[i];</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    uint32_t _lastPosition = 0;</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    <span class="keywordflow">for</span> (uint8_t i = 1; i &lt;= <a class="code hl_define" href="_simple_r_s_l_k_8h.html#ac3467e86d0d91872c68c705c6e8f3662">LS_NUM_SENSORS</a>; i++) {</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        uint16_t value = calVal[i-1];</div>
 <div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
 <div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        <span class="comment">// only average in values that are above a noise threshold</span></div>
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        <span class="keywordflow">if</span> (value &gt; 50) {</div>
@@ -324,65 +324,67 @@ $(function() {
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        }</div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    }</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    _lastPosition = avg / sum;</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    <span class="keywordflow">return</span> _lastPosition;</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>}</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> </div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno"><a class="line" href="_simple_r_s_l_k_8h.html#afa1b08c477adccb29dc3ad97a58b63c7">  253</a></span><span class="keywordtype">void</span> setSensorMinMax(uint16_t *sensor, uint16_t *sensorMin, uint16_t *sensorMax)</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>{</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; <a class="code hl_define" href="_simple_r_s_l_k_8h.html#ac3467e86d0d91872c68c705c6e8f3662">LS_NUM_SENSORS</a>; x++) {</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>        <span class="keywordflow">if</span> (sensor[x] &lt; sensorMin[x]) {</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>            sensorMin[x] = sensor[x];</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        }</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        <span class="keywordflow">if</span> (sensor[x] &gt; sensorMax[x]) {</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>            sensorMax[x] = sensor[x];</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        }</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    }</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>}</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno"><a class="line" href="_simple_r_s_l_k_8h.html#a950139ef3fccb4fa19d74dd1e7d0c8c4">  265</a></span><span class="keywordtype">void</span> setupWaitBtn(uint8_t btn)</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>{</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    pinMode(btn, INPUT_PULLUP);</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>}</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno"><a class="line" href="_simple_r_s_l_k_8h.html#ab8cd22c906c04fa5fd8631e30cd109cd">  270</a></span><span class="keywordtype">void</span> setupLed(uint8_t ledPin)</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>{</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    pinMode(ledPin, OUTPUT);</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>}</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> </div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno"><a class="line" href="_simple_r_s_l_k_8h.html#a38dca8d3b273454afac0abdc56397582">  275</a></span><span class="keywordtype">void</span> waitBtnPressed(uint8_t btnPin, String msg, int8_t ledPin)</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>{</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    uint8_t btnCnt = 0;</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    uint8_t pinVal = HIGH;</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> </div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <span class="comment">/* Turn on led */</span></div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    <span class="keywordflow">if</span> (ledPin &gt; 0)</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        digitalWrite(ledPin, pinVal);</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    <span class="keywordflow">while</span> (digitalRead(btnPin) == 1) {</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        delay(25);</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        btnCnt++;</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        <span class="keywordflow">if</span> (btnCnt == 40) {</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>            digitalWrite(ledPin, pinVal);</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>            btnCnt = 0;</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>            pinVal = !pinVal;</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> </div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>            <span class="keywordflow">if</span> (msg != <span class="stringliteral">&quot;&quot;</span>)</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>                Serial.println(msg);</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        }</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    }</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span> </div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    pinVal = LOW;</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>    <span class="keywordflow">if</span> (ledPin &gt; 0)</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        digitalWrite(ledPin, pinVal);</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> </div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>    <span class="comment">/* Wait for a short period to avoid button debounce */</span></div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>    delay(50);</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    <span class="keywordflow">while</span> (digitalRead(btnPin) == 0)</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>        ;</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span> </div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    <span class="comment">/* Wait for a short period to avoid button debounce */</span></div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    delay(50);</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>}</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    <span class="keywordflow">if</span> (sum &gt; 0)</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        _lastPosition = avg / sum;</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    <span class="keywordflow">return</span> _lastPosition;</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>}</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno"><a class="line" href="_simple_r_s_l_k_8h.html#afa1b08c477adccb29dc3ad97a58b63c7">  254</a></span><span class="keywordtype">void</span> setSensorMinMax(uint16_t *sensor, uint16_t *sensorMin, uint16_t *sensorMax)</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>{</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; <a class="code hl_define" href="_simple_r_s_l_k_8h.html#ac3467e86d0d91872c68c705c6e8f3662">LS_NUM_SENSORS</a>; x++) {</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        <span class="keywordflow">if</span> (sensor[x] &lt; sensorMin[x]) {</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>            sensorMin[x] = sensor[x];</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        }</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        <span class="keywordflow">if</span> (sensor[x] &gt; sensorMax[x]) {</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>            sensorMax[x] = sensor[x];</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        }</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    }</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>}</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno"><a class="line" href="_simple_r_s_l_k_8h.html#a950139ef3fccb4fa19d74dd1e7d0c8c4">  266</a></span><span class="keywordtype">void</span> setupWaitBtn(uint8_t btn)</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>{</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    pinMode(btn, INPUT_PULLUP);</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>}</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> </div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno"><a class="line" href="_simple_r_s_l_k_8h.html#ab8cd22c906c04fa5fd8631e30cd109cd">  271</a></span><span class="keywordtype">void</span> setupLed(uint8_t ledPin)</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>{</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    pinMode(ledPin, OUTPUT);</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>}</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> </div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno"><a class="line" href="_simple_r_s_l_k_8h.html#a872f07ea95ec3caeeb0a237881f9bc94">  276</a></span><span class="keywordtype">void</span> waitBtnPressed(uint8_t btnPin, int8_t ledPin)</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>{</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    uint8_t btnCnt = 0;</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    uint8_t pinVal = HIGH;</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    <span class="keywordflow">if</span> (ledPin &gt; MAX_PIN_NUMBER) </div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        ledPin = 0;</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    <span class="comment">/* Turn on led */</span></div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>    <span class="keywordflow">if</span> (ledPin &gt; 0)</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        digitalWrite(ledPin, pinVal);</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    <span class="keywordflow">while</span> (digitalRead(btnPin) == 1) {</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        delay(25);</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        btnCnt++;</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        <span class="keywordflow">if</span> (btnCnt == 40) {</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>            btnCnt = 0;</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>            <span class="keywordflow">if</span> (ledPin &gt; 0) {</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>                pinVal = !pinVal;</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>                digitalWrite(ledPin, pinVal);</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>            }</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        }</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    }</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> </div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    pinVal = LOW;</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>    <span class="keywordflow">if</span> (ledPin &gt; 0)</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>        digitalWrite(ledPin, pinVal);</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> </div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    <span class="comment">/* Wait for a short period to avoid button debounce */</span></div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    delay(50);</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    <span class="keywordflow">while</span> (digitalRead(btnPin) == 0)</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        ;</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> </div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    <span class="comment">/* Wait for a short period to avoid button debounce */</span></div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    delay(50);</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>}</div>
 <div class="ttc" id="a_q_t_r_sensors_8h_html_a3de40c1ece9200d5dcd314dcfe655a6ea194540c7816e1e0ee2ea7d726fee0872"><div class="ttname"><a href="_q_t_r_sensors_8h.html#a3de40c1ece9200d5dcd314dcfe655a6ea194540c7816e1e0ee2ea7d726fee0872">QTRReadMode::OddEven</a></div><div class="ttdeci">@ OddEven</div></div>
 <div class="ttc" id="a_r_s_l_k___pins_8h_html_a10016a10b86fc4df31780d097ebd7d2b"><div class="ttname"><a href="_r_s_l_k___pins_8h.html#a10016a10b86fc4df31780d097ebd7d2b">ENCODER_ERB_PIN</a></div><div class="ttdeci">#define ENCODER_ERB_PIN</div><div class="ttdoc">Value represents Energia number for Launchpad Pin P5.0.</div><div class="ttdef"><b>Definition</b> <a href="_r_s_l_k___pins_8h_source.html#l00195">RSLK_Pins.h:195</a></div></div>
 <div class="ttc" id="a_r_s_l_k___pins_8h_html_a1478e2c77c54b276a7bc900ffe924317"><div class="ttname"><a href="_r_s_l_k___pins_8h.html#a1478e2c77c54b276a7bc900ffe924317">MOTOR_L_PWM_PIN</a></div><div class="ttdeci">#define MOTOR_L_PWM_PIN</div><div class="ttdoc">Value represents Energia number for Launchpad Pin P2.7.</div><div class="ttdef"><b>Definition</b> <a href="_r_s_l_k___pins_8h_source.html#l00152">RSLK_Pins.h:152</a></div></div>
@@ -417,7 +419,7 @@ $(function() {
 <div class="ttc" id="a_simple_r_s_l_k_8h_html_a05cf18a2c53cec9c9122be2271c3e791"><div class="ttname"><a href="_simple_r_s_l_k_8h.html#a05cf18a2c53cec9c9122be2271c3e791">DARK_LINE</a></div><div class="ttdeci">#define DARK_LINE</div><div class="ttdoc">Used to specify that the robot is running on a floor lighter than the line.</div><div class="ttdef"><b>Definition</b> <a href="_simple_r_s_l_k_8h_source.html#l00085">SimpleRSLK.h:85</a></div></div>
 <div class="ttc" id="a_simple_r_s_l_k_8h_html_a135956392598cf8ec1d8c5511c42adda"><div class="ttname"><a href="_simple_r_s_l_k_8h.html#a135956392598cf8ec1d8c5511c42adda">TOTAL_BP_SW</a></div><div class="ttdeci">#define TOTAL_BP_SW</div><div class="ttdoc">Total number of bump switches.</div><div class="ttdef"><b>Definition</b> <a href="_simple_r_s_l_k_8h_source.html#l00040">SimpleRSLK.h:40</a></div></div>
 <div class="ttc" id="a_simple_r_s_l_k_8h_html_a149aff2324c35d74b3255e66c8e185a8"><div class="ttname"><a href="_simple_r_s_l_k_8h.html#a149aff2324c35d74b3255e66c8e185a8">DST_NUM_SENSORS</a></div><div class="ttdeci">#define DST_NUM_SENSORS</div><div class="ttdoc">Total number of distance sensors.</div><div class="ttdef"><b>Definition</b> <a href="_simple_r_s_l_k_8h_source.html#l00020">SimpleRSLK.h:20</a></div></div>
-<div class="ttc" id="a_simple_r_s_l_k_8h_html_a4422577e215cd79fe8c705fbae115cb3"><div class="ttname"><a href="_simple_r_s_l_k_8h.html#a4422577e215cd79fe8c705fbae115cb3">readLineSensor</a></div><div class="ttdeci">#define readLineSensor</div><div class="ttdoc">Read line sensor values.</div><div class="ttdef"><b>Definition</b> <a href="_simple_r_s_l_k_8h_source.html#l00332">SimpleRSLK.h:332</a></div></div>
+<div class="ttc" id="a_simple_r_s_l_k_8h_html_a4422577e215cd79fe8c705fbae115cb3"><div class="ttname"><a href="_simple_r_s_l_k_8h.html#a4422577e215cd79fe8c705fbae115cb3">readLineSensor</a></div><div class="ttdeci">#define readLineSensor</div><div class="ttdoc">Read line sensor values.</div><div class="ttdef"><b>Definition</b> <a href="_simple_r_s_l_k_8h_source.html#l00331">SimpleRSLK.h:331</a></div></div>
 <div class="ttc" id="a_simple_r_s_l_k_8h_html_a52b56a381e777b55e1b59019d9ee072e"><div class="ttname"><a href="_simple_r_s_l_k_8h.html#a52b56a381e777b55e1b59019d9ee072e">NUM_MOTORS</a></div><div class="ttdeci">#define NUM_MOTORS</div><div class="ttdoc">Total number of motors.</div><div class="ttdef"><b>Definition</b> <a href="_simple_r_s_l_k_8h_source.html#l00025">SimpleRSLK.h:25</a></div></div>
 <div class="ttc" id="a_simple_r_s_l_k_8h_html_a7f5f447d33b09e7475dad88f0e42ad0b"><div class="ttname"><a href="_simple_r_s_l_k_8h.html#a7f5f447d33b09e7475dad88f0e42ad0b">LEFT_MOTOR</a></div><div class="ttdeci">#define LEFT_MOTOR</div><div class="ttdoc">Can be used to reference the left motor in the below functions.</div><div class="ttdef"><b>Definition</b> <a href="_simple_r_s_l_k_8h_source.html#l00045">SimpleRSLK.h:45</a></div></div>
 <div class="ttc" id="a_simple_r_s_l_k_8h_html_ac3467e86d0d91872c68c705c6e8f3662"><div class="ttname"><a href="_simple_r_s_l_k_8h.html#ac3467e86d0d91872c68c705c6e8f3662">LS_NUM_SENSORS</a></div><div class="ttdeci">#define LS_NUM_SENSORS</div><div class="ttdoc">Total number of sensors on QTR line sensor.</div><div class="ttdef"><b>Definition</b> <a href="_simple_r_s_l_k_8h_source.html#l00015">SimpleRSLK.h:15</a></div></div>
@@ -448,7 +450,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 10 2023 01:37:22 for TI RSLK Library by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7
+Generated on Sat Aug 12 2023 21:37:30 for TI RSLK Library by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7
 </small></address>
 </body>
 </html>
