@@ -3,10 +3,10 @@
     {
       "name": "energia",
       "maintainer": "Energia",
-      "websiteURL": "http://www.energia.nu/",
+      "websiteURL": "https://github.com/ndroid/msp432-core/",
       "email": "make@energia.nu",
       "help": {
-        "online": "http://energia.nu/reference"
+        "online": "https://www.arduino.cc/reference/en/"
       },
       "platforms": [
         {

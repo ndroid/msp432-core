@@ -23,8 +23,9 @@ public:
     ///
     /// \param[in] pin_num on Launchpad connected to distance sensor's analog output.
     /// \param[in] mode for input pin. Options are the same as standard 
-    /// [Energia](https://energia.nu/reference/en/language/functions/digital-io/pinmode/)
-    ///     /Arduino pin mode.
+    ///  [Energia](https://energia.nu/reference/en/language/functions/digital-io/pinmode/)
+    ///  / [Arduino](https://www.arduino.cc/reference/en/language/functions/digital-io/pinmode/) 
+    ///  pin mode.
     bool begin(uint8_t pin_num, uint8_t mode = INPUT_PULLDOWN);
 
     /// \brief Read the value from distance sensor.
