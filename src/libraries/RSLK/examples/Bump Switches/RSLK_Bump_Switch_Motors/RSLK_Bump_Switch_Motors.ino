@@ -26,11 +26,14 @@
 /* Include RSLK library */
 #include "SimpleRSLK.h"
 
-const int motorSpeed = 10;
+/* Modify the following line to use an alternate UART interface (i.e. Serial1/2/3) */
+#define UART_SERIAL     Serial
+
+const int motorSpeed = 15;
 
 void setup()
 {
-    Serial.begin(115200);
+    UART_SERIAL.begin(115200);
     setupRSLK();
     /* Left button on Launchpad */
     setupWaitBtn(LP_LEFT_BTN);
@@ -42,9 +45,9 @@ void loop()
 {
     bool hitObstacle = false;
 
-    String btnMsg = "Push left button on Launchpad to start demo.\n";
+    UART_SERIAL.println("Push left button on Launchpad to start demo.\n");
     /* Wait until button is pressed to start robot */
-    waitBtnPressed(LP_LEFT_BTN, btnMsg, RED_LED);
+    waitBtnPressed(LP_LEFT_BTN, RED_LED);
 
     /* Wait two seconds before starting */
     delay(2000);
@@ -63,6 +66,6 @@ void loop()
         }
     }
 
-    Serial.println("Collision detected\n");
+    UART_SERIAL.println("Collision detected\n");
     disableMotor(BOTH_MOTORS);
 }

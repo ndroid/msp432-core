@@ -26,6 +26,9 @@
 /* Include RSLK library */
 #include "SimpleRSLK.h"
 
+/* Modify the following line to use an alternate UART interface (i.e. Serial1/2/3) */
+#define UART_SERIAL     Serial
+
 /* Diameter of Romi wheels in inches 
  *  2.7559055" = 7.0 cm (International System of Units) 
  */
@@ -58,7 +61,7 @@ uint32_t countForDistance(float wheel_diam, uint16_t cnt_per_rev, uint32_t dista
 
 void setup()
 {
-    Serial.begin(115200);
+    UART_SERIAL.begin(115200);
 
     setupRSLK();
     /* Left button on Launchpad */
@@ -72,8 +75,8 @@ void loop()
     uint16_t totalCount = 0;        // Total amount of encoder pulses received
     uint16_t leftCount, rightCount;
 
-    Serial.print("Driving forward distance (inches): ");
-    Serial.println(inchesToTravel);
+    UART_SERIAL.print("Driving forward distance (inches): ");
+    UART_SERIAL.println(inchesToTravel);
 
     /* Amount of encoder pulses needed to achieve distance */
     uint16_t target = countForDistance(wheelDiameter, cntPerRevolution, inchesToTravel);
@@ -82,7 +85,8 @@ void loop()
 
     /* Wait until button is pressed to start robot */
     btnMsg += "\nPush left button on Launchpad to start demo.\n";
-    waitBtnPressed(LP_LEFT_BTN, btnMsg, RED_LED);
+    UART_SERIAL.println(btnMsg);
+    waitBtnPressed(LP_LEFT_BTN, RED_LED);
 
     delay(2000);
 
@@ -104,8 +108,8 @@ void loop()
         leftCount = getEncoderLeftCnt();
         rightCount = getEncoderRightCnt();
         totalCount = (leftCount + rightCount) / 2;
-        Serial.print("\t"); Serial.print(leftCount);
-        Serial.print("\t"); Serial.println(rightCount);
+        UART_SERIAL.print("\t"); UART_SERIAL.print(leftCount);
+        UART_SERIAL.print("\t"); UART_SERIAL.println(rightCount);
     }
 
     /* Halt motors */
@@ -113,7 +117,7 @@ void loop()
 
     /* Calculate traveled distance from encoder ticks */
     float traveled = distanceTraveled(wheelDiameter, cntPerRevolution, totalCount);
-    Serial.print("Distance traveled (inches): ");
-    Serial.println(traveled);
-    Serial.println();
+    UART_SERIAL.print("Distance traveled (inches): ");
+    UART_SERIAL.println(traveled);
+    UART_SERIAL.println();
 }

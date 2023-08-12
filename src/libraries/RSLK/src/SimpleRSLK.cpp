@@ -273,15 +273,13 @@ void setupLed(uint8_t ledPin)
     pinMode(ledPin, OUTPUT);
 }
 
-void waitBtnPressed(uint8_t btnPin, String msg, int8_t ledPin)
+void waitBtnPressed(uint8_t btnPin, int8_t ledPin)
 {
     uint8_t btnCnt = 0;
     uint8_t pinVal = HIGH;
 
     if (ledPin > MAX_PIN_NUMBER) 
         ledPin = 0;
-    if (msg != "")
-        Serial.println(msg);
     /* Turn on led */
     if (ledPin > 0)
         digitalWrite(ledPin, pinVal);

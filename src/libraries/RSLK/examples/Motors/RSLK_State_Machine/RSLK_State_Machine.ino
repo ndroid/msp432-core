@@ -28,6 +28,9 @@
 /* Include RSLK library */
 #include "SimpleRSLK.h"
 
+/* Modify the following line to use an alternate UART interface (i.e. Serial1/2/3) */
+#define UART_SERIAL     Serial
+
 const uint16_t motorSpeed = 25;
 const uint32_t targetTicks = 50000;
 
@@ -49,9 +52,9 @@ my_state_t state = START;
 
 void setup() {
     /* Set serial communication to 115200 baud rate for MSP432 */
-    Serial.begin(115200);
+    UART_SERIAL.begin(115200);
     delay(500);
-    Serial.println("Initializing.....");
+    UART_SERIAL.println("Initializing.....");
 
     /* Run setup code */
     setupRSLK();
@@ -62,7 +65,7 @@ void setup() {
     /* Initialize LaunchPad buttons as inputs */
     pinMode(LP_S1_PIN, INPUT_PULLUP);
 
-    Serial.println("Initializing System Complete.");
+    UART_SERIAL.println("Initializing System Complete.");
 }
 
 void loop() {
@@ -72,13 +75,13 @@ void loop() {
   switch (state) {
 
     case START:
-        Serial.println("Enter START state");
+        UART_SERIAL.println("Enter START state");
         toggleCount = 0;
         state = WAIT;
         break;
 
     case WAIT:
-        Serial.println("Enter WAIT state");
+        UART_SERIAL.println("Enter WAIT state");
         digitalWrite(GREEN_LED, HIGH);
         delay(200);
         if (digitalRead(LP_S1_PIN) == 0) {
@@ -92,7 +95,7 @@ void loop() {
         break;
 
     case GO:
-        Serial.println("Enter GO state");
+        UART_SERIAL.println("Enter GO state");
         /* Start running the motors */
         /* Enables specified motor.
          *  Parameter:
@@ -106,7 +109,7 @@ void loop() {
         break;
 
     case GO2:
-        Serial.println("Enter GO2 state");
+        UART_SERIAL.println("Enter GO2 state");
         /* Detect a bump and then switch to bump correction state */
         if(getBumpSwitchPressed() > 0) {
             state = BUMPED1a;
@@ -120,7 +123,7 @@ void loop() {
         break;
 
     case BUMPED1a:
-        Serial.println("Enter BUMPED1a state");
+        UART_SERIAL.println("Enter BUMPED1a state");
         /* Stop the motors */
         pauseMotor(BOTH_MOTORS);
         /* Reverse the robot */
@@ -131,7 +134,7 @@ void loop() {
         break;
 
     case BUMPED1b:
-        Serial.println("Enter BUMPED1b state");
+        UART_SERIAL.println("Enter BUMPED1b state");
         /* Turn robot to avoid obstacle */
         setMotorSpeed(LEFT_MOTOR, 0);
         setMotorSpeed(RIGHT_MOTOR, motorSpeed);
@@ -141,7 +144,7 @@ void loop() {
         break;
 
     case DRIVE:
-        Serial.println("Enter DRIVE state");
+        UART_SERIAL.println("Enter DRIVE state");
         /* Put motors back to forward direction */
         setMotorDirection(BOTH_MOTORS, MOTOR_DIR_FORWARD);
         setMotorSpeed(BOTH_MOTORS, motorSpeed);
@@ -150,8 +153,8 @@ void loop() {
     break;
 
     case STOP:
-        Serial.println("Enter STOP state");
-        Serial.println("Press Reset to begin again");
+        UART_SERIAL.println("Enter STOP state");
+        UART_SERIAL.println("Press Reset to begin again");
         /* Stop all motors */
         disableMotor(BOTH_MOTORS);
     break;

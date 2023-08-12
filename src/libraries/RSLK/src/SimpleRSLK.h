@@ -249,9 +249,8 @@ void setupLed(uint8_t ledPin);
 /// specified button.
 ///
 /// \param[in] btnPin the Launchpad pin number you want to use.
-/// \param[in] msg contains the string to output while waiting for btn to be pressed.
 /// \param[in] ledPin represents the pin to toggle high and low while waiting for btn to be pressed.
-void waitBtnPressed(uint8_t btnPin, String msg = "", int8_t ledPin = 0);
+void waitBtnPressed(uint8_t btnPin, int8_t ledPin = 0);
 
 /// \brief Calibrates line sensor
 ///
@@ -418,4 +417,4 @@ void readCalLineSensor(uint16_t *sensor,
 ///  where the robot is detecting the line. This function can be overridden.
 uint32_t getLinePosition(uint16_t *calVal, uint8_t mode);
 
-#endif
+#endif  // SimpleRSLK_h

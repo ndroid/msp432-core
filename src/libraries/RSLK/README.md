@@ -4,15 +4,14 @@
 # Introduction
 
 
-This [Energia] (https://energia.nu/) library provides a set of classes and functions to make using the [Texas Instrument's Robotic System Learning Kit] (http://www.ti.com/rslk) simple. @n Go to http://www.ti.com/rslk to see the user guides, view curriculum and find the link to order.
+This [Energia] (https://energia.nu/) library provides a set of classes and functions to make using the [Texas Instrument's Robotic System Learning Kit] (http://www.ti.com/rslk) simple. @n Go to http://www.ti.com/rslk to see the user guides, view curriculum and find the link to order. This library is included with the [MSP432-Core](https://github.com/ndroid/msp432-core) for use with Arduino.
 
 # Using This Library
 
 ## Library Documentation
-Library documentation is hosted on Github Pages at https://fcooper.github.io/Energia-RSLK-Library/
+Library documentation is hosted on Github Pages at https://ndroid.github.io/msp432-core/RSLK/
 
 ## SimpleRSLK (Recommended)
-
 
 The SimpleRSLK.h defines a set of easy to use functions for the RSLK. Internally it calls the classes and functions mentioned below.
 
@@ -41,4 +40,3 @@ RSLK_Pins.h provides an important list of pins definitions for the RSLK.
 - [Line Sensor](https://www.pololu.com/product/3672)
 - [Motor Board] (https://www.pololu.com/product/3671)
 - [Gearmotor and Encoder] (https://www.pololu.com/product/3675)
-

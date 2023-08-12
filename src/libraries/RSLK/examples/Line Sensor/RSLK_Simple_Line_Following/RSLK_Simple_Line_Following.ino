@@ -33,6 +33,9 @@
 /* Include RSLK library */
 #include "SimpleRSLK.h"
 
+/* Modify the following line to use an alternate UART interface (i.e. Serial1/2/3) */
+#define UART_SERIAL     Serial
+
 /* Valid values are either:
  *  DARK_LINE  if your floor is lighter than your line
  *  LIGHT_LINE if your floor is darker than your line
@@ -43,7 +46,7 @@ const uint16_t fastSpeed = 20;
 
 void setup()
 {
-    Serial.begin(115200);
+    UART_SERIAL.begin(115200);
 
     setupRSLK();
     /* Left button on Launchpad */
@@ -56,13 +59,13 @@ void floorCalibration()
 {
     /* Place Robot On Floor (no line) */
     delay(2000);
-    String btnMsg = "Push left button on Launchpad to begin calibration.\n";
-    btnMsg += "Make sure the robot is on the floor away from the line.\n";
+    UART_SERIAL.println("Push left button on Launchpad to begin calibration.");
+    UART_SERIAL.println("Make sure the robot is on the floor away from the line.\n");
     /* Wait until button is pressed to start robot */
-    waitBtnPressed(LP_LEFT_BTN, btnMsg, RED_LED);
+    waitBtnPressed(LP_LEFT_BTN, RED_LED);
 
     delay(500);
-    Serial.println("Running calibration on floor");
+    UART_SERIAL.println("Running calibration on floor");
 
     /* Set both motors direction forward */
     setMotorDirection(BOTH_MOTORS, MOTOR_DIR_FORWARD);
@@ -77,12 +80,12 @@ void floorCalibration()
     /* Disable both motors */
     disableMotor(BOTH_MOTORS);
 
-    Serial.println("Reading floor values complete");
+    UART_SERIAL.println("Reading floor values complete");
 
-    btnMsg = "Push left button on Launchpad to begin line following.\n";
-    btnMsg += "Make sure the robot is on the line.\n";
+    UART_SERIAL.println("Push left button on Launchpad to begin line following.");
+    UART_SERIAL.println("Make sure the robot is on the line.\n");
     /* Wait until button is pressed to start robot */
-    waitBtnPressed(LP_LEFT_BTN, btnMsg, RED_LED);
+    waitBtnPressed(LP_LEFT_BTN, RED_LED);
     delay(1000);
 
     enableMotor(BOTH_MOTORS);

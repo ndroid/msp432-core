@@ -33,6 +33,9 @@
 /* Include RSLK library */
 #include "SimpleRSLK.h"
 
+/* Modify the following line to use an alternate UART interface (i.e. Serial1/2/3) */
+#define UART_SERIAL     Serial
+
 /* Valid values are either:
  *  DARK_LINE  if your floor is lighter than your line
  *  LIGHT_LINE if your floor is darker than your line
@@ -44,7 +47,7 @@ uint16_t sensorCalVal[LS_NUM_SENSORS];
 
 void setup()
 {
-    Serial.begin(115200);
+    UART_SERIAL.begin(115200);
 
     setupRSLK();
     /* Left button on Launchpad */
@@ -57,18 +60,18 @@ void floorCalibration()
 {
     /* Place Robot On Floor (no line) */
     delay(2000);
-    String btnMsg = "Push left button on Launchpad to begin calibration.\n";
-    btnMsg += "Make sure the robot is on the floor away from the line.\n";
+    UART_SERIAL.println("Push left button on Launchpad to begin calibration.");
+    UART_SERIAL.println("Make sure the robot is on the floor away from the line.\n");
     /* Wait until button is pressed to start robot */
-    waitBtnPressed(LP_LEFT_BTN, btnMsg, RED_LED);
+    waitBtnPressed(LP_LEFT_BTN, RED_LED);
 
     delay(500);
-    Serial.println("Running calibration on floor");
+    UART_SERIAL.println("Running calibration on floor");
 
     /* Must be called prior to using getLinePosition() or readCalLineSensor() */
     calibrateLineSensor(lineColor);
 
-    Serial.println("Reading floor values complete");
+    UART_SERIAL.println("Reading floor values complete");
     delay(500);
 }
 
@@ -86,19 +89,19 @@ void loop()
     readCalLineSensor(sensorCalVal);
     uint32_t linePos = getLinePosition();
 
-    Serial.println("Raw sensor values:");
+    UART_SERIAL.println("Raw sensor values:");
     for (int i = 0; i < LS_NUM_SENSORS; i++) {
-        Serial.print("\t"); Serial.print(sensorVal[i]);
+        UART_SERIAL.print("\t"); UART_SERIAL.print(sensorVal[i]);
     }
-    Serial.println();
+    UART_SERIAL.println();
 
-    Serial.println("Calibrated sensor values:");
+    UART_SERIAL.println("Calibrated sensor values:");
     for (int i = 0; i < LS_NUM_SENSORS; i++) {
-        Serial.print("\t"); Serial.print(sensorCalVal[i]);
+        UART_SERIAL.print("\t"); UART_SERIAL.print(sensorCalVal[i]);
     }
-    Serial.println();
+    UART_SERIAL.println();
 
-    Serial.print("Line position: "); Serial.println(linePos);
-    Serial.println();
+    UART_SERIAL.print("Line position: "); UART_SERIAL.println(linePos);
+    UART_SERIAL.println();
     delay(1000);
 }

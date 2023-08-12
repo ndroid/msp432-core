@@ -27,6 +27,9 @@
 /* Include RSLK library */
 #include "SimpleRSLK.h"
 
+/* Modify the following line to use an alternate UART interface (i.e. Serial1/2/3) */
+#define UART_SERIAL     Serial
+
 const uint16_t lowSpeed = 10;
 const uint16_t fastSpeed = 50;
 
@@ -47,7 +50,7 @@ bool checkCollision(uint32_t delayMS) {
     *      1 -> if bump switch is pressed
     */
     if (getBumpSwitchPressed() > 0) {
-      Serial.println("Collision detected");
+      UART_SERIAL.println("Collision detected");
       disableMotor(BOTH_MOTORS);
       hit_obstacle = true;
       return true;
@@ -59,7 +62,7 @@ bool checkCollision(uint32_t delayMS) {
 
 void setup() {
   /* Set serial communication to 115200 baud rate for MSP432 */
-  Serial.begin(115200);
+  UART_SERIAL.begin(115200);
   delay(500);
 
   /* Run setup code */
@@ -73,9 +76,9 @@ void setup() {
 }
 
 void loop() {
-  String btnMsg = "Push left button on Launchpad to start demo.\n";
+  UART_SERIAL.println("Push left button on Launchpad to start demo.\n");
   /* Wait until button is pressed to start robot */
-  waitBtnPressed(LP_LEFT_BTN, btnMsg, GREEN_LED);
+  waitBtnPressed(LP_LEFT_BTN, GREEN_LED);
 
   /* Wait one second before starting */
   delay(1000);
