@@ -43,8 +43,12 @@
 #define SPI_MODE2 SPI_POL1_PHA0
 #define SPI_MODE3 SPI_POL1_PHA1
 
+#ifndef MSBFIRST
 #define MSBFIRST 1
+#endif
+#ifndef LSBFIRST
 #define LSBFIRST 0
+#endif
 
 #define SPI_CLOCK_MAX 16000000L
 #define SPI_CLOCK_DIV1 1
@@ -55,6 +59,53 @@
 #define SPI_CLOCK_DIV32 32
 
 #define MAX_USING_INTERRUPTS 16
+
+class SPISettings {
+    public:
+        SPISettings(uint32_t clock, uint8_t bitOrder, uint8_t dataMode) {
+            init_MightInline(clock, bitOrder, dataMode);
+        }
+        SPISettings() {
+            init_AlwaysInline(4000000, MSBFIRST, SPI_MODE0);
+        }
+    private:
+        void init_MightInline(uint32_t clock, uint8_t bitOrder, uint8_t dataMode) {
+            init_AlwaysInline(clock, bitOrder, dataMode);
+        }
+        void init_AlwaysInline(uint32_t clock, uint8_t bitOrder, uint8_t dataMode)
+            __attribute__((__always_inline__)) {
+            // Clock settings are defined as follows. Note that this shows SPI2X
+            // inverted, so the bits form increasing numbers. Also note that
+            // fosc/64 appears twice
+            // SPR1 SPR0 ~SPI2X Freq
+            //   0    0     0   fosc/2
+            //   0    0     1   fosc/4
+            //   0    1     0   fosc/8
+            //   0    1     1   fosc/16
+            //   1    0     0   fosc/32
+            //   1    0     1   fosc/64
+            //   1    1     0   fosc/64
+            //   1    1     1   fosc/128
+
+            // We find the fastest clock that is less than or equal to the
+            // given clock rate. The clock divider that results in clock_setting
+            // is 2 ^^ (clock_div + 1). If nothing is slow enough, we'll use the
+            // slowest (128 == 2 ^^ 7, so clock_div = 6).
+            uint8_t clockDiv;
+
+                uint32_t clockSetting = F_CPU / 2;
+                clockDiv = 0;
+                while (clockDiv < 6 && clock < clockSetting)
+                {
+                    clockSetting /= 2;
+                    clockDiv++;
+                }
+        }
+        uint8_t bitOrder;
+        uint8_t dataMode;
+        uint8_t clockDivider;
+        friend class SPIClass;
+};
 
 class SPIClass
 {
