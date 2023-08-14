@@ -16,8 +16,8 @@
           "category": "Energia",
           "url": "https://github.com/ndroid/msp432-core/raw/main/cores/msp432-5.29.4.tar.bz2",
           "archiveFileName": "msp432-5.29.4.tar.bz2",
-          "checksum": "SHA-256:1715f96e15a94eb5c26b17853bc17228c41e0619f77833313de557aa7b3970f4",
-          "size": "29829567",
+          "checksum": "SHA-256:d8dbd16f4e3900310d74bc3021b26021ca4d8c1d29b68d30813855bd291bef3d",
+          "size": "29831099",
           "boards": [
             {"name": "MSP_EXP432P401R"},
             {"name": "MSP_EXP432P4111"}
