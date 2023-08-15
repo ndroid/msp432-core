@@ -30,6 +30,11 @@ This MSP432 core includes the following libraries:
 * IR remote (NEC transmit and receive)
 * SPI
 * Wire (I2C)
+* [TI RSLK Max library](https://ndroid.github.io/msp432-core/RSLK/)
+    * Encoders
+    * Sharp GP2Y0A21 IR distance sensors
+    * QTR line sensor
+    * Romi motor driver
 
 ### Energia Resources
 
@@ -66,7 +71,19 @@ More information can be found in the Energia guide [Installing the LaunchPad dri
 
 # Change Log
 
-__`version 5.29.4`__
+__`version 5.29.5`__
+
+* features
+    * added TI RSLK Max library which uses MSP432P401R
+        * updated RSLK library API for simplified application
+        * updated RSLK library examples
+        * added documentation for new RSLK library API, to be extended to document all libraries
+
+* bug fixes
+    * corrected pin 2.3 missing high-drive config option
+
+
+__`version 5.29.4`__ (corrected missing libraries issue)
 
 <ul> Initial release, adapted from msp432r version 5.29.1 core </ul>
 
