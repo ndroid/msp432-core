@@ -141,7 +141,7 @@ The Package Index file names need to follow the convention specified in the Ardu
 
 | Package Index File               | MSP Board Version  | Notes |
 | ------------------               | ------             | ----- |
-| `package_msp432_index.json`      | 5.29.4  | MSP432P4xx boards only, use with local Arduino IDE/CLI |
+| `package_msp432_index.json`      | 5.29.5  | MSP432P4xx boards only, use with local Arduino IDE/CLI |
 
 
 
@@ -149,6 +149,7 @@ The Package Index file names need to follow the convention specified in the Ardu
 
 Located in the **cores** directory. These files are referenced by the package index json files. This directory will host package releases, beginning with version 5.29.4.
 
+- `msp432-5.29.5.tar.bz2`
 - `msp432-5.29.4.tar.bz2`
 
 ### Board Platform Compiler and Tool Versions
@@ -157,6 +158,7 @@ The tools are specific to the board package platform and version. These are curr
 
 | Board Version  | Compiler                         | dslite     | ino2cpp |
 | -------------- | --------                         | ------     | ------- |
+| MSP432 5.29.5  | arm-none-eabi-gcc 8.3.1-20190703 | 9.3.0.1863 | 1.0.7   |
 | MSP432 5.29.4  | arm-none-eabi-gcc 8.3.1-20190703 | 9.3.0.1863 | 1.0.7   |
 
 | Tool Download Links              |              |             |             |
