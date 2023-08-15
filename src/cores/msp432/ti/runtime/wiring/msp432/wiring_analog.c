@@ -175,6 +175,8 @@ uint16_t pwmMaxDuty = 255;      /* default to 8 bit resolution  */
 
 /*
  * \brief sets the number of bits for duty cycle range of analogWrite()
+ * 
+ * \param bits  number of bits of duty cycle resolution (e.g. 8 gives range of 0->255)
  */
 void analogWriteResolution(uint16_t bits)
 {
@@ -474,8 +476,10 @@ void stopAnalogReadFxn(uint8_t pin)
     digital_pin_to_pin_function[pin] = PIN_FUNC_UNUSED;
 }
 
-/*
+/**
  * \brief sets the number of bits to shift the value read by ADCFIFORead()
+ * 
+ * \param bits  number of bits of analog read resolution (10 bits is default: range of 0->1023)
  */
 void analogReadResolution(uint16_t bits)
 {
