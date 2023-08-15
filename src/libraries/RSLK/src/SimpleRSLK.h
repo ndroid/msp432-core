@@ -261,8 +261,8 @@ void waitBtnPressed(uint8_t btnPin, int8_t ledPin = 0);
 /// \param[in] mode determines if the line is dark or light (default is DARK_LINE)
 /// - 0 (DARK_LINE) is used when the line is darker than the floor
 /// - 1 (LIGHT_LINE) is used when the line is lighter than the floor.
-/// \param[in] duration duration for calibration in milliseconds (default is 200)
-void calibrateLineSensor(uint8_t mode = DARK_LINE, uint32_t duration = 200);
+/// \param[in] duration duration for calibration in milliseconds (default is 500)
+void calibrateLineSensor(uint8_t mode = DARK_LINE, uint32_t duration = 500);
 
 /// \brief Read calibrated line sensor values. Assumes calibration completed.
 ///
