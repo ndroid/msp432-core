@@ -32,7 +32,7 @@
 #define UART_SERIAL     Serial
 
 const uint16_t motorSpeed = 25;
-const uint32_t targetTicks = 50000;
+const uint32_t targetTicks = 5000;  // approx. 10'
 
 /* Defines constants for state machine states */
 typedef enum
@@ -63,7 +63,7 @@ void setup() {
     setupLed(GREEN_LED);
   
     /* Initialize LaunchPad buttons as inputs */
-    pinMode(LP_S1_PIN, INPUT_PULLUP);
+    pinMode(LP_LEFT_BTN, INPUT_PULLUP);
 
     UART_SERIAL.println("Initializing System Complete.");
 }
@@ -76,7 +76,6 @@ void loop() {
 
     case START:
         UART_SERIAL.println("Enter START state");
-        toggleCount = 0;
         state = WAIT;
         break;
 
@@ -84,12 +83,12 @@ void loop() {
         UART_SERIAL.println("Enter WAIT state");
         digitalWrite(GREEN_LED, HIGH);
         delay(200);
-        if (digitalRead(LP_S1_PIN) == 0) {
+        if (digitalRead(LP_LEFT_BTN) == 0) {
             state = GO;
         }
         digitalWrite(GREEN_LED, LOW);
         delay(200);
-        if (digitalRead(LP_S1_PIN) == 0) {
+        if (digitalRead(LP_LEFT_BTN) == 0) {
             state = GO;
         }
         break;
@@ -138,7 +137,7 @@ void loop() {
         /* Turn robot to avoid obstacle */
         setMotorSpeed(LEFT_MOTOR, 0);
         setMotorSpeed(RIGHT_MOTOR, motorSpeed);
-        delay(100);
+        delay(500);
 
         state = DRIVE;
         break;
@@ -160,5 +159,5 @@ void loop() {
     break;
   }
 
-  delay(20);
+  delay(50);
 }

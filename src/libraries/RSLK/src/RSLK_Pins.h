@@ -109,28 +109,27 @@
 /**
  * @brief   Value represents Energia number for Launchpad Pin P4.0
  */
-#define BP_SW_PIN_0 24          //    <- Energia Pin #   Launchpad Pin -> P4.0
+#define BP_SW_PIN_5 24          //    <- Energia Pin #   Launchpad Pin -> P4.0
 /**
  * @brief   Value represents Energia number for Launchpad Pin P4.2
  */
-#define BP_SW_PIN_1 25          //    <- Energia Pin #   Launchpad Pin -> P4.2
+#define BP_SW_PIN_4 25          //    <- Energia Pin #   Launchpad Pin -> P4.2
 /**
  * @brief   Value represents Energia number for Launchpad Pin P4.3
  */
-#define BP_SW_PIN_2 6           //    <- Energia Pin #   Launchpad Pin -> P4.3
+#define BP_SW_PIN_3 6           //    <- Energia Pin #   Launchpad Pin -> P4.3
 /**
  * @brief   Value represents Energia number for Launchpad Pin P4.5
  */
-#define BP_SW_PIN_3 27          //    <- Energia Pin #   Launchpad Pin -> P4.5
+#define BP_SW_PIN_2 27          //    <- Energia Pin #   Launchpad Pin -> P4.5
 /**
  * @brief   Value represents Energia number for Launchpad Pin P4.6
  */
-#define BP_SW_PIN_4 8           //    <- Energia Pin #   Launchpad Pin -> P4.6
-
+#define BP_SW_PIN_1 8           //    <- Energia Pin #   Launchpad Pin -> P4.6
 /**
  * @brief   Value represents Energia number for Launchpad Pin P4.7
  */
-#define BP_SW_PIN_5 28          //    <- Energia Pin #   Launchpad Pin -> P4.7
+#define BP_SW_PIN_0 28          //    <- Energia Pin #   Launchpad Pin -> P4.7
 
 /* Motor Driver and Power Distribution Board (https://www.pololu.com/product/3543)
  * Pin configuration for the left and right motor's sleep, direction and pwm pin
@@ -251,6 +250,26 @@
  * @brief   Value represents Energia number for Launchpad Pin P9.6
  */
 #define LCD_DC 50               // <- Energia Pin #   Launchpad Pin -> P9.6
+
+/* Blinker LEDs on Chassis Board (https://www.pololu.com/product/3671)
+ */
+
+/**
+ * @brief   Value represents Energia number for Launchpad Pin P8.6
+ */
+#define LED_BL_PIN	57          // <- Energia Pin #   Launchpad Pin -> P8.6
+/**
+ * @brief   Value represents Energia number for Launchpad Pin P8.7
+ */
+#define LED_BR_PIN	58          // <- Energia Pin #   Launchpad Pin -> P8.7
+/**
+ * @brief   Value represents Energia number for Launchpad Pin P8.0
+ */
+#define LED_FL_PIN	51          // <- Energia Pin #   Launchpad Pin -> P8.0
+/**
+ * @brief   Value represents Energia number for Launchpad Pin P8.5
+ */
+#define LED_FR_PIN	41          // <- Energia Pin #   Launchpad Pin -> P8.5
 
 #endif  // USING_RSLK_CLASSIC
 

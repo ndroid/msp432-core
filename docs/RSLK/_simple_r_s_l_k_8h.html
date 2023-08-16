@@ -189,9 +189,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a872f07ea95ec3caeeb0a237881f9bc94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_simple_r_s_l_k_8h.html#a872f07ea95ec3caeeb0a237881f9bc94">waitBtnPressed</a> (uint8_t btnPin, int8_t ledPin=0)</td></tr>
 <tr class="memdesc:a872f07ea95ec3caeeb0a237881f9bc94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busy wait until user pushes and releases button.  <br /></td></tr>
 <tr class="separator:a872f07ea95ec3caeeb0a237881f9bc94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad99b34785db6e0b0982917217e7b85f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_simple_r_s_l_k_8h.html#ad99b34785db6e0b0982917217e7b85f3">calibrateLineSensor</a> (uint8_t mode=<a class="el" href="_simple_r_s_l_k_8h.html#a05cf18a2c53cec9c9122be2271c3e791">DARK_LINE</a>, uint32_t duration=200)</td></tr>
-<tr class="memdesc:ad99b34785db6e0b0982917217e7b85f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calibrates line sensor.  <br /></td></tr>
-<tr class="separator:ad99b34785db6e0b0982917217e7b85f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4ed954c793a24b4ba6426ad2fd3d2fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_simple_r_s_l_k_8h.html#ac4ed954c793a24b4ba6426ad2fd3d2fa">calibrateLineSensor</a> (uint8_t mode=<a class="el" href="_simple_r_s_l_k_8h.html#a05cf18a2c53cec9c9122be2271c3e791">DARK_LINE</a>, uint32_t duration=500)</td></tr>
+<tr class="memdesc:ac4ed954c793a24b4ba6426ad2fd3d2fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calibrates line sensor.  <br /></td></tr>
+<tr class="separator:ac4ed954c793a24b4ba6426ad2fd3d2fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad3e4e47d504102b253067592b5e2af1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_simple_r_s_l_k_8h.html#aad3e4e47d504102b253067592b5e2af1">readCalLineSensor</a> (uint16_t *calVal)</td></tr>
 <tr class="memdesc:aad3e4e47d504102b253067592b5e2af1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read calibrated line sensor values. Assumes calibration completed.  <br /></td></tr>
 <tr class="separator:aad3e4e47d504102b253067592b5e2af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -536,8 +536,8 @@ Each index will contain a value from 0 - 2500.<ul>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ad99b34785db6e0b0982917217e7b85f3" name="ad99b34785db6e0b0982917217e7b85f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad99b34785db6e0b0982917217e7b85f3">&#9670;&#160;</a></span>calibrateLineSensor()</h2>
+<a id="ac4ed954c793a24b4ba6426ad2fd3d2fa" name="ac4ed954c793a24b4ba6426ad2fd3d2fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4ed954c793a24b4ba6426ad2fd3d2fa">&#9670;&#160;</a></span>calibrateLineSensor()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -552,7 +552,7 @@ Each index will contain a value from 0 - 2500.<ul>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>duration</em> = <code>200</code>&#160;</td>
+          <td class="paramname"><em>duration</em> = <code>500</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -571,7 +571,7 @@ Each index will contain a value from 0 - 2500.<ul>
 <li>1 (LIGHT_LINE) is used when the line is lighter than the floor. </li>
 </ul>
 </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">duration</td><td>duration for calibration in milliseconds (default is 200) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">duration</td><td>duration for calibration in milliseconds (default is 500) </td></tr>
   </table>
   </dd>
 </dl>
@@ -733,7 +733,7 @@ Each index will contain a value from 0 - 2500.<ul>
 </div><div class="memdoc">
 
 <p>Get line position. </p>
-<p>Provides a numerical value indicating where the robot is detecting the line. Assumes <a class="el" href="_simple_r_s_l_k_8h.html#ad99b34785db6e0b0982917217e7b85f3" title="Calibrates line sensor.">calibrateLineSensor()</a> has already been called (only necessary to calibrate once).</p>
+<p>Provides a numerical value indicating where the robot is detecting the line. Assumes <a class="el" href="_simple_r_s_l_k_8h.html#ac4ed954c793a24b4ba6426ad2fd3d2fa" title="Calibrates line sensor.">calibrateLineSensor()</a> has already been called (only necessary to calibrate once).</p>
 <dl class="section return"><dt>Returns</dt><dd>value between 0 - 8000.<ul>
 <li>0 no line detected <br  />
  ...</li>
@@ -893,7 +893,7 @@ Each index will contain a value from 0 - 2500.<ul>
 </div><div class="memdoc">
 
 <p>Read calibrated line sensor values. Assumes calibration completed. </p>
-<p>Takes the current line sensor values and sets calVal to the calibrated values. Assumes <a class="el" href="_simple_r_s_l_k_8h.html#ad99b34785db6e0b0982917217e7b85f3" title="Calibrates line sensor.">calibrateLineSensor()</a> has already been called (only necessary to calibrate once).</p>
+<p>Takes the current line sensor values and sets calVal to the calibrated values. Assumes <a class="el" href="_simple_r_s_l_k_8h.html#ac4ed954c793a24b4ba6426ad2fd3d2fa" title="Calibrates line sensor.">calibrateLineSensor()</a> has already been called (only necessary to calibrate once).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">calVal</td><td>is an array that will be filled with the calibrated values based on the sensor. <br  />
@@ -1442,7 +1442,7 @@ Elements will be filled with values of 0 - 1000<ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 12 2023 23:24:12 for TI RSLK Library by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7
+Generated on Tue Aug 15 2023 20:37:21 for TI RSLK Library by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7
 </small></address>
 </body>
 </html>

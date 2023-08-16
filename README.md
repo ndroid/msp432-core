@@ -30,6 +30,11 @@ This MSP432 core includes the following libraries:
 * IR remote (NEC transmit and receive)
 * SPI
 * Wire (I2C)
+* [TI RSLK Max library](https://ndroid.github.io/msp432-core/RSLK/)
+    * Encoders
+    * Sharp GP2Y0A21 IR distance sensors
+    * QTR line sensor
+    * Romi motor driver
 
 ### Energia Resources
 
@@ -66,7 +71,19 @@ More information can be found in the Energia guide [Installing the LaunchPad dri
 
 # Change Log
 
-__`version 5.29.4`__
+__`version 5.29.5`__
+
+* features
+    * added TI RSLK Max library which uses MSP432P401R
+        * updated RSLK library API for simplified application
+        * updated RSLK library examples
+        * added documentation for new RSLK library API, to be extended to document all libraries
+
+* bug fixes
+    * corrected pin 2.3 missing high-drive config option
+
+
+__`version 5.29.4`__ (corrected missing libraries issue)
 
 <ul> Initial release, adapted from msp432r version 5.29.1 core </ul>
 
@@ -124,7 +141,7 @@ The Package Index file names need to follow the convention specified in the Ardu
 
 | Package Index File               | MSP Board Version  | Notes |
 | ------------------               | ------             | ----- |
-| `package_msp432_index.json`      | 5.29.4  | MSP432P4xx boards only, use with local Arduino IDE/CLI |
+| `package_msp432_index.json`      | 5.29.5  | MSP432P4xx boards only, use with local Arduino IDE/CLI |
 
 
 
@@ -132,6 +149,7 @@ The Package Index file names need to follow the convention specified in the Ardu
 
 Located in the **cores** directory. These files are referenced by the package index json files. This directory will host package releases, beginning with version 5.29.4.
 
+- `msp432-5.29.5.tar.bz2`
 - `msp432-5.29.4.tar.bz2`
 
 ### Board Platform Compiler and Tool Versions
@@ -140,6 +158,7 @@ The tools are specific to the board package platform and version. These are curr
 
 | Board Version  | Compiler                         | dslite     | ino2cpp |
 | -------------- | --------                         | ------     | ------- |
+| MSP432 5.29.5  | arm-none-eabi-gcc 8.3.1-20190703 | 9.3.0.1863 | 1.0.7   |
 | MSP432 5.29.4  | arm-none-eabi-gcc 8.3.1-20190703 | 9.3.0.1863 | 1.0.7   |
 
 | Tool Download Links              |              |             |             |

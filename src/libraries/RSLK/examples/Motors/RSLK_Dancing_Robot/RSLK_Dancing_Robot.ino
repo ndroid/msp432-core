@@ -30,8 +30,8 @@
 /* Modify the following line to use an alternate UART interface (i.e. Serial1/2/3) */
 #define UART_SERIAL     Serial
 
-const uint16_t lowSpeed = 10;
-const uint16_t fastSpeed = 50;
+const uint16_t lowSpeed = 15;
+const uint16_t fastSpeed = 30;
 
 bool hit_obstacle = false;
 
