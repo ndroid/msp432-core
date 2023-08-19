@@ -1,5 +1,10 @@
-/*
- * IRData.h
+/**
+ * @file IRData.h
+ *
+ * @brief Structure of IR Data for transmit and receive.
+ * 
+ * Defines IRData struct used for both transmit and receive operations. See
+ * IRreceiver and IRsender.
  *
  *  Copyright (C) 2023  chris miller
  *  miller4@rose-hulman.edu
@@ -24,9 +29,16 @@
 
 #include <stdint.h>
 
-/**
+/** \addtogroup IRDataStruct IR Data structure
+ * @{
+ *  Structure of IR Data for transmit and receive. See IRreceiver::decodeIR()
+ *  and IRsender::write().
+ */
+
+/** 
  * An enum consisting of all formats supported by IRRemote library.
  * Included for consistancy with existing libraries.
+ * TineIRremote library only implements NEC.
  */
 typedef enum {
     UNKNOWN = 0,
@@ -62,10 +74,16 @@ typedef enum {
  * Minimal struct to only include necessary data.
  */
 typedef struct IRDataStruct {
-    decode_type_t protocol;     ///< UNKNOWN, NEC, SONY, RC5, ...
-    uint16_t address;           ///< Decoded address
-    uint16_t command;           ///< Decoded command
+    //! defines protocol for IR encoding (assumes NEC)
+    decode_type_t protocol;
+    //! decoded address 
+    uint16_t address; 
+    //! decoded command
+    uint16_t command; 
+    //! true if last received message specifies repeat code
     bool isRepeat;
 } IRData;
+
+/** @}*/
 
 #endif // IR_DATA_H

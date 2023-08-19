@@ -74,7 +74,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Encoder.h File Reference</div></div>
 </div><!--header-->
@@ -83,207 +82,31 @@ $(function() {
 </div>
 <p><a href="_encoder_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:afbcc0dd7194cd5ce46346f09ccb55c4e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_encoder_8h.html#afbcc0dd7194cd5ce46346f09ccb55c4e">WHEEL_DIR_FORWARD</a>&#160;&#160;&#160;1</td></tr>
-<tr class="memdesc:afbcc0dd7194cd5ce46346f09ccb55c4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value used to reference wheel going forward.  <br /></td></tr>
-<tr class="separator:afbcc0dd7194cd5ce46346f09ccb55c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87461f9e30cfb61870cc7898d9ef3a3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_encoder_8h.html#a87461f9e30cfb61870cc7898d9ef3a3f">WHEEL_DIR_BACKWARD</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:a87461f9e30cfb61870cc7898d9ef3a3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value used to reference wheel going backwards.  <br /></td></tr>
-<tr class="separator:a87461f9e30cfb61870cc7898d9ef3a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ae18779531f410b1f3cad62046a96899b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_encoder_8h.html#ae18779531f410b1f3cad62046a96899b">setupEncoder</a> (uint8_t ela_pin, uint8_t elb_pin, uint8_t era_pin, uint8_t erb_pin)</td></tr>
 <tr class="memdesc:ae18779531f410b1f3cad62046a96899b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the wheel encoder.  <br /></td></tr>
 <tr class="separator:ae18779531f410b1f3cad62046a96899b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc2f8a39b7ae55cebb70b74d172c4552"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_encoder_8h.html#adc2f8a39b7ae55cebb70b74d172c4552">getEncoderLeftCnt</a> ()</td></tr>
-<tr class="memdesc:adc2f8a39b7ae55cebb70b74d172c4552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of encoder ticks from the left wheel.  <br /></td></tr>
-<tr class="separator:adc2f8a39b7ae55cebb70b74d172c4552"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afec1a455755531708dd98ded60c406dc"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_encoder_8h.html#afec1a455755531708dd98ded60c406dc">getEncoderRightCnt</a> ()</td></tr>
-<tr class="memdesc:afec1a455755531708dd98ded60c406dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of encoder ticks from the right wheel.  <br /></td></tr>
-<tr class="separator:afec1a455755531708dd98ded60c406dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3db3c23b8153c41d80fd7f56a249c1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_encoder_8h.html#ab3db3c23b8153c41d80fd7f56a249c1c">resetLeftEncoderCnt</a> ()</td></tr>
-<tr class="memdesc:ab3db3c23b8153c41d80fd7f56a249c1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the left encoder tick count to 0.  <br /></td></tr>
-<tr class="separator:ab3db3c23b8153c41d80fd7f56a249c1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a999ff39a1fcc3afe4e52e055534ebfd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_encoder_8h.html#a999ff39a1fcc3afe4e52e055534ebfd7">resetRightEncoderCnt</a> ()</td></tr>
-<tr class="memdesc:a999ff39a1fcc3afe4e52e055534ebfd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the right encoder tick count to 0.  <br /></td></tr>
-<tr class="separator:a999ff39a1fcc3afe4e52e055534ebfd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a375bd605579562ecf1773f18e43607ae"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_encoder_8h.html#a375bd605579562ecf1773f18e43607ae">getLeftWheelDir</a> ()</td></tr>
-<tr class="memdesc:a375bd605579562ecf1773f18e43607ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if the left wheel is going forward or backwards.  <br /></td></tr>
-<tr class="separator:a375bd605579562ecf1773f18e43607ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87491e40b0e6e45a35f538be27b2a40a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_encoder_8h.html#a87491e40b0e6e45a35f538be27b2a40a">getRightWheelDir</a> ()</td></tr>
-<tr class="memdesc:a87491e40b0e6e45a35f538be27b2a40a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if the right wheel is going forward or backwards.  <br /></td></tr>
-<tr class="separator:a87491e40b0e6e45a35f538be27b2a40a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc2f8a39b7ae55cebb70b74d172c4552"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___simple_r_s_l_k.html#gadc2f8a39b7ae55cebb70b74d172c4552">getEncoderLeftCnt</a> ()</td></tr>
+<tr class="memdesc:gadc2f8a39b7ae55cebb70b74d172c4552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of encoder ticks from the left wheel.  <br /></td></tr>
+<tr class="separator:gadc2f8a39b7ae55cebb70b74d172c4552"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafec1a455755531708dd98ded60c406dc"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___simple_r_s_l_k.html#gafec1a455755531708dd98ded60c406dc">getEncoderRightCnt</a> ()</td></tr>
+<tr class="memdesc:gafec1a455755531708dd98ded60c406dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of encoder ticks from the right wheel.  <br /></td></tr>
+<tr class="separator:gafec1a455755531708dd98ded60c406dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab3db3c23b8153c41d80fd7f56a249c1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___simple_r_s_l_k.html#gab3db3c23b8153c41d80fd7f56a249c1c">resetLeftEncoderCnt</a> ()</td></tr>
+<tr class="memdesc:gab3db3c23b8153c41d80fd7f56a249c1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the left encoder tick count to 0.  <br /></td></tr>
+<tr class="separator:gab3db3c23b8153c41d80fd7f56a249c1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga999ff39a1fcc3afe4e52e055534ebfd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___simple_r_s_l_k.html#ga999ff39a1fcc3afe4e52e055534ebfd7">resetRightEncoderCnt</a> ()</td></tr>
+<tr class="memdesc:ga999ff39a1fcc3afe4e52e055534ebfd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the right encoder tick count to 0.  <br /></td></tr>
+<tr class="separator:ga999ff39a1fcc3afe4e52e055534ebfd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga375bd605579562ecf1773f18e43607ae"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___simple_r_s_l_k.html#ga375bd605579562ecf1773f18e43607ae">getLeftWheelDir</a> ()</td></tr>
+<tr class="memdesc:ga375bd605579562ecf1773f18e43607ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if the left wheel is going forward or backwards.  <br /></td></tr>
+<tr class="separator:ga375bd605579562ecf1773f18e43607ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga87491e40b0e6e45a35f538be27b2a40a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___simple_r_s_l_k.html#ga87491e40b0e6e45a35f538be27b2a40a">getRightWheelDir</a> ()</td></tr>
+<tr class="memdesc:ga87491e40b0e6e45a35f538be27b2a40a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if the right wheel is going forward or backwards.  <br /></td></tr>
+<tr class="separator:ga87491e40b0e6e45a35f538be27b2a40a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a87461f9e30cfb61870cc7898d9ef3a3f" name="a87461f9e30cfb61870cc7898d9ef3a3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87461f9e30cfb61870cc7898d9ef3a3f">&#9670;&#160;</a></span>WHEEL_DIR_BACKWARD</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define WHEEL_DIR_BACKWARD&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Value used to reference wheel going backwards. </p>
-
-<p class="definition">Definition at line <a class="el" href="_encoder_8h_source.html#l00045">45</a> of file <a class="el" href="_encoder_8h_source.html">Encoder.h</a>.</p>
-
-</div>
-</div>
-<a id="afbcc0dd7194cd5ce46346f09ccb55c4e" name="afbcc0dd7194cd5ce46346f09ccb55c4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbcc0dd7194cd5ce46346f09ccb55c4e">&#9670;&#160;</a></span>WHEEL_DIR_FORWARD</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define WHEEL_DIR_FORWARD&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Value used to reference wheel going forward. </p>
-
-<p class="definition">Definition at line <a class="el" href="_encoder_8h_source.html#l00040">40</a> of file <a class="el" href="_encoder_8h_source.html">Encoder.h</a>.</p>
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="adc2f8a39b7ae55cebb70b74d172c4552" name="adc2f8a39b7ae55cebb70b74d172c4552"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc2f8a39b7ae55cebb70b74d172c4552">&#9670;&#160;</a></span>getEncoderLeftCnt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t getEncoderLeftCnt </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return number of encoder ticks from the left wheel. </p>
-<dl class="section return"><dt>Returns</dt><dd>The number of encoder ticks from the left wheel. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="_encoder_8cpp_source.html#l00056">56</a> of file <a class="el" href="_encoder_8cpp_source.html">Encoder.cpp</a>.</p>
-
-</div>
-</div>
-<a id="afec1a455755531708dd98ded60c406dc" name="afec1a455755531708dd98ded60c406dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afec1a455755531708dd98ded60c406dc">&#9670;&#160;</a></span>getEncoderRightCnt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t getEncoderRightCnt </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return number of encoder ticks from the right wheel. </p>
-<dl class="section return"><dt>Returns</dt><dd>The number of encoder ticks from the right wheel. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="_encoder_8cpp_source.html#l00051">51</a> of file <a class="el" href="_encoder_8cpp_source.html">Encoder.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a375bd605579562ecf1773f18e43607ae" name="a375bd605579562ecf1773f18e43607ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a375bd605579562ecf1773f18e43607ae">&#9670;&#160;</a></span>getLeftWheelDir()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t getLeftWheelDir </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Determines if the left wheel is going forward or backwards. </p>
-<dl class="section return"><dt>Returns</dt><dd>1 for forward or 0 for backwards </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="_encoder_8cpp_source.html#l00071">71</a> of file <a class="el" href="_encoder_8cpp_source.html">Encoder.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a87491e40b0e6e45a35f538be27b2a40a" name="a87491e40b0e6e45a35f538be27b2a40a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87491e40b0e6e45a35f538be27b2a40a">&#9670;&#160;</a></span>getRightWheelDir()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t getRightWheelDir </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Determines if the right wheel is going forward or backwards. </p>
-<dl class="section return"><dt>Returns</dt><dd>1 for forward or 0 for backwards </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="_encoder_8cpp_source.html#l00075">75</a> of file <a class="el" href="_encoder_8cpp_source.html">Encoder.cpp</a>.</p>
-
-</div>
-</div>
-<a id="ab3db3c23b8153c41d80fd7f56a249c1c" name="ab3db3c23b8153c41d80fd7f56a249c1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3db3c23b8153c41d80fd7f56a249c1c">&#9670;&#160;</a></span>resetLeftEncoderCnt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void resetLeftEncoderCnt </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set the left encoder tick count to 0. </p>
-
-<p class="definition">Definition at line <a class="el" href="_encoder_8cpp_source.html#l00061">61</a> of file <a class="el" href="_encoder_8cpp_source.html">Encoder.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a999ff39a1fcc3afe4e52e055534ebfd7" name="a999ff39a1fcc3afe4e52e055534ebfd7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a999ff39a1fcc3afe4e52e055534ebfd7">&#9670;&#160;</a></span>resetRightEncoderCnt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void resetRightEncoderCnt </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set the right encoder tick count to 0. </p>
-
-<p class="definition">Definition at line <a class="el" href="_encoder_8cpp_source.html#l00066">66</a> of file <a class="el" href="_encoder_8cpp_source.html">Encoder.cpp</a>.</p>
-
-</div>
-</div>
 <a id="ae18779531f410b1f3cad62046a96899b" name="ae18779531f410b1f3cad62046a96899b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae18779531f410b1f3cad62046a96899b">&#9670;&#160;</a></span>setupEncoder()</h2>
 
@@ -341,7 +164,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 15 2023 20:37:21 for TI RSLK Library by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7
+Generated on Sat Aug 19 2023 19:30:43 for TI RSLK Library by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7
 </small></address>
 </body>
 </html>

@@ -14,6 +14,10 @@
 /// This function needs to be called before any other encoder function is used.
 void setupEncoder(uint8_t ela_pin, uint8_t elb_pin, uint8_t era_pin, uint8_t erb_pin);
 
+/** \addtogroup SimpleRSLK Library for Texas Instrument's Robotic System Learning Kit
+ * @{
+ */
+
 /// \brief Return number of encoder ticks from the left wheel.
 ///
 /// \return The number of encoder ticks from the left wheel.
@@ -34,6 +38,7 @@ void resetLeftEncoderCnt();
 ///
 void resetRightEncoderCnt();
 
+/** \cond   */
 /**
  * @brief Value used to reference wheel going forward.
  */
@@ -43,6 +48,7 @@ void resetRightEncoderCnt();
  * @brief Value used to reference wheel going backwards.
  */
 #define WHEEL_DIR_BACKWARD 0
+/** \endcond */
 
 /// \brief Determines if the left wheel is going forward or backwards
 ///
@@ -55,5 +61,7 @@ uint8_t getLeftWheelDir();
 /// \return 1 for forward or 0 for backwards
 ///
 uint8_t getRightWheelDir();
+
+/** @}*/
 
 #endif

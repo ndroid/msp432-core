@@ -1,7 +1,20 @@
-/*
- *  TinyNECRX.h
+/**
+ * @file TinyNECRX.h
  *
+ * @brief Minimal IR receiver for NEC protocol.
  *
+ *  Receives IR protocol data of NEC protocol using pin change interrupts.
+ *  NEC is the protocol of most cheap remote controls for Arduino.
+ *
+ *  No parity check is done! If callback function is enabled, on a completely 
+ *  received IR command the user handler function is called in Interrupt context 
+ *  but with interrupts being enabled to enable use of delay() etc.
+ *  !!!!!!!!!!!!!!!!!!!!!!
+ *  Functions called in interrupt context should be running as short as possible,
+ *  so if you require longer action, save the data (address + command) and handle 
+ *  them in the main loop.
+ *
+ * 
  *  Copyright (C) 2022  chris miller
  *  miller4@rose-hulman.edu
  *
@@ -35,9 +48,16 @@
 #include "IRFeedbackLED.h"
 #include "LongUnion.h"
 
+/** \addtogroup TinyIRReceiver Minimal IR receiver for NEC protocol
+ * @{
+ *  Minimal IR receiver for NEC protocol. See IRreceiver class for details.
+ */
 
 /**
- *  @brief  IRData callback function type
+ *  @brief  IRData callback function prototype
+ * 
+ * If callback is enabled when initializing IR receiver, the callback function 
+ *  handler must reference a function of the following prototype.
  *
  *  @param  address     Address value from received IR command
  *  @param  command     Commmand value from received IR command
@@ -46,14 +66,22 @@
 typedef void (*IRData_CallbackFxn)(uint16_t address, uint8_t command, bool isRepeat);
 
 /**
- * Control and data variables of the state machine for TinyReceiver
+ * Main class for receiving IR signals
+ * 
+ * Receives IR protocol data of NEC protocol using pin change interrupts. Does
+ *  not use any timer resources. May be used on any pin in ports 1 to 6 
+ *  (requires pin interrupt). Any number of IRreceiver instances may be declared,
+ *  but performance may degrade as number increases since signal is decoded 
+ *  within pin change interrupt handlers.
  */
 class IRreceiver {
 public:
-    /* Default (only) constructor. Must call initIRReceiver() and verify success
+    /** 
+     * Default (only) constructor. Must call initIRReceiver() and verify success
      *  before using object.
      *  
-     *  @param receivePin   The Arduino pin number, where an IR receiver is connected.
+     *  @param receivePin   The Arduino pin number, where an IR receiver is 
+     *                      connected (may be any pin on Ports 1 to 6)
      */
     IRreceiver(uint8_t receivePin);
 
@@ -144,5 +172,6 @@ private:
  */
 //void handleReceivedTinyIRData(uint16_t aAddress, uint8_t aCommand, bool isRepeat);
 
+/** @}*/
 
 #endif // TINY_NEC_RX_H

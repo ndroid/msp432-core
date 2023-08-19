@@ -41,43 +41,73 @@ $(function() {
 
 <div><div class="header">
   <div class="headertitle"><div class="title">TI MSP432 Core </div>
-  <p>This page provides references for the MSP432 Core, supporting TI MSP432P4xx Launchpads on Arduino. It includes documentation for included libraries and for the Launchpad boards. See the <a href="https://github.com/ndroid/msp432-core">MSP432-core</a> repo for additional information, including source files and README. </p></div>
+    <p>This page provides references for the MSP432 Core, supporting TI MSP432P4xx 
+        Launchpads on Arduino. It includes documentation for included libraries and 
+        for the Launchpad boards. This board package is intended to match Arduino 10600
+        specification. For core package reference, refer to 
+        <a href="https://www.arduino.cc/reference/"> Arduino Reference </a>. </p>
+    <p>See the <a href="https://github.com/ndroid/msp432-core">MSP432-core</a> repo 
+        for additional information, including source files and README. </p>
+  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="mainpage"></a></p>
   <h2>TI MSP432 Core Libraries </h2>
     <p>References for libraries included with the TI MSP432 Core for Arduino.</p>
-  <h3><a class="anchor" id="autotoc_md0"></a>
-  TI RSLK Library (<a href="RSLK/index.html">Reference</a>)</h3>
-  <p>  Library provides a set of classes and functions to make using the <a href="http://www.ti.com/rslk">Texas Instrument's Robotic System Learning Kit</a> simple. <br  />
-  Go to <a href="http://www.ti.com/rslk">http://www.ti.com/rslk</a> to see the user guides, view curriculum and find the link to order.</p>
   <h3><a class="anchor" id="autotoc_md0"></a> Educational BoosterPack MKII </h3>
-    <p> Provides a set of classes and methods to simplify display to the Educational BoosterPack Mark II LCD screen. <br  />
-    See the product page at <a href="https://www.ti.com/tool/BOOSTXL-EDUMKII">https://www.ti.com/tool/BOOSTXL-EDUMKII</a> or the user guide at <a href="https://www.ti.com/lit/pdf/slau599"> BOOSTXL-EDUMKII User's Guide</a>.
+    <p> Provides a set of classes and methods to simplify display to the Educational 
+        BoosterPack Mark II LCD screen. <br  /> See the product page at 
+        <a href="https://www.ti.com/tool/BOOSTXL-EDUMKII">
+            https://www.ti.com/tool/BOOSTXL-EDUMKII</a> or the user guide at 
+            <a href="https://www.ti.com/lit/pdf/slau599"> BOOSTXL-EDUMKII User's Guide</a>.
     <ul><a href="EduBPMKII_Screen/LCD_screen-Reference_Manual.pdf">LCD screen library reference</a></ul>
-    </p></div>
+    </p>
+  <h3><a class="anchor" id="autotoc_md0"></a> Servo Library (<a href="Servo/index.html">Reference</a>)</h3>
+    <p>  This library is based on the Arduino Servo library, see 
+        <a href="https://www.arduino.cc/reference/en/libraries/servo/">
+            https://www.arduino.cc/reference/en/libraries/servo/</a>.</p>
+  <h3><a class="anchor" id="autotoc_md0"></a> TinyIRremote Library 
+    (<a href="TinyIRremote/index.html">Reference</a>)</h3>
+    <p>  MSP432 optimized implementation of IR receive and transmit library for 
+        NEC protocol.</p>
+  <h3><a class="anchor" id="autotoc_md0"></a> TI RSLK Library (<a href="RSLK/index.html">Reference</a>)</h3>
+    <p>  Library provides a set of classes and functions to make using the 
+        <a href="http://www.ti.com/rslk">Texas Instrument's Robotic System 
+            Learning Kit</a> simple. <br  /> Go to <a href="http://www.ti.com/rslk">
+                http://www.ti.com/rslk</a> to see the user guides, view curriculum 
+                and find the link to order.</p>
+</div>
 <div><p><br></p><hr></div>
 <div>
   <h2>Board reference and pin maps</h2>
   <h3>Arduino Pin Maps for MSP432P4xx</h3>
   <ul>
     <p><a href="pins/msp432p4xx_1pg_pin_map.pdf">Pin Map</a>  : 1-page summary pin map</p>
-    <p><a href="pins/msp432p4xx_hdr_pin_table.pdf">Pin Table (Breakout)</a>  : pin map table ordered by breakout board header order</p>
-    <p><a href="pins/msp432p4xx_booster_pin_table.pdf">Pin Table (BoosterPack)</a>  : pin map table ordered by Arduino pin number order</p>
+    <p><a href="pins/msp432p4xx_hdr_pin_table.pdf">Pin Table (Breakout)</a>  : pin 
+        map table ordered by breakout board header order</p>
+    <p><a href="pins/msp432p4xx_booster_pin_table.pdf">Pin Table (BoosterPack)</a>  : 
+        pin map table ordered by Arduino pin number order</p>
   </ul>
   <h3>MSP432P4xx pin tables</h3>
-  <p>These provide improved summaries of pin attributes from tables provided in Section 4 of the data sheet. </p>
+  <p>These provide improved summaries of pin attributes from tables provided in 
+    Section 4 of the data sheet. </p>
   <ul>
-    <p><a href="pins/msp432p4xx_pin_functions.htm">Pin functions</a>  : table of pin assignments organized by peripheral function</p>
-    <p><a href="pins/msp432p4xx_pin_attributes-compact.htm">Pin attributes</a><a href="pins/msp432p4xx_pin_attributes-compact.pdf"> (pdf) </a>  : pin attributes table ordered by port pin value (compact version) </p>
-    <ul><p><a href="pins/msp432p4xx_pin_attributes-full.htm">Complete table</a><a href="pins/msp432p4xx_pin_attributes-full.pdf"> (pdf) </a>  : complete attributes table including summary descriptions</p></ul>
+    <p><a href="pins/msp432p4xx_pin_functions.htm">Pin functions</a>  : table of 
+        pin assignments organized by peripheral function</p>
+    <p><a href="pins/msp432p4xx_pin_attributes-compact.htm">Pin attributes</a>
+        <a href="pins/msp432p4xx_pin_attributes-compact.pdf"> (pdf) </a>  : pin 
+        attributes table ordered by port pin value (compact version) </p>
+    <ul><p><a href="pins/msp432p4xx_pin_attributes-full.htm">Complete table</a>
+        <a href="pins/msp432p4xx_pin_attributes-full.pdf"> (pdf) </a>  : complete 
+        attributes table including summary descriptions</p></ul>
   </ul>
 </div>
 </div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 9 2023 21:34:06 for TI MSP432 Core Libraries by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7
+Generated on Wed Aug 9 2023 21:34:06 for TI MSP432 Core Libraries by&#160;
+    <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7
 </small></address>
 </body>
 </html>

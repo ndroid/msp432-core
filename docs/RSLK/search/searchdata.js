@@ -7,8 +7,9 @@ var indexSectionsWithContent =
   4: "cimq",
   5: "q",
   6: "mo",
-  7: "bcdelmnqrstw",
-  8: "dt"
+  7: "belmqs",
+  8: "l",
+  9: "dt"
 };
 
 var indexSectionNames =
@@ -21,7 +22,8 @@ var indexSectionNames =
   5: "enums",
   6: "enumvalues",
   7: "defines",
-  8: "pages"
+  8: "groups",
+  9: "pages"
 };
 
 var indexSectionLabels =
@@ -34,6 +36,7 @@ var indexSectionLabels =
   5: "Enumerations",
   6: "Enumerator",
   7: "Macros",
-  8: "Pages"
+  8: "Modules",
+  9: "Pages"
 };
 
