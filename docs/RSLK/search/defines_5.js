@@ -1,11 +1,12 @@
 var searchData=
 [
-  ['motor_5fdir_5fbackward_0',['MOTOR_DIR_BACKWARD',['../_simple_r_s_l_k_8h.html#af563100d732df64e244d0901c5e6e9fa',1,'SimpleRSLK.h']]],
-  ['motor_5fdir_5fforward_1',['MOTOR_DIR_FORWARD',['../_simple_r_s_l_k_8h.html#a0740818ff5586a16597ba38a5e4b14c4',1,'SimpleRSLK.h']]],
-  ['motor_5fl_5fdir_5fpin_2',['MOTOR_L_DIR_PIN',['../_r_s_l_k___pins_8h.html#a6fdb6948048aea547c3a536f5a0f7b51',1,'RSLK_Pins.h']]],
-  ['motor_5fl_5fpwm_5fpin_3',['MOTOR_L_PWM_PIN',['../_r_s_l_k___pins_8h.html#a1478e2c77c54b276a7bc900ffe924317',1,'RSLK_Pins.h']]],
-  ['motor_5fl_5fslp_5fpin_4',['MOTOR_L_SLP_PIN',['../_r_s_l_k___pins_8h.html#affc31a615d991f173b0dbec738320ad0',1,'RSLK_Pins.h']]],
-  ['motor_5fr_5fdir_5fpin_5',['MOTOR_R_DIR_PIN',['../_r_s_l_k___pins_8h.html#ad77f696a2b1f8510025a1b98982f8f99',1,'RSLK_Pins.h']]],
-  ['motor_5fr_5fpwm_5fpin_6',['MOTOR_R_PWM_PIN',['../_r_s_l_k___pins_8h.html#aad0f9183b31b4741151abb8e3a99cdda',1,'RSLK_Pins.h']]],
-  ['motor_5fr_5fslp_5fpin_7',['MOTOR_R_SLP_PIN',['../_r_s_l_k___pins_8h.html#ac5aaad738cf69f7a18bc8ce05a5a2fc7',1,'RSLK_Pins.h']]]
+  ['shrp_5fdist_5fc_5fpin_0',['SHRP_DIST_C_PIN',['../_r_s_l_k___pins_8h.html#a73b4c9a418b4c615437e1b57d3766ada',1,'RSLK_Pins.h']]],
+  ['shrp_5fdist_5fl_5fpin_1',['SHRP_DIST_L_PIN',['../_r_s_l_k___pins_8h.html#a9b8fc4cc9ec1a0be2a93a473baf519b6',1,'RSLK_Pins.h']]],
+  ['shrp_5fdist_5fr_5fpin_2',['SHRP_DIST_R_PIN',['../_r_s_l_k___pins_8h.html#a5e9eee9d40ef665c4c93c244e1e7acc7',1,'RSLK_Pins.h']]],
+  ['srv_5f0_3',['SRV_0',['../_r_s_l_k___pins_8h.html#aa4252f727af507b064b9e7eda440ccd2',1,'RSLK_Pins.h']]],
+  ['srv_5f1_4',['SRV_1',['../_r_s_l_k___pins_8h.html#a305182cc8d3bcab44e4f15bb5a757193',1,'RSLK_Pins.h']]],
+  ['srv_5f2_5',['SRV_2',['../_r_s_l_k___pins_8h.html#a9f738a6763766a77900748b7cea8eb0e',1,'RSLK_Pins.h']]],
+  ['srv_5ffb0_6',['SRV_FB0',['../_r_s_l_k___pins_8h.html#a91dae95568646a74e354580391f495f9',1,'RSLK_Pins.h']]],
+  ['srv_5ffb1_7',['SRV_FB1',['../_r_s_l_k___pins_8h.html#ae2a437c4fd7f3554004176e8d47d2daf',1,'RSLK_Pins.h']]],
+  ['srv_5ffb2_8',['SRV_FB2',['../_r_s_l_k___pins_8h.html#abe718d4de3a5beef771bd33747bf4b08',1,'RSLK_Pins.h']]]
 ];

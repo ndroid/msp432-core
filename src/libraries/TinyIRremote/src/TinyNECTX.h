@@ -1,5 +1,9 @@
-/*
- *  TinyNECTX.h
+/**
+ * @file TinyNECTX.h
+ *
+ * @brief Minimal IR transmitter for NEC protocol. 
+ * 
+ * Transmits IR protocol data of NEC protocol by toggling PWM output.
  *
  *
  *  Copyright (C) 2022  chris miller
@@ -36,28 +40,76 @@
 #include "IRData.h"
 #include "IRFeedbackLED.h"
 
-
-/**
- * Just for better readability of code
+/** \addtogroup TinyIRSender Minimal IR transmitter for NEC protocol
+ * @{
+ *  Minimal IR transmitter for NEC protocol. See IRsender class for details.
  */
+
+/** \cond   Just for better readability of code */
 #define NO_REPEATS              0
 #define SEND_STOP_BIT           true
 #define SEND_NO_STOP_BIT        false
 #define SEND_REPEAT_COMMAND     true ///< used for e.g. NEC, where a repeat is different from just repeating the data.
+/** \endcond */
 
+#if ! defined(IR_SEND_DUTY_CYCLE)
 /**
  * Duty cycle in percent for sent signals.
+ * 30 saves power and is compatible to the old existing code.
  */
-#if ! defined(IR_SEND_DUTY_CYCLE)
-#define IR_SEND_DUTY_CYCLE 30 // 30 saves power and is compatible to the old existing code
+#define IR_SEND_DUTY_CYCLE 30 
 #endif
 
 /**
  * Main class for sending IR signals
+ * 
+ * Transmits IR protocol data of NEC protocol using PWM output. Pin configuration 
+ *  is toggled from CCRx output to GPIO output for faster toggle between marks and 
+ *  spaces. Up to four IR transmit objects may be declared as type IRsender, but
+ *  each must use the same timer (determined by first sender initialized).
+ *  
+ *  May declare up to _four_ transmitters which use a mappable PWM timer (Ports 
+ *      2, 3, and 7 are mappable and may be connected to Timer_A0 or Timer_A1), 
+ *      **OR** up to _four_ transmitters which use timer TA2 pins.
+ * 
+ *  Supported send pins include:
+ * 
+ *      pin#        port.pin     timer
+ *       3           P3.2        mappable
+ *       4           P3.3        mappable
+ *       11          P3.6        mappable
+ *       17          P5.7        TA2.2
+ *       18          P3.0        mappable
+ *       19          P2.5        TA0.2/mappable
+ *       31          P3.7        mappable
+ *       32          P3.5        mappable
+ *       34          P2.3        TA1.1/mappable
+ *       35          P6.7        TA2.4
+ *       36          P6.6        TA2.3
+ *       37          P5.6        TA2.1
+ *       38          P2.4        TA0.1/mappable
+ *       39          P2.6        TA0.3/mappable
+ *       40          P2.7        TA0.4/mappable
+ *      * * * * *  LED pins  * * * * * * * *
+ *       75          P2.0        mappable (RED_LED)
+ *       76          P2.1        mappable (GREEN_LED)
+ *       77          P2.2        mappable (BLUE_LED)
+ *      
+ *      * * *  MSP432P401R only  * * * * * *
+ *       47          P7.3        mappable
+ *       48          P7.1        mappable
+ *       52          P7.4        mappable
+ *       53          P7.6        mappable
+ *       64          P7.2        mappable
+ *       65          P7.0        mappable
+ *       68          P7.5        mappable
+ *       69          P7.7        mappable
+ * 
  */
 class IRsender {
 public:
-    /* Default (only) constructor. Must call initIRSender() and verify success
+    /** 
+     * Default (only) constructor. Must call initIRSender() and verify success
      *  before using object.
      * 
      * @param sendPin   The Arduino pin number, where an IR LED is connected.
@@ -200,5 +252,6 @@ private:
     static void customDelayMicroseconds(unsigned long aMicroseconds);
 };
 
+/** @}*/
 
 #endif // TINY_NEC_TX_H

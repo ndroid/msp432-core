@@ -1,5 +1,12 @@
-/*
- *  TinyIRremote.h
+/**
+ * @file TinyIRremote.h
+ *
+ * @brief Main header file for TinyIRremote library.
+ * 
+ * Main header file for TinyIRremote library, only file necessary to be 
+ * included by user sketches. Provides reference to all included IR transmit 
+ * and receive resources. See IRreceiver, IRsender, IRData, and 
+ * FeedbackLEDFunctions for details on classes and methods.
  *
  *
  *  Copyright (C) 2022  chris miller
@@ -34,6 +41,6 @@
 #include "LongUnion.h"
 
 
-/** @}*/
+/* @}*/
 
 #endif // TINY_IR_REMOTE_H

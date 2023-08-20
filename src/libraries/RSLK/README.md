@@ -13,7 +13,7 @@ Library documentation is hosted on Github Pages at https://ndroid.github.io/msp4
 
 ## SimpleRSLK (Recommended)
 
-The SimpleRSLK.h defines a set of easy to use functions for the RSLK. Internally it calls the classes and functions mentioned below.
+The [SimpleRSLK](group___simple_r_s_l_k.html) defines a set of easy to use functions for the RSLK. Internally it calls the classes and functions mentioned below.
 
 ## Peripheral Specific Library/Function
 

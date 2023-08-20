@@ -9,6 +9,10 @@
 #ifndef SimpleRSLK_h
 #define SimpleRSLK_h
 
+/** \addtogroup SimpleRSLK Library for Texas Instrument's Robotic System Learning Kit
+ * @{
+ */
+
 /**
  * @brief   Total number of sensors on QTR line sensor.
  */
@@ -416,5 +420,7 @@ void readCalLineSensor(uint16_t *sensor,
 ///  Using calibrated line sensor value this function provides a numerical value indicating
 ///  where the robot is detecting the line. This function can be overridden.
 uint32_t getLinePosition(uint16_t *calVal, uint8_t mode);
+
+/** @}*/
 
 #endif  // SimpleRSLK_h

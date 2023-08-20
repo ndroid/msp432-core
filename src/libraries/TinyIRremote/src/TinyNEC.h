@@ -33,9 +33,6 @@
 /* driverlib header files */
 #include <ti/devices/msp432p4xx/driverlib/gpio.h>
 
-/** \addtogroup TinyReceiver Minimal receiver for NEC protocol
- * @{
- */
 
 /*
  * Debug directives
@@ -140,7 +137,5 @@ typedef struct PinConfig {
     uint16_t config;
 } PinConfig;
 
-
-/** @}*/
 
 #endif // TINY_NEC_H

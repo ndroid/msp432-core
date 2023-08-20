@@ -2,6 +2,7 @@
 
 This repository is to maintain and update cores for the MSP432P4xx Red Launchpad boards by Texas Instruments. This allows development for TI LaunchPads using the Arduino IDE (using [Arduino Boards Manager](https://support.arduino.cc/hc/en-us/articles/360016119519-Add-boards-to-Arduino-IDE)) rather than the [Energia IDE](http://energia.nu). The official Energia release provided support for a single MSP432 Launchpad, the MSP432P401R Red Launchpad board. This repository will provide an MSP432 core compatible with the **Arduino Boards Manager** which maintains and extends support for the **MSP432P401R** and adds support for the **MSP432P4111 Launchpad** board. In addition, this project extends the core to provide some bug fixes and new features, as detailed below.
 
+References for the libraries included with the board package, as well as additional resources for using the TI MSP432P4xx LaunchPad with Arduino can be found at [MSP432-Core for Arduino](https://ndroid.github.io/msp432-core/).
 
 
 ## Background
@@ -25,9 +26,11 @@ The Energia IDE includes several libraries at the application level of the IDE, 
 
 This MSP432 core includes the following libraries:
 
-* Educational BoosterPack MKII
-* Servo 
-* IR remote (NEC transmit and receive)
+* [Educational BoosterPack MKII](https://ndroid.github.io/msp432-core/EduBPMKII_Screen/LCD_screen-Reference_Manual.pdf)
+* [Servo](https://ndroid.github.io/msp432-core/Servo/)
+* [IR remote](https://ndroid.github.io/msp432-core/TinyIRremote/)
+    * NEC protocol transmit
+    * NEC protocol receive
 * SPI
 * Wire (I2C)
 * [TI RSLK Max library](https://ndroid.github.io/msp432-core/RSLK/)
