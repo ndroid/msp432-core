@@ -9,7 +9,7 @@
 
 // a maximum of eight servo objects can be created
 Servo myservos[SERVO_CNT]; 
-const int servoPins[SERVO_CNT] = {5, 6, 7, 8, 9, 10, 11, 12};
+const int servoPins[SERVO_CNT] = {5, 6, 7, 8, 9, 10, 12, 13};
 
 void setup() 
 { 

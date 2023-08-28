@@ -66,7 +66,7 @@
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
-#define IR_TRX_PIN1      4
+#define IR_TRX_PIN1      18
 #define IR_TRX_PIN2      19
 
 IRsender sendIR1(IR_TRX_PIN1);

@@ -30,7 +30,7 @@
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
-#define IR_RCV_PIN      32
+#define IR_RCV_PIN      33
 
 IRreceiver irRX(IR_RCV_PIN);
 
